@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('home');
 });
 
 /*
@@ -40,5 +40,11 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::group(['middleware' => 'web'], function () {
+    Route::get('/home', 'HomeController@index');
+});
+
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+
     Route::get('/home', 'HomeController@index');
 });

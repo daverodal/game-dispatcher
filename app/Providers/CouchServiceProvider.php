@@ -24,9 +24,15 @@ class CouchServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('App\Services\CouchService',function(){
+            $conf = $this->app->config['couch'];
+            $user = $conf['username'];
+            $pass = $conf['password'];
+            $host = $conf['hostname'];
+            $port = $conf['port'];
+            $login = $user ? "$user:$pass@" : "";
             $guz = new \App\Services\CouchService([
                 // Base URI is used with relative requests
-                'base_uri' => "http://pink:floyd@localhost:5984/",
+                'base_uri' => "http://$login$host:$port/",
                 // You can set any number of default request options.
                 'timeout'  => 1800.0,
             ]);
