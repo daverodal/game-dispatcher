@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'log'),
+    'driver' => env('MAIL_DRIVER', 'sendmail'),
 
     /*
     |--------------------------------------------------------------------------
@@ -108,4 +108,5 @@ return [
 
     'sendmail' => '/usr/sbin/sendmail -bs',
 
+'from' => array('address' => 'david@davidrodal.com', 'name' => 'Restful Rest Dude'),
 ];
