@@ -8,6 +8,8 @@
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
+     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 
     <style type="text/css">
         body{
@@ -184,7 +186,7 @@
 
     <a href="{{ url('/login') }}">Login</a>
     <div class="boxed" ><a href="{{ url('wargame/play') }}">home</a></div>
-    <div class="boxed" ><a href="{{ url('admin/allGames') }}">All Games</a></div>
+    <div class="boxed" ><a href="{{ url('admin/allgames') }}">All Games</a></div>
     <div class="boxed" ><a href="{{ url('admin/games') }}">All Games Avail</a></div>
     <div class="boxed" ><a href="{{ url('users') }}">Users</a></div>
     <div class="boxed" ><a href="{{ url('"users/logins') }}">Logins</a></div>
