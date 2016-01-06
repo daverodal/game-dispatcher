@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 Route::get('/', function () {
     return redirect('home');
 });
-
+Route::controller('wedmen', 'AdminController');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -45,6 +45,8 @@ Route::group(['middleware' => 'web'], function () {
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
+    Route::controller('rest','MapsController');
+    Route::controller('admin','AdminController');
 
     Route::get('/home', 'HomeController@index');
 });
