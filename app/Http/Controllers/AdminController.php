@@ -21,19 +21,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use App\Services\AdminService;
 use App\Services\CouchService;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    /* @var CouchService */
-    protected $cs;
     public function __construct()
     {
     }
@@ -48,6 +43,18 @@ class AdminController extends Controller
         return view('admin.home');
     }
 
+    public function getUsers(AdminService $ad){
+
+//            $this->_isLoggedIn();
+//            $this->load->model('users/users_model');
+        $users = [];
+            $users = $ad->getUsersByUsername();
+//            $users = $this->load->view('users/users_view', compact("users"));
+//        var_dump($this->users_model->getUsersByEmail());
+        var_dump($users);
+        return;
+
+    }
     function getGames(CouchService $cs)
     {
         $this->cs = $cs;
@@ -56,43 +63,44 @@ class AdminController extends Controller
         return view('admin.games', ['games' => $games]);
     }
 
-    function getAllgames(CouchService $cs, Request $req){
+    function getAllgames(AdminService $ad){
 
-        $user = $req->user()['name'];
+        $user = Auth::user()['name'];
 
 
+        $lobbies = $ad->getAllGames();
 //            $users = $this->couchsag->get('/_design/newFilter/_view/userByEmail');
 //            $userids = $this->couchsag->get('/_design/newFilter/_view/userById');
 
 //            var_dump($poll);
 //            echo $this->wargame_model->getLobbyChanges(false,$poll);
         //$seq = $this->couchsag->get("/_design/newFilter/_view/getLobbies?startkey=[\"$user\"]&endkey=[\"$user\",\"zzzzzzzzzzzzzzzzzzzzzzzz\"]");
-        $prevDb = $cs->setDb('mydatabase');
-
-        $seq = $cs->get("_design/newFilter/_view/allGames?");
-        $lobbies = [];
-        date_default_timezone_set("America/New_York");
-        $odd = 0;
-
-        foreach($seq->rows as $row){
-            $keys = $row->key;
-            $creator = array_shift($keys);
-            $gameName = array_shift($keys);
-
-            $name = array_shift($keys);
-            $gameType = array_shift($keys);
-            $id = array_shift($keys);
-//               $key = implode($keys,"  ");
-            $id = $row->id;
-            $dt =  $row->value[1];
-            $myTurn = "";
-//            $row->value[1] = "created ".formatDateDiff($dt)." ago";
-
-            $row->value[1] = "created a long long time ago";
-            $odd ^= 1;
-
-            $lobbies[] =  array("odd"=>$odd ? "odd":"","id"=>$id, "gameName" => $gameName, "name"=>$name, 'date'=>$row->value[1], "id"=>$id, "creator"=>$creator,"gameType"=>$gameType );
-        }
+//        $prevDb = $cs->setDb('mydatabase');
+//
+//        $seq = $cs->get("_design/newFilter/_view/allGames?");
+//        $lobbies = [];
+//        date_default_timezone_set("America/New_York");
+//        $odd = 0;
+//
+//        foreach($seq->rows as $row){
+//            $keys = $row->key;
+//            $creator = array_shift($keys);
+//            $gameName = array_shift($keys);
+//
+//            $name = array_shift($keys);
+//            $gameType = array_shift($keys);
+//            $id = array_shift($keys);
+////               $key = implode($keys,"  ");
+//            $id = $row->id;
+//            $dt =  $row->value[1];
+//            $myTurn = "";
+////            $row->value[1] = "created ".formatDateDiff($dt)." ago";
+//
+//            $row->value[1] = "created a long long time ago";
+//            $odd ^= 1;
+//
+//            $lobbies[] =  array("odd"=>$odd ? "odd":"","id"=>$id, "gameName" => $gameName, "name"=>$name, 'date'=>$row->value[1], "id"=>$id, "creator"=>$creator,"gameType"=>$gameType );
+//        }
 
         return view('admin.allGames',['lobbies'=>$lobbies]);
         return $lobbies;

@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 
 class CouchServiceProvider extends ServiceProvider
 {
+
     /**
      * Bootstrap the application services.
      *
@@ -36,6 +37,7 @@ class CouchServiceProvider extends ServiceProvider
                 // You can set any number of default request options.
                 'timeout'  => 1800.0,
             ]);
+            $guz->setDb($conf['restName']);
             return $guz;
         });
     }

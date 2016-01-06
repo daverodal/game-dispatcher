@@ -22,5 +22,8 @@ return [
     'hostname' => 'localhost',
     'port'=>5984,
     'username'=>'',
-    'password'=>''
+    'password'=>'',
+    'restName'=>'rest',
+    'dbName'=>'mydatabase',
+    'userName'=>'users'
 ];
