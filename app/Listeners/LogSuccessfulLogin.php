@@ -4,6 +4,7 @@ namespace App\Listeners;
 use App\Services\CouchService;
 
 use Auth;
+use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,9 +17,10 @@ class LogSuccessfulLogin
      *
      * @return void
      */
-    public function __construct(CouchService $cs)
+    public function __construct(CouchService $cs, Request $req)
     {
         $this->cs = $cs;
+        $req->session()->put('wargame', 'mywargame');
         //
     }
 

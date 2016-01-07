@@ -29,6 +29,7 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+
     public function __construct()
     {
     }
@@ -62,7 +63,7 @@ class AdminController extends Controller
     function getAllgames(AdminService $ad){
 
         $lobbies = $ad->getAllGames();
-        return view('admin.allGames',['lobbies'=>$lobbies,'peace'=>'love']);
+        return view('admin.allGames',['lobbies'=>$lobbies]);
     }
 
 
