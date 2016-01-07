@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('love')
+    @parent
+love wuv uv
+@endsection
 
 @section('content')
 <div class="boxed">

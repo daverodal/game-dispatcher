@@ -62,7 +62,7 @@ class AdminController extends Controller
     function getAllgames(AdminService $ad){
 
         $lobbies = $ad->getAllGames();
-        return view('admin.allGames',['lobbies'=>$lobbies]);
+        return view('admin.allGames',['lobbies'=>$lobbies,'peace'=>'love']);
     }
 
 

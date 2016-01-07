@@ -182,6 +182,9 @@
 </head>
 <body>
 <div class="boxed" id="adminMenu">
+    @section($peace)
+        bluelbue
+    @show
 
     <a href="{{ url('/login') }}">Login</a>
     <div class="boxed" ><a href="{{ url('wargame/play') }}">home</a></div>
