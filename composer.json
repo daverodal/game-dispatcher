@@ -22,8 +22,8 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        }
-    },
+        },
+        "files": ["app/Helpers/formatDateDiffHelper.php"]    },
     "autoload-dev": {
         "classmap": [
             "tests/TestCase.php"
