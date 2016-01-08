@@ -12,5 +12,9 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
+
+    mix.copy('node_modules/node-bourbon/node_modules/bourbon/app/assets/stylesheets/', 'resources/assets/sass/');
+    mix.copy('node_modules/node-bourbon/node_modules/bourbon/app/assets/stylesheets/', 'resources/assets/sass/');
+    mix.copy('resources/assets/images', 'public/images');
     mix.sass('app.scss');
 });

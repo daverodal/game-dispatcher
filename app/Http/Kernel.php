@@ -21,13 +21,16 @@ class Kernel extends HttpKernel
      * The application's route middleware groups.
      *
      * @var array
+     *
+     *
+     *             \App\Http\Middleware\VerifyCsrfToken::class,
+     * removed the above
      */
     protected $middlewareGroups = [
         'web' => [
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \App\Http\Middleware\VerifyCsrfToken::class,
         ],
 
         'api' => [

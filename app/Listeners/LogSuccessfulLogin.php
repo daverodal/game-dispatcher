@@ -20,7 +20,7 @@ class LogSuccessfulLogin
     public function __construct(CouchService $cs, Request $req)
     {
         $this->cs = $cs;
-        $req->session()->put('wargame', 'mywargame');
+        $req->session()->put('wargame', '');
         //
     }
 
