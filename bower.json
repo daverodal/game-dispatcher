@@ -19,6 +19,8 @@
     "angular-sanitize": "~1.4.8",
     "bourbon": "~4.2.6",
     "neat": "~1.7.2",
-    "font-awesome": "~4.5.0"
+    "font-awesome": "~4.5.0",
+    "jquery": "~2.2.0",
+    "jquery-ui": "~1.11.4"
   }
 }
