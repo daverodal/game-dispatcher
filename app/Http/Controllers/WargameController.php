@@ -908,5 +908,58 @@ class WargameController extends Controller
         return \Wargame\Battle::transformChanges($doc, $last_seq, $user);
     }
 
+    public function postPoke(Request $req, CouchService $cs)
+    {
+        $user = Auth::user()['name'];
+
+        $wargame = urldecode($req->session()->get("wargame"));
+
+        $x = (int)Input::get('x', FALSE);
+        $y = (int)Input::get('y', FALSE);
+        $event = (int)Input::get('event', FALSE);
+        $id = Input::get('id', FALSE);
+
+//        $this->load->model("wargame/wargame_model");
+        /*  @var  Wargame_model */
+        $cs->setDb('mydatabase');
+        $doc = $cs->get(urldecode($wargame));
+        $ter = false;
+        if (!empty($doc->wargame->terrainName)) {
+            try {
+                $ter = $cs->get($doc->wargame->terrainName);
+            }catch(Exception $e){var_dump($e->getMessage());}
+            $doc->wargame->terrain = $ter->terrain;
+        }
+//        $this->load->library("battle");
+        $game = !empty($doc->gameName) ? $doc->gameName : '';
+        $emsg = false;
+        $click = $doc->_rev;
+        $matches = array();
+        preg_match("/^([0-9]+)-/", $click, $matches);
+        $click = $matches[1];
+        try {
+            $battle = Battle::getBattle($game, $doc->wargame, $doc->wargame->arg);
+            $doSave = $battle->poke($event, $id, $x, $y, $user, $click);
+            $success = false;
+            if ($doSave) {
+                $doc->wargame = $battle->save();
+
+                $cs->put($doc->_id, $doc);
+                $success = true;
+
+            }
+            if ($doSave === 0) {
+                $success = true;
+            }
+        } catch (Exception $e) {
+            $emsg = $e->getMessage() . " \nFile: " . $e->getFile() . " \nLine: " . $e->getLine() . " \nCode: " . $e->getCode();
+            $success = false;
+        }
+        if (!$success) {
+            header("HTTP/1.1 404 Not Found");
+        }
+        return compact('success', "emsg");
+    }
+
 
 }
