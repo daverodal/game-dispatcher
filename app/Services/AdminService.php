@@ -81,7 +81,7 @@ class  AdminService
     }
 
 
-    public function availGames( $dir = false, $genre = false, $game = false){
+    public function getAvailGames( $dir = false, $genre = false, $game = false){
 
 
         $reduceArgs = "group=true&group_level=2";
@@ -110,10 +110,10 @@ class  AdminService
                 $game = $row->value;
                 $game->key = $row->key;
             } else {
-                $game = new stdClass();
+                $game = new \stdClass();
                 $game->dir = $row->key[0];
                 $game->genre = $row->key[1];
-                $game->game = $row->key[2];
+                $game->game = isset($row->key[2]) ? $row->key[2] : '';
                 $game->value = $row->value;
             }
             $games[] = $game;
@@ -121,4 +121,56 @@ class  AdminService
 
         return $games;
     }
+
+    public function getGame($gameName){
+
+        $games = $this->getAvailGames(true);
+        foreach($games as $game){
+            if($gameName == $game->key[2]){
+                return $game;
+            }
+        }
+        return false;
+    }
+
+    public function getCustomScenarios($dir = false, $genre = false, $game = false){
+
+        $reduceArgs = "group=true&group_level=2";
+        if($dir !== false){
+            $reduceArgs = "group=true&group_level=2&startkey=[\"$dir\"]&endkey=[\"$dir\",\"zzzzzzzzzzzzzzzzzzzzzzzz\"]";
+            if($dir === true){
+                $reduceArgs = "reduce=false";
+            }
+            if($genre !== false){
+                $reduceArgs = "reduce=false&startkey=[\"$dir\",\"$genre\"]&endkey=[\"$dir\",\"$genre\",\"zzzzzzzzzzzzzzzzzzzzzzzz\"]";
+                if($game !== false){
+                    $reduceArgs = "reduce=false&startkey=[\"$dir\",\"$genre\",\"$game\"]&endkey=[\"$dir\",\"$genre\",\"$game\",\"zzzzzzzzzzzzzzzzzzzzzzzz\"]";
+                }
+            }
+        }
+        $this->cs->setDb('users');
+
+        $seq = $this->cs->get("/_design/newFilter/_view/getCustomScenarios?$reduceArgs");
+        $this->cs->setDb('mydatabase');
+        $rows = $seq->rows;
+        $games = [];
+
+        foreach($rows as $row){
+            if($dir === true){
+                $game = $row->value;
+                $game->key = $row->key;
+            }else{
+                $game = new stdClass();
+                $game->dir = $row->key[0];
+                $game->genre = $row->key[1];
+                $game->game = $row->key[2];
+                $game->scenario = $row->key[3];
+                $game->value = $row->value;
+            }
+            $games[] = $game;
+        }
+
+        return $games;
+    }
+
 }

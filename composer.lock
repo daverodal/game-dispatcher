@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ad88be12f8be07310d26c949681df9e3",
-    "content-hash": "416ce9dfa68fa1f577485063f2e071fc",
+    "hash": "6c214b37e4ccd6c4b89436cd973f9c2c",
+    "content-hash": "fdc501b10061f3370e92b21e2e7b2f9c",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -60,6 +60,35 @@
                 "preload"
             ],
             "time": "2015-11-09 22:51:51"
+        },
+        {
+            "name": "daverodal/webwargaming",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/daverodal/webwargaming.git",
+                "reference": "63c63c9133767e9addc9b46c4bc10bce202c13c6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/daverodal/webwargaming/zipball/63c63c9133767e9addc9b46c4bc10bce202c13c6",
+                "reference": "63c63c9133767e9addc9b46c4bc10bce202c13c6",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "": "."
+                },
+                "files": [
+                    "./constants.php"
+                ]
+            },
+            "support": {
+                "source": "https://github.com/daverodal/webwargaming/tree/master",
+                "issues": "https://github.com/daverodal/webwargaming/issues"
+            },
+            "time": "2016-01-01 21:15:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -479,16 +508,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.2.6",
+            "version": "v5.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "b774c304ee81fcf5402fa06b261b364ba8f29cf0"
+                "reference": "26cd65eaa4bcc0fb0be381cfb7cfdcda06a3c2b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/b774c304ee81fcf5402fa06b261b364ba8f29cf0",
-                "reference": "b774c304ee81fcf5402fa06b261b364ba8f29cf0",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/26cd65eaa4bcc0fb0be381cfb7cfdcda06a3c2b4",
+                "reference": "26cd65eaa4bcc0fb0be381cfb7cfdcda06a3c2b4",
                 "shasum": ""
             },
             "require": {
@@ -603,7 +632,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-12-31 17:41:58"
+            "time": "2016-01-07 13:54:34"
         },
         {
             "name": "league/flysystem",
@@ -910,16 +939,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "1.1.4",
+            "version": "1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "d762ee5b099a29044603cd4649851e81aa66cb47"
+                "reference": "dd8998b7c846f6909f4e7a5f67fabebfc412a4f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/d762ee5b099a29044603cd4649851e81aa66cb47",
-                "reference": "d762ee5b099a29044603cd4649851e81aa66cb47",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/dd8998b7c846f6909f4e7a5f67fabebfc412a4f7",
+                "reference": "dd8998b7c846f6909f4e7a5f67fabebfc412a4f7",
                 "shasum": ""
             },
             "require": {
@@ -954,7 +983,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2015-12-10 14:48:13"
+            "time": "2016-01-06 13:31:20"
         },
         {
             "name": "psr/http-message",
@@ -3223,7 +3252,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "daverodal/webwargaming": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

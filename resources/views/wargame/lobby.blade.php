@@ -26,8 +26,8 @@
 <html ng-app="lobbyApp">
 <head>
     <meta charset="UTF-8">
-    <script src="{{ asset('js/jquery-1.11.1.min.js')}}"></script>
-    <script src="{{ asset('js/jquery-ui-1.11.0.min.js')}}"></script>
+    <script src="{{ asset('js/jquery.js')}}"></script>
+    <script src="{{ asset('js/jquery-ui.js')}}"></script>
     <script src="{{ asset('js/sync.js')}}"></script>
     <script src="{{ asset('js/angular.js')}}"></script>
     <link href="{{ asset('css/app.css')}}" rel="stylesheet" type="text/css">
@@ -62,7 +62,7 @@
         </div>
     </my-pane>
     <my-pane title="My Games"  is-selected="true" >
-        <div id="content" ng-controller="LobbyController">
+        <div class="game-view" id="content" ng-controller="LobbyController">
             <a class="logout logoutUpper" href="{{url('users/logout')}}">Logout</a>
 
             <?php if ($myName == "Markarian") { ?>

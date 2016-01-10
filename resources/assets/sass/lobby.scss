@@ -57,26 +57,30 @@ $grid-columns: 12;
   }
 }
 body{
-background-repeat: no-repeat;
-color: #666;
-background-position: center top;
-height: 100%;
-
+  background-repeat: no-repeat;
+  color: #666;
+  background-position: center top;
+  height: 100%;
 }
 
-ul .lobbyHeader:hover, ul .lobbySpacer:hover{
-  background-color:transparent;
+#sinners {
+  h3 {
+    font-size: 16px;
+  }
+
+  span {
+    display: inline-block;
+  }
+
+  h2 {
+    font-style: italic;
+  }
 }
 
-
-
-h3 {
-  font-size: 16px;
+li {
+  list-style: none;
 }
 
-span {
-  display: inline-block;
-}
 
 .bold {
   font-family: Lucida;
@@ -84,14 +88,6 @@ span {
   font-size: 18px;
   color: white;
   text-shadow: 0px 0px 3px black, 0px 0px 3px black, 0px 0px 3px black, 0px 0px 3px black, 0px 0px 3px black, 0px 0px 3px black;
-}
-
-h2 {
-  font-style: italic;
-}
-
-li {
-  list-style: none;
 }
 
 .myTurn {
@@ -144,19 +140,24 @@ a {
 }
 
 
-ul {
+.game-view ul {
   padding: 5px 10px 15px;
   border-radius: 10px;
   background: rgba(92, 92, 92, 0.50);
   color: white;
+  a{
+    color:white;
+  }
+  .lobbyRow:hover {
+    background: rgba(0, 0, 0, .5);
+  }
+
+  .lobbyHeader:hover, .lobbySpacer:hover{
+    background-color:transparent;
+  }
 }
 
-ul a {
-  color: white;
-}
-ul .lobbyRow:hover {
-  background: rgba(0, 0, 0, .5);
-}
+
 
 #content{
   color: black;
@@ -169,6 +170,7 @@ ul .lobbyRow:hover {
   width: 80%;
   margin: 0 auto;
 }
+
 .attribution{
   &:before{
     content:"Image by: ";
@@ -185,7 +187,6 @@ ul .lobbyRow:hover {
   border-radius: 10px;
   margin-bottom:15px;
 }
-
 
 .tabbable {
   .nav-tabs {
@@ -251,6 +252,7 @@ ul .lobbyRow:hover {
   width:50%;
   margin:0 auto;
 }
+
 .wideCoolBox{
   font-size: 22px;
   background: rgba(255, 255, 255, .9);

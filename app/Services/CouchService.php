@@ -33,7 +33,8 @@ class CouchService extends \GuzzleHttp\Client
     }
 
     public function get($id){
-        $resp = $this->request('GET', $this->db."/$id");
+        $resp = $this->request('GET', $this->db . "/$id");
+
         return json_decode((string)$resp->getBody());
     }
 

@@ -56,7 +56,7 @@ class AdminController extends Controller
 
     function getGames(AdminService $ad)
     {
-        $games = $ad->availGames(true);
+        $games = $ad->getAvailGames(true);
         return view('admin.games', ['games' => $games]);
     }
 

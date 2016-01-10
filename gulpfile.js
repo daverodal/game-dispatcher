@@ -13,8 +13,18 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
 
-    mix.copy('node_modules/node-bourbon/node_modules/bourbon/app/assets/stylesheets/', 'resources/assets/sass/');
-    mix.copy('node_modules/node-bourbon/node_modules/bourbon/app/assets/stylesheets/', 'resources/assets/sass/');
+    mix.copy('bower_components/angularjs/angular.js', 'public/js');
+    mix.copy('bower_components/angular-sanitize/angular-sanitize.js', 'public/js');
+    mix.copy('bower_components/angular-modal-service/dst/angular-modal-service.js', 'public/js');
+
+    mix.copy('bower_components/jquery/dist/jquery.js', 'public/js');
+    mix.copy('bower_components/jquery-ui/jquery-ui.js', 'public/js');
+
+    mix.copy('bower_components/font-awesome/scss/', 'resources/assets/sass/font-awesome');
+    mix.copy('bower_components/font-awesome/fonts/', 'public/fonts/font-awesome');
+
+    mix.copy('node_modules/bourbon/app/assets/stylesheets/', 'resources/assets/sass/bourbon');
+    mix.copy('node_modules/bourbon-neat/app/assets/stylesheets/', 'resources/assets/sass/neat');
     mix.copy('resources/assets/images', 'public/images');
     mix.sass('app.scss');
 });

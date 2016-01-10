@@ -1,0 +1,24 @@
+{
+  "name": "game-dispatcher",
+  "version": "0.0.0",
+  "homepage": "https://github.com/daverodal/game-dispatcher",
+  "authors": [
+    "daverodal <dave.rodal@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angularjs": "v1.3.13",
+    "angular-modal-service": "~0.6.9",
+    "angular-sanitize": "~1.4.8",
+    "bourbon": "~4.2.6",
+    "neat": "~1.7.2",
+    "font-awesome": "~4.5.0"
+  }
+}
