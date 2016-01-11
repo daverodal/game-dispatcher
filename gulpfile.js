@@ -23,8 +23,8 @@ elixir(function(mix) {
     mix.copy('bower_components/font-awesome/scss/', 'resources/assets/sass/font-awesome');
     mix.copy('bower_components/font-awesome/fonts/', 'public/fonts/font-awesome');
 
-    mix.copy('node_modules/bourbon/app/assets/stylesheets/', 'resources/assets/sass/bourbon');
-    mix.copy('node_modules/bourbon-neat/app/assets/stylesheets/', 'resources/assets/sass/neat');
+    mix.copy('bower_components/bourbon/app/assets/stylesheets/', 'resources/assets/sass/bourbon');
+    mix.copy('bower_components/neat/app/assets/stylesheets/', 'resources/assets/sass/neat');
     mix.copy('resources/assets/images', 'public/images');
     mix.sass('app.scss');
 });

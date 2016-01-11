@@ -26,6 +26,7 @@
 <html ng-app="lobbyApp">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="{{ asset('js/jquery.js')}}"></script>
     <script src="{{ asset('js/jquery-ui.js')}}"></script>
     <script src="{{ asset('js/sync.js')}}"></script>
@@ -34,7 +35,7 @@
     <style type="text/css">
 
         body{
-            background: asset("{{ asset('images/armoredKnight.jpg')}}") #fff;
+            background: url("{{ asset('images/armoredKnight.jpg')}}") #fff;
             background-repeat: no-repeat;
             background-position: center top;
         }
@@ -47,6 +48,11 @@
     </style>
     <script type="text/javascript">
         var DR = {};
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
         var fetchUrl = '{{ url("wargame/fetch-lobby/") }}';
     </script>

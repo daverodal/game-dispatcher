@@ -21,6 +21,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/favicon.ico" type="image/icon">
     <!--    <link href="--><?//=base_url("js/jquery-ui.css");?><!--" rel="stylesheet" type="text/css"/>-->
@@ -30,6 +31,13 @@
     <script src="<?=url("js/jquery.panzoom/dist/jquery.panzoom.js");?>"></script>
     <script src="<?=url("js/jquery.panzoom/test/libs/jquery.mousewheel.js");?>"></script>
     <script src="<?=url("js/sync.js");?>"></script>
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
     <?php \Wargame\Battle::getHeader($gameName, $playerData, $arg);?>
 </head>
 <?php

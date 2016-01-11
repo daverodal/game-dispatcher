@@ -67,4 +67,40 @@ class AdminController extends Controller
     }
 
 
+
+    function getAddGame(CouchService $cs){
+
+//        var_dump($_GET);
+        $dir = \Input::get('dir',false);
+        if($dir){
+            $infoPath =  base_path("vendor/daverodal/wargaming/$dir/info.json");
+
+            $info = json_decode(file_get_contents($infoPath));
+
+            $games = $this->addGame($cs, $info);
+            return redirect('admin/games');
+        }
+
+        return;
+//        $this->load->view('users/games_view',compact("games"));
+//        var_dump($this->users_model->getUsersByEmail());
+    }
+
+
+    public function addGame(CouchService $cs, $games){
+
+        $prevDb = $cs->setDb('users');
+        $doc = $cs->get("gnuGamesAvail");
+        if($doc->docType == "gnuGamesAvail"){
+            foreach($games as $name => $game) {
+                if(!empty($game->disabled) === true){
+                    continue;
+                }
+                $doc->games->$name = $game;
+            }
+        }
+        $cs->put($doc->_id, $doc);
+        $cs->setDb($prevDb);
+    }
+
 }
