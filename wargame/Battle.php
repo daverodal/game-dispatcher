@@ -42,7 +42,7 @@ $dir = dirname(__DIR__);
 //}else{
 //    define ("WARGAMES","/var/www/MartianCivilWar/");
 //}
-define("WARGAMES","$dir/vendor/daverodal/webwargaming/");
+define("WARGAMES","$dir/vendor/daverodal/wargaming/");
 set_include_path(WARGAMES . "stdIncludes" . PATH_SEPARATOR . WARGAMES . PATH_SEPARATOR .  get_include_path());
 
 class Battle

@@ -14,6 +14,10 @@
 Route::get('/', function () {
     return redirect('home');
 });
+
+Route::get('/lovelove', function(){
+    return view('wargame::view');
+});
 /*
 |--------------------------------------------------------------------------
 | Application Routes

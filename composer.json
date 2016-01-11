@@ -7,7 +7,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/daverodal/webwargaming"
+            "url": "https://github.com/daverodal/wargaming"
         }
     ],
 
@@ -15,7 +15,7 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "guzzlehttp/guzzle":"~6.0",
-        "daverodal/webwargaming": "dev-master"
+        "daverodal/wargaming": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

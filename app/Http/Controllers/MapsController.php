@@ -111,7 +111,7 @@ class MapsController extends Controller
     public function deleteHexstrs(CouchService $client, $id){
         try{
             $doc = $client->get($id);
-        }catch(Exception $e){
+        }catch(\GuzzleHttp\Exception\BadResponseException $e){
             return json_encode(new \stdClass());
         }
         $client->delete($doc->_id, $doc->_rev);
@@ -121,7 +121,7 @@ class MapsController extends Controller
     public function deleteMaps(CouchService $client, $id){
         try{
             $doc = $client->get($id);
-        }catch(Exception $e){
+        }catch(\GuzzleHttp\Exception\BadResponseException $e){
             return json_encode(new \stdClass());
         }
         $client->delete($doc->_id, $doc->_rev);

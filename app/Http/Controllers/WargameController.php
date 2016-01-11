@@ -169,7 +169,8 @@ class WargameController extends Controller
         $scenario = $doc->wargame->scenario;
         $scenarioArray = [];
         $scenarioArray[] = $scenario;
-        return view("wargame/wargame-header", compact("scenarioArray", "name", "arg", "player", "mapUrl", "units", "playerData", "gameName", "wargame", "user"));
+
+        return view("wargame::TMCW.Amph.view", compact("scenarioArray", "name", "arg", "player", "mapUrl", "units", "playerData", "gameName", "wargame", "user"));
     }
 
 
@@ -419,7 +420,7 @@ class WargameController extends Controller
                     $backgroundAttr = 'Alvin Jewett Johnson [Public domain], <a target="blank" href="http://commons.wikimedia.org/wiki/File%3A1864_Johnson&#039;s_Map_of_India_(Hindostan_or_British_India)_-_Geographicus_-_India-j-64.jpg">via Wikimedia Commons</a>';
                 }
             }
-            if(preg_match("/20%27th/", $genre)){
+            if(preg_match("/20'th/", $genre)){
                 $backgroundImage = "M110_howitzer.jpg";
                 $backgroundAttr = 'By Greg Goebel [Public domain], <a target="blank" href="http://commons.wikimedia.org/wiki/File%3AM110_8_inch_self_propelled_howitzer_tank_military.jpg">via Wikimedia Commons</a>';
             }
@@ -437,7 +438,7 @@ class WargameController extends Controller
             }
             try {
                 $terrain = $cs->get($terrainName);
-            }catch(Exception $e){echo $terrainName." ".$e->getMessage();               }
+            }catch(\GuzzleHttp\Exception\BadResponseException $e){echo $terrainName." ".$e->getMessage();               }
             if(!$terrain){
                 $terrain = $this->couchsag->get("terrain-".$game);
             }
@@ -481,7 +482,7 @@ class WargameController extends Controller
                 }
                 try {
                     $terrain = $this->couchsag->get($terrainName);
-                }catch(Exception $e){}
+                }catch(\GuzzleHttp\Exception\BadResponseException $e){}
                 if(!$terrain){
                     $terrain = $this->couchsag->get("terrain-".$game);
                 }
@@ -501,7 +502,7 @@ class WargameController extends Controller
             $gameFeed = strtolower($game);
             $feed = file_get_contents("http://davidrodal.com/pubs/category/$gameFeed/feed");
             $theGameMeta = (array)$theGame->value;
-            $theGameMeta['options'] = ifset($theGameMeta['options'])? $theGameMeta['options'] : [];
+            $theGameMeta['options'] = isset($theGameMeta['options'])? $theGameMeta['options'] : [];
             unset($theGameMeta->scenarios);
             if ($feed !== false) {
                 $xml = new \SimpleXmlElement($feed);
@@ -550,8 +551,9 @@ class WargameController extends Controller
                     $terrain = "";
                     try {
                         $terrain = $cs->get($terrainName);
-                    } catch (Exception $e) {
-                        echo "EXCEPTION ";
+                    } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+                        continue;
+                        echo "EXCEPTION $terrainName ";
                     }
 
                     $mapUrl = $terrain->terrain->mapUrl;
@@ -564,7 +566,7 @@ class WargameController extends Controller
                     $gameAvail->name = $gameAvail->value->name;
                     $gameAvail->mapUrl = $mapUrl;
                     $gameAvail->longDescription = isset($gameAvail->value->longDescription) ? $gameAvail->value->longDescription :'';
-                    $gameAvail->description = $gameAvail->value->description;
+                    $gameAvail->description = isset($gameAvail->value->description) ? $gameAvail->value->description : '';
                 }
 
                 $gameAvail->urlGenre = rawurlencode($gameAvail->genre);
@@ -619,7 +621,7 @@ class WargameController extends Controller
         $this->load->view("wargame/wargameCreate", compact("message", "game","scenario"));
     }
 
-    public function createWargame($cs, $name)
+    public function createWargame(CouchService $cs, $name)
     {
         date_default_timezone_set("America/New_York");
 //        $data = array('docType' => "wargame", "_id" => $name, "name" => $name, "chats" => array(),"createDate"=>date("r"),"createUser"=>$this->session->userdata("user"),"playerStatus"=>"created");
@@ -632,6 +634,7 @@ class WargameController extends Controller
             $data->createDate = date("r");
             $data->createUser = Auth::user()['name'];
             $data->playerStatus = "created";
+            $cs->setDb("mydatabase");
             $ret = $cs->post($data);
         } catch (Exception $e) {
             ;
@@ -640,7 +643,7 @@ class WargameController extends Controller
         return $ret;
     }
 
-    public function getUnitInit( Request $req,CouchService $cs, AdminService $ad, $game = "MartianCivilWar", $arg = false)
+    public function getUnitInit( Request $req,CouchService $cs, AdminService $ad, $game, $arg = false)
     {
         $user = Auth::user()['name'];
         $wargame = urldecode($req->session()->get("wargame"));
@@ -671,12 +674,12 @@ class WargameController extends Controller
             try{
                 $terrainName = "terrain-$game.$arg";
                 $terrainDoc = $cs->get($terrainName);
-            }catch(Exception $e){}
+            }catch(\GuzzleHttp\Exception\BadResponseException $e){}
             if(!$terrainDoc){
                 try{
                     $terrainName = "terrain-$game";
                     $terrainDoc = $cs->get($terrainName);
-                }catch(Exception $e){var_dump($e->getMessage());}
+                }catch(\GuzzleHttp\Exception\BadResponseException $e){var_dump($e->getMessage());}
             }
             $battle->terrainName = $terrainName;
             $battle->terrainInit($terrainDoc);
@@ -793,6 +796,7 @@ class WargameController extends Controller
         if ($newWargame == false) {
             $newWargame = $wargame;
         }
+        $cs->setDb('mydatabase');
         if ($cs->get($newWargame)) {
 
             $req->session()->put("wargame", $newWargame);
@@ -927,7 +931,7 @@ class WargameController extends Controller
         if (!empty($doc->wargame->terrainName)) {
             try {
                 $ter = $cs->get($doc->wargame->terrainName);
-            }catch(Exception $e){var_dump($e->getMessage());}
+            }catch(\GuzzleHttp\Exception\BadResponseException $e){var_dump($e->getMessage());}
             $doc->wargame->terrain = $ter->terrain;
         }
 //        $this->load->library("battle");

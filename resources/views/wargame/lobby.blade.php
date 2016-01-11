@@ -34,7 +34,7 @@
     <style type="text/css">
 
         body{
-            background: url("{{ asset('images/armoredKnight.jpg')}}") #fff;
+            background: asset("{{ asset('images/armoredKnight.jpg')}}") #fff;
             background-repeat: no-repeat;
             background-position: center top;
         }
@@ -70,7 +70,7 @@
             <?php } ?>
             <h2>Welcome {{$myName}}</h2>
 
-            <h3>You can <a id="create" href="{{url('wargame/unattachedGame')}}"><button class="create-button">Start New Game</button></a></h3>
+            <h3>You can <a id="create" href="{{url('wargame/unattached-game')}}"><button class="create-button">Start New Game</button></a></h3>
             Or play an existing game:<br>
 
             <h1>Multi Player Games</h1>
@@ -88,7 +88,7 @@
                         </li>
                         <li class="bold lobbySpacer">&nbsp;</li>
                         <li ng-class-odd="'odd'" ng-repeat="myMultiGame in myMultiGames" class="lobbyRow">
-                            <a ng-href="{{url('wargame/changeWargame')}}/@{{myMultiGame.id}}/">
+                            <a ng-href="{{url('wargame/change-wargame')}}/@{{myMultiGame.id}}/">
                                 <span class="colOne">@{{myMultiGame.name}}</span>
                                 <span class="colTwo">@{{myMultiGame.gameName}}</span>
                                 <span class="colThree" ng-class="myMultiGame.myTurn">@{{myMultiGame.turn}}</span>
@@ -97,7 +97,7 @@
                             </a>
 
                     <span class="colSix"><a ng-click='publicGame(myMultiGame)' href='' ng-heref="@{{myMultiGame.pubLink}}">make @{{myMultiGame.pubLinkLabel}}</a>
-                        <a ng-href='{{url("wargame/playAs")}}/@{{myMultiGame.id}}'>edit</a> <a href='' ng-click="deleteGame(myMultiGame.id)">delete</a>
+                        <a ng-href='{{url("wargame/play-as")}}/@{{myMultiGame.id}}'>edit</a> <a href='' ng-click="deleteGame(myMultiGame.id)">delete</a>
 </span>
                             <div class='clear'></div>
                         </li>
@@ -116,7 +116,7 @@
                         </li>
                         <li class="lobbySpacer">&nbsp;</li>
                         <li ng-class-odd="'odd'" ng-repeat="myOtherGame in myOtherGames" class="lobbyRow">
-                            <a ng-href="{{url('wargame/changeWargame')}}/@{{myOtherGame.id}}/">
+                            <a ng-href="{{url('wargame/change-wargame')}}/@{{myOtherGame.id}}/">
                                 <span class="colOne">@{{myOtherGame.name}}</span>
                                 <span class="colTwo">@{{myOtherGame.gameName}}</span>
                                 <span class="colThree" ng-class="myOtherGame.myTurn">It's @{{myOtherGame.turn}} Turn</span>
@@ -141,14 +141,14 @@
                 <li ng-class-odd="'odd'" ng-repeat="myHotGame in myHotGames" class="lobbyRow">
 
 
-                    <a ng-href="{{url('wargame/changeWargame')}}/@{{myHotGame.id}}/">
+                    <a ng-href="{{url('wargame/change-wargame')}}/@{{myHotGame.id}}/">
                         <span class="colOne">@{{myHotGame.name}}</span>
                         <span class="colTwo">@{{myHotGame.gameName}}</span>
                         <span class="colThree">@{{myHotGame.turn}}</span>
                         <span class="colFour">@{{myHotGame.date}}</span>
                         <span class='colFive'></span>
                     </a>
-                    <a ng-click='publicGame(myHotGame)' href='' ng-heref="@{{myHotGame.pubLink}}">make @{{myHotGame.pubLinkLabel}}</a> <a ng-href='{{url("wargame/playAs")}}/@{{myHotGame.id}}'>edit</a> <a href='' ng-click="deleteGame(myHotGame.id)">delete</a>
+                    <a ng-click='publicGame(myHotGame)' href='' ng-heref="@{{myHotGame.pubLink}}">make @{{myHotGame.pubLinkLabel}}</a> <a ng-href='{{url("wargame/play-as")}}/@{{myHotGame.id}}'>edit</a> <a href='' ng-click="deleteGame(myHotGame.id)">delete</a>
 
                     <div class='clear'></div>
                 </li>
@@ -165,7 +165,7 @@
                 <li class="lobbySpacer">&nbsp;</li>
 
                 <li ng-class-odd="'odd'" ng-repeat="myPublicGame in myPublicGames | orderBy : [ 'players','date']" class="lobbyRow">
-                    <a ng-href="{{url('wargame/changeWargame')}}/@{{myPublicGame.id}}/">
+                    <a ng-href="{{url('wargame/change-wargame')}}/@{{myPublicGame.id}}/">
                         <span class="colOne">@{{myPublicGame.name}}</span>
                         <span class="colTwo">@{{myPublicGame.gameName}}</span>
                         <span class="colThree" ng-class="myPublicGame.myTurn">It's @{{myPublicGame.turn}} Turn</span>
@@ -881,7 +881,7 @@ Public License instead of this License.  But first, please read
     <my-pane title="Profile">
         <div class="coolBox">
             <h2>Welcome {myName}</h2>
-            <a href="{{url('users/changePassword/')}}">Change Password</a>
+            <a href="{{url('users/change-password/')}}">Change Password</a>
         </div>
 
     </my-pane>
