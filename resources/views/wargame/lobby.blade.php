@@ -94,7 +94,7 @@
                         </li>
                         <li class="bold lobbySpacer">&nbsp;</li>
                         <li ng-class-odd="'odd'" ng-repeat="myMultiGame in myMultiGames" class="lobbyRow">
-                            <a ng-href="{{url('wargame/change-wargame')}}/@{{myMultiGame.id}}/">
+                            <a ng-href="{{url('wargame/change-wargame')}}/@{{myMultiGame.id}}">
                                 <span class="colOne">@{{myMultiGame.name}}</span>
                                 <span class="colTwo">@{{myMultiGame.gameName}}</span>
                                 <span class="colThree" ng-class="myMultiGame.myTurn">@{{myMultiGame.turn}}</span>
@@ -122,7 +122,7 @@
                         </li>
                         <li class="lobbySpacer">&nbsp;</li>
                         <li ng-class-odd="'odd'" ng-repeat="myOtherGame in myOtherGames" class="lobbyRow">
-                            <a ng-href="{{url('wargame/change-wargame')}}/@{{myOtherGame.id}}/">
+                            <a ng-href="{{url('wargame/change-wargame')}}/@{{myOtherGame.id}}">
                                 <span class="colOne">@{{myOtherGame.name}}</span>
                                 <span class="colTwo">@{{myOtherGame.gameName}}</span>
                                 <span class="colThree" ng-class="myOtherGame.myTurn">It's @{{myOtherGame.turn}} Turn</span>
@@ -147,7 +147,7 @@
                 <li ng-class-odd="'odd'" ng-repeat="myHotGame in myHotGames" class="lobbyRow">
 
 
-                    <a ng-href="{{url('wargame/change-wargame')}}/@{{myHotGame.id}}/">
+                    <a ng-href="{{url('wargame/change-wargame')}}/@{{myHotGame.id}}">
                         <span class="colOne">@{{myHotGame.name}}</span>
                         <span class="colTwo">@{{myHotGame.gameName}}</span>
                         <span class="colThree">@{{myHotGame.turn}}</span>
@@ -171,7 +171,7 @@
                 <li class="lobbySpacer">&nbsp;</li>
 
                 <li ng-class-odd="'odd'" ng-repeat="myPublicGame in myPublicGames | orderBy : [ 'players','date']" class="lobbyRow">
-                    <a ng-href="{{url('wargame/change-wargame')}}/@{{myPublicGame.id}}/">
+                    <a ng-href="{{url('wargame/change-wargame')}}/@{{myPublicGame.id}}">
                         <span class="colOne">@{{myPublicGame.name}}</span>
                         <span class="colTwo">@{{myPublicGame.gameName}}</span>
                         <span class="colThree" ng-class="myPublicGame.myTurn">It's @{{myPublicGame.turn}} Turn</span>

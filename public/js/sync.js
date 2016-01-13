@@ -52,7 +52,7 @@ function Sync(baseUrl) {
         debugger;
         this.current = $.ajax(
             {url:this.baseUrl + "/" + last_seq+travel,
-                type:"POST",
+                type:"GET",
                 data:theArgs,
 
                 error:function(jqXHR, two, three){

@@ -102,10 +102,10 @@ class Battle
        public function resize($size,$player){
 
        }
-    public static function getInit($dir){
-        $file = file_get_contents(WARGAMES."/".$dir."/info.json");
-        return json_decode($file);
-    }
+//    public static function getInit($dir){
+//        $file = file_get_contents(WARGAMES."/".$dir."/info.json");
+//        return json_decode($file);
+//    }
     public static  function getBattle($name = false,$doc = null, $arg = false, $options = false){
         try{
         if(self::$theBattle){
@@ -154,45 +154,46 @@ class Battle
 
         }catch(Exception $e){echo $e->getMessage()." ".$e->getFile()." ".$e->getLine();}
     }
-    public static function getView($name,$mapUrl, $player = 0, $arg = false, $argTwo = false, $scenario = false, $units = []){
-        try{
-        $game = self::loadGame($name, $arg);
-            $className = $game->className;
-        $className::getView($name, $mapUrl,$player, $arg, $argTwo, $game,  $units);
-        }catch(Exception $e){echo $e->getMessage()." ".$e->getFile()." ".$e->getLine();}
-    }
-    public static function getHeader($name,$data,$arg){
+//    public static function getView($name,$mapUrl, $player = 0, $arg = false, $argTwo = false, $scenario = false, $units = []){
+//        try{
+//        $game = self::loadGame($name, $arg);
+//            $className = $game->className;
+//        $className::getView($name, $mapUrl,$player, $arg, $argTwo, $game,  $units);
+//        }catch(Exception $e){echo $e->getMessage()." ".$e->getFile()." ".$e->getLine();}
+//    }
+//    public static function getHeader($name,$data,$arg){
+//
+//        if(!isset($arg)){
+//            die("NO HEADER");
+//        }
+//        try{
+//        $game = self::loadGame($name, $arg);
+//            $className = $game->className;
+//
+//            $className::getHeader($name,$data);
+//        }catch(Exception $e){echo $e->getMessage()." ".$e->getFile()." ".$e->getLine();}
+//
+//    }
 
-        if(!isset($arg)){
-            die("NO HEADER");
-        }
-        try{
-        $game = self::loadGame($name, $arg);
-            $className = $game->className;
+//    public static function playAs($name,$wargame,$arg){
+//        try{
+//            $game = self::loadGame($name,$arg);
+//            $className = $game->className;
+//            $className::playAs($name,$wargame);
+//
+//        }catch(Exception $e){echo $e->getMessage()." ".$e->getFile()." ".$e->getLine();}
+//
+//    }
 
-            $className::getHeader($name,$data);
-        }catch(Exception $e){echo $e->getMessage()." ".$e->getFile()." ".$e->getLine();}
-
-    }
-    public static function playAs($name,$wargame,$arg){
-        try{
-            $game = self::loadGame($name,$arg);
-            $className = $game->className;
-            $className::playAs($name,$wargame);
-
-        }catch(Exception $e){echo $e->getMessage()." ".$e->getFile()." ".$e->getLine();}
-
-    }
-
-    public static function playMulti($name,$wargame,$arg){
-        try{
-            $game = self::loadGame($name,$arg);
-            $className = $game->className;
-            $className::playMulti($name,$wargame, $arg);
-
-        }catch(Exception $e){echo $e->getMessage()." ".$e->getFile()." ".$e->getLine();}
-
-    }
+//    public static function playMulti($name,$wargame,$arg){
+//        try{
+//            $game = self::loadGame($name,$arg);
+//            $className = $game->className;
+//            $className::playMulti($name,$wargame, $arg);
+//
+//        }catch(Exception $e){echo $e->getMessage()." ".$e->getFile()." ".$e->getLine();}
+//
+//    }
 
     public static function transformChanges($doc, $last_seq, $user){
         try{

@@ -754,7 +754,11 @@ class WargameController extends Controller
         $game = $doc->gameName;
         $arg = $doc->wargame->arg;
         echo "<!doctype html><html>";
-        \Wargame\Battle::playAs($game,$wargame, $arg);
+        $className = isset($doc->className)? $doc->className : '';
+        $viewPath = preg_replace("/\\\\/", ".", $className);
+        $viewPath = preg_replace("/\.[^.]*$/","", $viewPath).".playAs";
+        return "<!doctype html><html>".view("wargame::".$viewPath, compact("game", "user", "wargame", $doc->wargame, "arg"))."</html>";
+//        \Wargame\Battle::playAs($game,$wargame, $arg);
         echo "</html>";
         return;
         $this->load->view("wargame/wargamePlayAs", compact("game", "user", "wargame", $doc->wargame, "arg"));
@@ -777,8 +781,78 @@ class WargameController extends Controller
         }
     }
 
+    public function getEnterMulti(CouchService $cs, AdminService $ad, $wargame = false, $playerOne = "", $playerTwo = "", $visibility="", $playerThree = "", $playerFour = "")
+    {
+        $user = Auth::user()['name'];
+        if (!$wargame) {
+            redirect("wargame/play");
 
-    public function enterHotseat($wargame, CouchService $cs)
+        }
+//        $this->load->model('wargame/wargame_model');
+        $cs->setDb('mydatabase');
+        $doc = $cs->get($wargame);
+        if(!$visibility){
+            if(!empty($doc->visibility)){
+                $visibility = $doc->visibility;
+            }
+        }
+        if(!$visibility){
+            $visibility = "public";
+        }
+        if (!$doc || $doc->createUser != $user) {
+            redirect("wargame/play");
+        }
+
+        $scenario = $doc->wargame->scenario;
+        if(isset($scenario->maxPlayers)){
+            $maxPlayers = $scenario->maxPlayers;
+        }else{
+            $maxPlayers = 2;
+        }
+        if ($playerOne == "") {
+            $users = $ad->getUsersByUsername();
+            foreach ($users as $k => $val) {
+                if ($val['name'] == $user) {
+                    unset($users[$k]);
+                    continue;
+                }
+                $users[$k] = $val;
+            }
+
+            $doc = $cs->get(urldecode($wargame));
+            if (!$doc || $doc->createUser != $user) {
+                redirect("wargame/play");
+            }
+            $game = $doc->gameName;
+
+            $path = url("wargame/enter-multi");
+            $me = $user;
+            $others = $users;
+            $pOne = isset($scenario->playerOne) ? $scenario->playerOne : '';
+            $pTwo = isset($scenario->playerTwo) ? $scenario->playerTwo : '';
+
+            $players = ["neutral", $pOne, $pTwo];
+            $arg = $doc->wargame->arg;
+            $className = isset($doc->className)? $doc->className : '';
+            $viewPath = preg_replace("/\\\\/", ".", $className);
+            $viewPath = preg_replace("/\.[^.]*$/","", $viewPath).".playMulti";
+//            Battle::playMulti($game, $wargame, $arg);
+//            $this->parser->parse("wargame/wargameMulti", compact("maxPlayers","players","visibility", "game", "users", "wargame", "me", "path", "others", "arg"));
+            return view('layouts/playMulti', compact("viewPath", "maxPlayers","players","visibility", "game", "users", "wargame", "me", "path", "others", "arg"));
+                return 'jfj';
+        }
+
+//        $wargame = $this->session->userdata("wargame");
+//        $this->load->model("wargame/wargame_model");
+        if ($playerTwo == "") {
+            $playerTwo = $user;
+        }
+//        $this->wargame_model->enterMulti($wargame, $playerOne, $playerTwo, $visibility, $playerThree, $playerFour);
+        return redirect("wargame/change-wargame/$wargame");
+    }
+
+
+    public function enterHotseat($wargame, CouchService $cs )
     {
         $cs->setDb('mydatabase');
         $user = Auth::user()['name'];
@@ -820,7 +894,7 @@ class WargameController extends Controller
     }
 
 
-    public function postFetch(Request $req, CouchService $cs, $last_seq = '')
+    public function getFetch(Request $req, CouchService $cs, $last_seq = '')
     {
         $user = Auth::user()['name'];
 
