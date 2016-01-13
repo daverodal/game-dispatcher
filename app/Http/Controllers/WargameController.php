@@ -169,8 +169,13 @@ class WargameController extends Controller
         $scenario = $doc->wargame->scenario;
         $scenarioArray = [];
         $scenarioArray[] = $scenario;
-
-        return view("wargame::TMCW.Amph.view", compact("scenarioArray", "name", "arg", "player", "mapUrl", "units", "playerData", "gameName", "wargame", "user"));
+        $className = isset($doc->className)? $doc->className : '';
+        $playDat = $className::getPlayerData();
+        $forceName = $playDat['forceName'];
+        $deployName = $playDat['deployName'];
+        $viewPath = preg_replace("/\\\\/", ".", $className);
+        $viewPath = preg_replace("/\.[^.]*$/","", $viewPath).".view";
+        return view("wargame::$viewPath", compact("deployName", "forceName", "scenario", "scenarioArray", "name", "arg", "player", "mapUrl", "units", "playerData", "gameName", "wargame", "user"));
     }
 
 
@@ -543,6 +548,8 @@ class WargameController extends Controller
             }
             unset($theGame->value);
             $theGame = (array)$theGame;
+            $theGameMeta['description'] = '';
+
             return view("wargame/wargame-unattached-game", compact("theScenarios", "editor", "backgroundImage", "backgroundAttr","bigMapUrl", "mapUrl", "theScenario", "plainGenre", "theGame", "games", "nest","siteUrl","theGameMeta"));
         } else {
             foreach ($gamesAvail as $gameAvail) {
@@ -643,6 +650,12 @@ class WargameController extends Controller
         return $ret;
     }
 
+    function getLeaveGame(Request $req)
+    {
+        $req->session()->forget('wargame');
+        return redirect("/wargame/play");
+    }
+
     public function getUnitInit( Request $req,CouchService $cs, AdminService $ad, $game, $arg = false)
     {
         $user = Auth::user()['name'];
@@ -714,6 +727,8 @@ class WargameController extends Controller
             $doc->wargame->genTerrain = false;
 
         }
+
+        $doc->className = get_class($battle);
         $doc->chats = array();
         $doc->gameName = $game;
 

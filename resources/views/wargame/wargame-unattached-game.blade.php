@@ -49,8 +49,8 @@
             <img id="mapImage" imageonload ng-src="@{{scenario.mapUrl}}">
             <?php
             echo "<h3>Designer Notes</h3><div class='coolBox wordpress-wrapper'>";
-            echo $theGameMeta['playerEditLink'];
-            echo $theGameMeta['playerNotes'];
+//            echo $theGameMeta['playerEditLink'];
+//            echo $theGameMeta['playerNotes'];
             echo "</div></li>";
             echo "</ul>";
             } ?>
