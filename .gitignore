@@ -6,3 +6,5 @@ Homestead.json
 .env
 .idea/workspace.xml
 .composer.lock
+.idea/modules.xml
+.idea/directories
