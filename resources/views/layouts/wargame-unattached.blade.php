@@ -175,7 +175,7 @@
         $scope.editor = '<?=$editor;?>';
         $scope.name = '<?=addslashes($theGameMeta['name']);?>';
         $scope.description = '<?=$theGameMeta['description'];?>';
-        $scope.histEditLink = '<?=$theGameMeta['histEditLink'];?>';
+        $scope.histEditLink = '<?=isset($theGameMeta['histEditLink']) ? $theGameMeta['histEditLink'] : false;?>';
 
         $scope.lastScenario = $scope.scenario;
         $scope.scenario.selected = 'selected';
