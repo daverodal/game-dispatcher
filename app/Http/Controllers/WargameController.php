@@ -20,7 +20,6 @@ class WargameController extends Controller
 {
 
     public function getIndex(){
-        return 'love';
     }
 
     public function getPlay(Request $req, CouchService $cs){
@@ -175,7 +174,16 @@ class WargameController extends Controller
         $deployName = $playDat['deployName'];
         $viewPath = preg_replace("/\\\\/", ".", $className);
         $viewPath = preg_replace("/\.[^.]*$/","", $viewPath).".view";
-        return view("wargame::$viewPath", compact("deployName", "forceName", "scenario", "scenarioArray", "name", "arg", "player", "mapUrl", "units", "playerData", "gameName", "wargame", "user"));
+        if(view()->exists("wargame::$viewPath")){
+            return view("wargame::$viewPath", compact("className", "deployName", "forceName", "scenario", "scenarioArray", "name", "arg", "player", "mapUrl", "units", "playerData", "gameName", "wargame", "user"));
+        }
+        $viewArr = explode('.',$viewPath);
+        array_pop($viewArr);
+        $clsName = array_pop($viewArr);
+        $viewPath = implode('.', $viewArr);
+        $curPath = "wargame::".implode('.',[$viewPath,$clsName]);
+        $viewPath .= ".view-family";
+        return view("wargame::$viewPath", compact("clsName", "curPath", "deployName", "forceName", "scenario", "scenarioArray", "name", "arg", "player", "mapUrl", "units", "playerData", "gameName", "wargame", "user"));
     }
 
 
@@ -688,7 +696,7 @@ class WargameController extends Controller
                 $terrainName = "terrain-$game.$arg";
                 $terrainDoc = $cs->get($terrainName);
             }catch(\GuzzleHttp\Exception\BadResponseException $e){}
-            if(!$terrainDoc){
+            if(empty($terrainDoc)){
                 try{
                     $terrainName = "terrain-$game";
                     $terrainDoc = $cs->get($terrainName);
