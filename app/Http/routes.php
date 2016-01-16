@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return redirect('home');
+    return "EARTH";
 });
 
 Route::get('/lovelove', function(){
