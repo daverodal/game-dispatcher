@@ -128,11 +128,11 @@ class Battle
                     $scenarios->$pKey = $pValue;
                 }
             }
-            if($options){
+            if(!empty($options)){
                 foreach($options as $name){
                     foreach($game->options as $gameOption){
                         if($gameOption->keyName === $name){
-                            if($gameOption->extra){
+                            if(!empty($gameOption->extra)){
                                 foreach($gameOption->extra as $k=>$v){
                                     $scenarios->$k = $v;
                                 }

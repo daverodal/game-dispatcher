@@ -161,7 +161,7 @@ class  WargameService{
         $scenarioArray = [];
         $scenarioArray[] = $scenario;
         $className = isset($doc->className)? $doc->className : '';
-        $playDat = $className::getPlayerData();
+        $playDat = $className::getPlayerData($scenario);
         $forceName = $playDat['forceName'];
         $deployName = $playDat['deployName'];
         return compact("className", "deployName", "forceName", "scenario", "scenarioArray", "name", "arg", "player", "mapUrl", "units", "playerData", "gameName", "wargame", "user");

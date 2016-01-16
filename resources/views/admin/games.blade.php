@@ -11,7 +11,7 @@
     }
 </style>
 <div>
-    <a href='{{ url('/admin/addGame') }}'>add</a>
+    <a href='{{ url('/admin/add-game') }}'>add</a>
     <ul>
         <?php foreach ($games as $key => $game) { ?>
         <li>
@@ -25,7 +25,7 @@
 
             echo " <a href='$delUrl'>delete</a>";
             ?>
-            <form action="/admin/addGame">
+            <form action="/admin/add-game">
                 <input type="hidden" name="dir" value="<?= $game->path; ?>">
                 <!--    <input type="text" name="newgame[]">-->
                 <!--    <input type="text" name="newgame[]">-->
