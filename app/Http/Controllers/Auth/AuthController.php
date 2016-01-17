@@ -30,6 +30,8 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/home';
 
+    protected $redirectAfterLogout = '/wargame/play';
+
     /**
      * Create a new authentication controller instance.
      *
@@ -40,6 +42,13 @@ class AuthController extends Controller
         $this->middleware('guest', ['except' => 'logout']);
     }
 
+
+    protected function getCredentials(\Illuminate\Http\Request $request)
+    {
+        $ret =  $request->only($this->loginUsername(), 'password');
+        $ret['disabled'] = false;
+        return $ret;
+    }
     /**
      * Get a validator for an incoming registration request.
      *
@@ -49,7 +58,7 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique:users',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
@@ -67,6 +76,9 @@ class AuthController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'disabled' => 0,
+            'is_admin' => 0,
+            'is_editor' => 0,
         ]);
     }
 }

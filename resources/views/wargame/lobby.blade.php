@@ -69,10 +69,12 @@
     </my-pane>
     <my-pane title="My Games"  is-selected="true" >
         <div class="game-view" id="content" ng-controller="LobbyController">
-            <a class="logout logoutUpper" href="{{url('users/logout')}}">Logout</a>
+            <a class="logout logoutUpper" href="{{url('logout')}}">Logout</a>
 
             <?php if ($myName == "Markarian") { ?>
-            <h1><a href="{{url('admin')}}">Admin </a></h1>
+            @if(\Auth::user()['is_admin'])
+                <h1><a href="{{url('admin')}}">Admin </a></h1>
+            @endif
             <?php } ?>
             <h2>Welcome {{$myName}}</h2>
 
@@ -1009,7 +1011,7 @@ Public License instead of this License.  But first, please read
         $scope.myOtherGames = $scope.myPublicGames = $scope.myMultiGames = $scope.myHotGames = [];
 
         $scope.deleteGame = function(id){
-            $http.get('deleteGame/'+id);
+            $http.get('delete-game/'+id);
         };
 
         $scope.publized = false;
@@ -1053,7 +1055,6 @@ Public License instead of this License.  But first, please read
 
     lobbyApp.factory('sync',function(){
 
-        debugger;
         var sync = new Sync(fetchUrl);
         return sync;
     });

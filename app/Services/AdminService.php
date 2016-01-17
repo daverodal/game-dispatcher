@@ -40,18 +40,7 @@ class  AdminService
 
     public function getUsersByUsername(){
         $users = \Illuminate\Foundation\Auth\User::all();
-        $retUsers = [];
-        foreach($users as $aUser){
-            $newUser = [];
-            $newUser['name'] = $aUser['name'];
-            $newUser['id'] = $aUser['id'];
-            $retUsers[$newUser['name']] = $newUser;
-        }
-        return $retUsers;
-        $prevDb = $this->cs->setDb($this->couch['userName']);
-        $seq = $this->cs->get("/_design/newFilter/_view/userByUsername");
-        $this->cs->setDb($prevDb);
-        return $seq->rows;
+        return $users;
 
     }
 

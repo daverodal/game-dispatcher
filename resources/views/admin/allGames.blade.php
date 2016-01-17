@@ -20,10 +20,10 @@
             <span title="click to change" class="col-md-2">{{$lobby['name']}}</span>
             <span class="col-md-1 {gameType}">{{$lobby['gameType']}}</span>
             <span class="col-md-3">{{$lobby['date']}}</span>
-            <a href="wargame/changeWargame/{id}"><span class="col-md-1">Watch</span></a>
+            <a href="/wargame/change-wargame/{{$lobby['id']}}"><span class="col-md-1">Watch</span></a>
 
 
-            <a class="col-md-1" href="admin/deleteGame/{id}/">delete</a>
+            <a class="col-md-1" href="admin/delete-game/{{$lobby['id']}}/">delete</a>
             </div>
             @endforeach
     </div>

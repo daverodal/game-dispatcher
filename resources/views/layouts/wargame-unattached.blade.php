@@ -164,7 +164,6 @@
     });
 
     scenarioApp.controller('ScenarioController', ['$scope', 'ModalService', function ($scope, ModalService) {
-        debugger;
         $scope.predicate = '';
         $scope.scenarios = $.parseJSON(jString);
         for (var i in $scope.scenarios) {

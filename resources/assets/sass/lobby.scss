@@ -265,3 +265,9 @@ a {
   margin:0 auto;
 }
 
+.users-row{
+  @include outer-container;
+  .users-layout{
+    @include span-columns(3);
+  }
+}

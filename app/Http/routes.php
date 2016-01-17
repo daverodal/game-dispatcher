@@ -12,12 +12,9 @@
 */
 
 Route::get('/', function () {
-    return "EARTH";
+    return view('front');
 });
 
-Route::get('/lovelove', function(){
-    return view('wargame::view');
-});
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -44,4 +41,8 @@ Route::group(['middleware' => ['web','auth']], function () {
 });
 Route::get('wargame',function(){
     return redirect('wargame/play');
+});
+
+Route::get('/register', function () {
+    return redirect('/');
 });

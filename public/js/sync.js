@@ -49,7 +49,6 @@ function Sync(baseUrl) {
             this.timeFork = false;
             this.timeTravel = false;
         }
-        debugger;
         this.current = $.ajax(
             {url:this.baseUrl + "/" + last_seq+travel,
                 type:"GET",
@@ -60,7 +59,6 @@ function Sync(baseUrl) {
 //                    jqXHR.abort();
                 },
                 success:function (data, textstatus, jqXHR) {
-                    debugger;
                     var now = ((new Date()).getTime()) / 1000;
                     that.fetchTimes.push(now);
                     if (that.fetchTimes.length > 10) {
@@ -104,7 +102,6 @@ function Sync(baseUrl) {
                     }
                 },
                 complete:function (jq, textstatus) {
-                    debugger;
                     var now = ((new Date()).getTime()) / 1000;
                     that.fetchTimes.push(now);
                     if (that.fetchTimes.length > 10) {

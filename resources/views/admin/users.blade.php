@@ -17,9 +17,20 @@
 
 
                 <ul>
+                    <li class="users-row">
+                        <span class="users-layout">name</span>
+                        <span class="users-layout">email</span>
+                        <span class="users-layout">is_admin</span>
+                        <span class="users-layout">is_editor</span>
+
+                    </li>
                     @foreach ($users as $user)
-                        <li>
-                            {{$user->value->username}}
+                        <li class="users-row">
+                            <span class="users-layout">{{$user['name']}}</span>
+                            <span class="users-layout">{{$user['email']}}</span>
+                                <span class="users-layout">{{$user['is_admin']}}</span>
+                            <span class="users-layout">{{$user['is_editor']}}</span>
+
                         </li>
                     @endforeach
                 </ul>

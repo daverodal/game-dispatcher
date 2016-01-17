@@ -340,6 +340,22 @@ class WargameController extends Controller
         return redirect("/wargame/play");
     }
 
+    function getDeleteGame(CouchService $cs, $gameName){
+        $user = Auth::user()['name'];
+        $cs->setDb('mydatabase');
+        if ($gameName) {
+            try {
+                $doc = $cs->get($gameName);
+                if ($doc->createUser == $user) {
+                    if ($doc && $doc->_id && $doc->_rev) {
+                        $cs->delete($doc->_id, $doc->_rev);
+                    }
+                }
+            } catch (Exception $e) {
+            }
+        }
+        echo json_encode(["success"=>true, "emsg"=>false]);
+    }
     public function getUnitInit( Request $req,CouchService $cs, AdminService $ad, $game, $arg = false)
     {
         $user = Auth::user()['name'];
@@ -465,7 +481,7 @@ class WargameController extends Controller
         }
     }
 
-    public function getEnterMulti(CouchService $cs, AdminService $ad, $wargame = false, $playerOne = "", $playerTwo = "", $visibility="", $playerThree = "", $playerFour = "")
+    public function getEnterMulti(CouchService $cs, AdminService $ad,WargameService $ws,  $wargame = false, $playerOne = "", $playerTwo = "", $visibility="", $playerThree = "", $playerFour = "")
     {
         $user = Auth::user()['name'];
         if (!$wargame) {
@@ -520,18 +536,18 @@ class WargameController extends Controller
             $className = isset($doc->className)? $doc->className : '';
             $viewPath = preg_replace("/\\\\/", ".", $className);
             $viewPath = preg_replace("/\.[^.]*$/","", $viewPath).".playMulti";
-//            Battle::playMulti($game, $wargame, $arg);
-//            $this->parser->parse("wargame/wargameMulti", compact("maxPlayers","players","visibility", "game", "users", "wargame", "me", "path", "others", "arg"));
-            return view('layouts/playMulti', compact("viewPath", "maxPlayers","players","visibility", "game", "users", "wargame", "me", "path", "others", "arg"));
-                return 'jfj';
+            $playDat = $className::getPlayerData($scenario);
+            $foreceName = $playDat['forceName'];
+            $deployName = $playDat['deployName'];
+            return view('layouts/playMulti', compact("deployName", "forceName", "viewPath", "maxPlayers","players","visibility", "game", "users", "wargame", "me", "path", "others", "arg"));
         }
 
-//        $wargame = $this->session->userdata("wargame");
-//        $this->load->model("wargame/wargame_model");
         if ($playerTwo == "") {
             $playerTwo = $user;
         }
-//        $this->wargame_model->enterMulti($wargame, $playerOne, $playerTwo, $visibility, $playerThree, $playerFour);
+
+        $ws->enterMulti($wargame, $playerOne, $playerTwo, $visibility, $playerThree, $playerFour);
+
         return redirect("wargame/change-wargame/$wargame");
     }
 

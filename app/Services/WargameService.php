@@ -435,4 +435,29 @@ class  WargameService{
         return \Wargame\Battle::transformChanges($doc, $last_seq, $user);
     }
 
+    public function enterMulti($wargame, $playerOne, $playerTwo, $visibility, $playerThree, $playerFour)
+    {
+        $user = Auth::user()['name'];
+        $this->cs->setDb('mydatabase');
+        try {
+            $doc = $this->cs->get($wargame);
+        } catch (Exception $e) {
+            return false;
+        }
+        if (!$doc || $user != $doc->createUser) {
+            return false;
+        }
+        $doc->playerStatus = "multi";
+        $doc->visibility = $visibility;
+        $doc->wargame->players = array("", $playerOne, $playerTwo);
+        if($playerThree){
+            $doc->wargame->players[] = $playerThree;
+            if($playerFour){
+                $doc->wargame->players[] = $playerFour;
+            }
+        }
+        $doc->wargame->gameRules->turnChange = true;
+        $this->cs->put($doc->_id, $doc);
+        return true;
+    }
 }

@@ -139,7 +139,6 @@ if (!empty($players[3])) {
                 $scope.wargame = '{wargame}';
                 $scope.iAm = '{me}';
                 $scope.player = {};
-                debugger;
                 var users = JSON.parse('<?php echo json_encode($users);?>');
                 var usersArray = [];
                 for(var i in users){
@@ -149,7 +148,6 @@ if (!empty($players[3])) {
                 $scope.numPlayers = 2;
                 $scope.thirdPlayer = {};
                 $scope.macsPlayers = '{{$maxPlayers}}';
-                debugger;
                 $scope.playerTwo = {
                     "myName": "<?=$playerTwo;?>",
                     "theirName": "<?=$playerOne;?>",
