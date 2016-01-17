@@ -104,4 +104,20 @@ class AdminController extends Controller
         $cs->setDb($prevDb);
     }
 
+    function getDeleteGame(CouchService $cs, $gameName){
+        $user = Auth::user()['name'];
+        $cs->setDb('mydatabase');
+        if ($gameName) {
+            try {
+                $doc = $cs->get($gameName);
+                if ($doc->createUser == $user) {
+                    if ($doc && $doc->_id && $doc->_rev) {
+                        $cs->delete($doc->_id, $doc->_rev);
+                    }
+                }
+            } catch (Exception $e) {
+            }
+        }
+        return redirect('/admin/allgames');
+    }
 }

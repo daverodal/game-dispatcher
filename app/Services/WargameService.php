@@ -35,18 +35,12 @@ class  WargameService{
 
         foreach ($seq->rows as $row) {
             $keys = $row->key;
-            $creator = array_shift($keys);
-            $name = array_shift($keys);
-            $gameType = array_shift($keys);
-            $playerTurn = array_shift($keys);
-            $filename = array_shift($keys);
-//               $key = implode($keys,"  ");
+            list($creator, $gameStatus, $gameInfo, $gameName, $playerTurn, $id, $vis) = $keys;
             $id = $row->id;
             $dt = new DateTime($row->value[1]);
             $thePlayers = $row->value[2];
-//                $playerTurn = $thePlayers[$playerTurn];
+                $playerTurn = $thePlayers[$playerTurn];
             $myTurn = "";
-            $playerTurn = "Markarian";
             if ($playerTurn == $user) {
                 $playerTurn = "Your";
                 $myTurn = "myTurn";
@@ -57,7 +51,7 @@ class  WargameService{
             $players = implode($thePlayers, " ");
             $row->value[1] = "created " . formatDateDiff($dt) . " ago";
             $odd ^= 1;
-            $lobbies[] = array("odd" => $odd ? "odd" : "", "name" => $row->value[0], 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
+            $lobbies[] = array("odd" => $odd ? "odd" : "", "name" => $row->value[0], 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameInfo, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
         }
         $seq = $this->cs->get("/_design/newFilter/_view/getGamesImIn?startkey=[\"$user\"]&endkey=[\"$user\",\"zzzzzzzzzzzzzzzzzzzzzzzz\"]");
 
@@ -68,12 +62,16 @@ class  WargameService{
             $creator = array_shift($keys);
             $name = array_shift($keys);
             $gameType = array_shift($keys);
+            $gameClass = array_shift($keys);
+            $playerStatus = array_shift($keys);
             $playerTurn = array_shift($keys);
             $filename = array_shift($keys);
             $id = $row->id;
             $dt = new DateTime($row->value[1]);
             $thePlayers = $row->value[2];
             $playerTurn = $thePlayers[$playerTurn];
+            $myTurn = "";
+
             if ($playerTurn == $user) {
                 $playerTurn = "Your";
                 $myTurn = "myTurn";

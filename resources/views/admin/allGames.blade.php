@@ -23,7 +23,7 @@
             <a href="/wargame/change-wargame/{{$lobby['id']}}"><span class="col-md-1">Watch</span></a>
 
 
-            <a class="col-md-1" href="admin/delete-game/{{$lobby['id']}}/">delete</a>
+            <a class="col-md-1" href="/admin/delete-game/{{$lobby['id']}}/">delete</a>
             </div>
             @endforeach
     </div>
