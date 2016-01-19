@@ -37,6 +37,7 @@ Route::group(['middleware' => ['web','auth']], function () {
     Route::get('/home', 'HomeController@index');
     Route::controller('rest','MapsController');
     Route::controller('admin','AdminController');
+    Route::get('/wargame/terrainInit/{id}/{jd}/{kd}', 'WargameController@terrainInit');
     Route::controller('wargame','WargameController');
 });
 Route::get('wargame',function(){

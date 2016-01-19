@@ -12,11 +12,34 @@ use Input;
 
 class  WargameService{
     public $cs;
+    static $viewBase = false;
+    public $couch;
     public function __construct(CouchService $cs)
     {
         $this->cs = $cs;
+        $couch = \Config::get('couch');
+        $this->couch = $couch;
+
     }
 
+    public static function viewBase($className){
+        $base = static::$viewBase;
+        $viewPath = preg_replace("/\\\\/", ".", $className);
+        $viewPath = preg_replace("/\.[^.]*$/","", $viewPath);
+        $viewPath = preg_replace("/^$base\./","", $viewPath);
+        return $viewPath;
+    }
+
+    public static function viewParent($className){
+        $child = static::viewBase($className);
+        $viewArr = explode('.',$child);
+        $clsName = array_pop($viewArr);
+        $viewPath = implode('.', $viewArr);
+        $curPath = "wargame::".implode('.',[$viewPath,$clsName]);
+        $ret['clsName'] = $clsName;
+        $ret['curPath'] = $curPath;
+        return [$viewPath, $ret];
+    }
     public function lobbyView(){
 
         $user = Auth::user()['name'];
@@ -147,8 +170,10 @@ class  WargameService{
             if ($aUnit->name == "infantry-1") {
                 $newUnit['unitSize'] = 'xx';
             }
-            if ($newUnit['range'] == 1) {
-                $newUnit['range'] = '';
+            if(isset($newUnit['range'])) {
+                if ($newUnit['range'] == 1) {
+                    $newUnit['range'] = '';
+                }
             }
             $newUnits[] = $newUnit;
         }
@@ -185,7 +210,7 @@ class  WargameService{
         $lastSeq = $this->fetchLobbyChanges($this->cs, $user, $last_seq);
 
 
-        $this->cs->setDb("mydatabase");
+        $this->cs->setDb('mydatabase');
 
         $seq = $this->cs->get("_design/newFilter/_view/getLobbies?startkey=[\"$user\",\"hot seat\"]&endkey=[\"$user\",\"hot seat\",\"zzzzzzzzzzzzzzzzzzzzzzzz\"]");
         $lobbies = [];
@@ -457,5 +482,89 @@ class  WargameService{
         $doc->wargame->gameRules->turnChange = true;
         $this->cs->put($doc->_id, $doc);
         return true;
+    }
+
+    public function saveTerrainDoc($terrainDocName, $wargameDoc){
+        $ter = false;
+        try {
+            $ter = $this->cs->get($terrainDocName);
+        } catch (\GuzzleHttp\Exception\BadResponseException  $e) {
+        };
+        if (!$ter) {
+            $data = array("_id" => $terrainDocName, "docType" => "terrain", "terrain" => $wargameDoc->terrain);
+            $this->cs->post($data);
+        } else {
+
+            $data = array("_id" => $terrainDocName, "docType" => "terrain", "terrain" => $wargameDoc->terrain);
+            /* totally throw the old one away */
+
+            $this->cs->delete($terrainDocName, $ter->_rev);
+            $this->cs->post($data);
+        }
+    }
+
+
+    public function rotateImage($filename, $dir = false)
+    {
+
+// Get new dimensions
+        list($width, $height, $type) = getimagesize($filename);
+
+// Resample
+        switch($type){
+            case IMAGETYPE_PNG:
+                $image = imagecreatefrompng($filename);
+                break;
+            case IMAGETYPE_JPEG:
+                $image = imagecreatefromjpeg($filename);
+                break;
+        }
+        $rotate = imagerotate($image, 90, 0);
+
+// Output
+        $f = basename($filename,'.png'). "Left.png";
+        if($dir){
+            $f = "$dir/$f";
+        }
+        imagepng($rotate, "js/$f");
+        imagedestroy($rotate);
+
+        $f = basename($filename,'.png'). "Right.png";
+        if($dir){
+            $f = "$dir/$f";
+        }
+        $rotate = imagerotate($image, -90, 0);
+        imagepng($rotate, "js/$f");
+        imagedestroy($image);
+        imagedestroy($rotate);
+    }
+
+    public function resizeImage($filename, $new_width = 500, $dir = 'smallImages')
+    {
+
+// Get new dimensions
+        list($width, $height, $type) = getimagesize($filename);
+        $new_height = ($height / $width) * $new_width;
+
+// Resample
+        $image_p = imagecreatetruecolor($new_width, $new_height);
+        switch($type){
+            case IMAGETYPE_PNG:
+                $image = imagecreatefrompng($filename);
+                break;
+            case IMAGETYPE_JPEG:
+                $image = imagecreatefromjpeg($filename);
+                break;
+        }
+        imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+
+// Output
+        $f = "$dir/".basename($filename,'.png'). ".png";
+        imagepng($image_p, "js/$f");
+        imagedestroy($image_p);
+        imagedestroy($image);
+
+        return dirname($filename)."/".$f;
+
     }
 }

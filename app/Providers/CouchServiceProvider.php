@@ -37,7 +37,7 @@ class CouchServiceProvider extends ServiceProvider
                 // You can set any number of default request options.
                 'timeout'  => 1800.0,
             ]);
-            $guz->setDb($conf['restName']);
+            $guz->setDb('rest');
             return $guz;
         });
     }

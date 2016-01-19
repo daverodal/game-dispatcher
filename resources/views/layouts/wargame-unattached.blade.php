@@ -41,7 +41,7 @@
 
     <style type="text/css">
         body {
-            background: url('{{asset("images/$backgroundImage")}}');
+            background: url('{{asset("vendor/wargame/genre/images/$backgroundImage")}}');
             background-repeat: no-repeat;
             background-size: 100%;
             background-attachment:fixed;

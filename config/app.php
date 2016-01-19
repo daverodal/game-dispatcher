@@ -157,7 +157,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\CouchServiceProvider::class,
         App\Providers\BattleProvider::class,
-        WargameServiceProvider::class,
+        Wargame\WargameServiceProvider::class,
 
     ],
 

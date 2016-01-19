@@ -31,7 +31,8 @@
         "psr-4": {
             "App\\": "app/"
         },
-        "files": ["wargame/Battle.php", "app/Helpers/FormatDateDiffHelper.php"]    },
+        "files": ["app/Helpers/FormatDateDiffHelper.php"]
+    },
     "autoload-dev": {
         "classmap": [
             "tests/TestCase.php"

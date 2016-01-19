@@ -20,7 +20,7 @@
             if ($game->name) {
                 echo $game->name;
             }
-            $delUrl = "deleteGameType/?";
+            $delUrl = "delete-game-type/?";
             $delUrl .= "killGame=" . $game->key[2];
 
             echo " <a href='$delUrl'>delete</a>";

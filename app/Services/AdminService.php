@@ -32,7 +32,7 @@ class  AdminService
     }
 
     public function getLogins(){
-        $prevDb = $this->cs->setDb($this->couch['userName']);
+        $prevDb = $this->cs->setDb('users');
         $logins = $this->cs->get("userLogins");
         $this->cs->setDb($prevDb);
         return $logins;
@@ -46,7 +46,7 @@ class  AdminService
 
     public function getAllGames(){
 
-        $prevDb = $this->cs->setDb($this->couch['dbName']);
+        $prevDb = $this->cs->setDb('mydatabase');
 
         $seq = $this->cs->get("_design/newFilter/_view/allGames?");
         $lobbies = [];
@@ -96,7 +96,7 @@ class  AdminService
                 }
             }
         }
-        $prevDb = $this->cs->setDb($this->couch['userName']);
+        $prevDb = $this->cs->setDb('users');
 
         $seq = $this->cs->get("/_design/newFilter/_view/gnuGetAvailGames?$reduceArgs");
         $this->cs->setDb($prevDb);
@@ -169,6 +169,21 @@ class  AdminService
         }
 
         return $games;
+    }
+
+    public function deleteGame($killGame){
+
+        if(!$killGame){
+            return false;
+        }
+        $prevDb = $this->cs->setDb('users');
+        $doc = $this->cs->get("gnuGamesAvail");
+        if(!$doc->docType == "gnuGamesAvail"){
+            return false;
+        }
+        unset($doc->games->$killGame);
+        $ret = $this->cs->put($doc->_id, $doc);
+        $this->cs->setDb($prevDb);
     }
 
 }

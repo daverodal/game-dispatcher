@@ -17,6 +17,7 @@ use \Wargame\Battle;
 use \App\Services\WargameService;
 
 
+
 class WargameController extends Controller
 {
 
@@ -36,20 +37,15 @@ class WargameController extends Controller
         }
         $ret = $ws->gameView($wargame);
         $className = $ret['className'];
-        $viewPath = preg_replace("/\\\\/", ".", $className);
-        $viewPath = preg_replace("/\.[^.]*$/","", $viewPath).".view";
+        $viewPath = WargameService::viewBase($className).".view";
         if(view()->exists("wargame::$viewPath")){
             return view("wargame::$viewPath", $ret);
         }
 
-        $viewArr = explode('.',$viewPath);
-        array_pop($viewArr);
-        $clsName = array_pop($viewArr);
-        $viewPath = implode('.', $viewArr);
-        $curPath = "wargame::".implode('.',[$viewPath,$clsName]);
+        list($viewPath, $viewRet) = WargameService::viewParent($className);
         $viewPath .= ".view-family";
-        $ret['clsName'] = $clsName;
-        $ret['curPath'] = $curPath;
+        $ret = array_merge($ret, $viewRet);
+
         return view("wargame::$viewPath", $ret);
     }
 
@@ -85,7 +81,7 @@ class WargameController extends Controller
         $backgroundImage = "Egyptian_Pharaoh_in_a_War-Chariot,_Warrior,_and_Horses._(1884)_-_TIMEA.jpg";
         $backgroundAttr = 'By Unknown author [<a href="http://creativecommons.org/licenses/by-sa/2.5">CC BY-SA 2.5</a>], <a href="http://commons.wikimedia.org/wiki/File%3AEgyptian_Pharaoh_in_a_War-Chariot%2C_Warrior%2C_and_Horses._(1884)_-_TIMEA.jpg">via Wikimedia Commons</a>';
         if($genre){
-            if(preg_match("/18%27th/", $genre)){
+            if(preg_match("/18%27th/", urlencode($genre))){
                 $backgroundImage = "18th_century_gun.jpg";
                 $backgroundAttr = 'By MKFI (Own work) [Public domain], <a href="http://commons.wikimedia.org/wiki/File%3ASwedish_18th_century_6_pound_cannon_front.JPG">via Wikimedia Commons</a>';
             }
@@ -100,7 +96,7 @@ class WargameController extends Controller
                 $backgroundAttr = 'Jacques-Louis David [Public domain], <a href="https://commons.wikimedia.org/wiki/File%3AJacques-Louis_David_-_Napoleon_at_the_St._Bernard_Pass_-_WGA06083.jpg">via Wikimedia Commons</a>';
             }
 
-            if(preg_match("/19%27th/", $genre)) {
+            if(preg_match("/19%27th/", urlencode($genre))) {
                 if(preg_match("/Europe/", $genre)){
                     $backgroundImage = "Grande_Armée_-_10th_Regiment_of_Cuirassiers_-_Colonel.jpg";
                     $backgroundAttr = 'By Carle Vernet (Carle Vernet, La Grande Armée de 1812) [Public domain], <a target="blank" href="https://commons.wikimedia.org/wiki/File%3AGrande_Arm%C3%A9e_-_10th_Regiment_of_Cuirassiers_-_Colonel.jpg">via Wikimedia Commons</a>';
@@ -189,7 +185,8 @@ class WargameController extends Controller
 //            $theGame->value->scenarios = $theScenarios;
 
             $gameFeed = strtolower($game);
-            $feed = file_get_contents("http://davidrodal.com/pubs/category/$gameFeed/feed");
+            //$feed = file_get_contents("http://davidrodal.com/pubs/category/$gameFeed/feed");
+            $feed = false;
             $theGameMeta = (array)$theGame->value;
             $theGameMeta['options'] = isset($theGameMeta['options'])? $theGameMeta['options'] : [];
             unset($theGameMeta->scenarios);
@@ -412,7 +409,7 @@ class WargameController extends Controller
                 $ter = $cs->get($doc->wargame->terrainName);
             } catch (\GuzzleHttp\Exception\BadResponseException $e) {
             };
-            if (!$ter) {
+            if (empty($ter)) {
                 $data = array("_id" => $doc->wargame->terrainName, "docType" => "terrain", "terrain" => $doc->wargame->terrain);
                 $cs->post($data);
             } else {
@@ -455,8 +452,7 @@ class WargameController extends Controller
         $arg = $doc->wargame->arg;
         echo "<!doctype html><html>";
         $className = isset($doc->className)? $doc->className : '';
-        $viewPath = preg_replace("/\\\\/", ".", $className);
-        $viewPath = preg_replace("/\.[^.]*$/","", $viewPath).".playAs";
+        $viewPath = WargameService::viewBase($className).".playAs";
         return "<!doctype html><html>".view("wargame::".$viewPath, compact("game", "user", "wargame", $doc->wargame, "arg"))."</html>";
 //        \Wargame\Battle::playAs($game,$wargame, $arg);
         echo "</html>";
@@ -534,10 +530,9 @@ class WargameController extends Controller
             $players = ["neutral", $pOne, $pTwo];
             $arg = $doc->wargame->arg;
             $className = isset($doc->className)? $doc->className : '';
-            $viewPath = preg_replace("/\\\\/", ".", $className);
-            $viewPath = preg_replace("/\.[^.]*$/","", $viewPath).".playMulti";
+            $viewPath = WargameService::viewBase($className).".playMulti";
             $playDat = $className::getPlayerData($scenario);
-            $foreceName = $playDat['forceName'];
+            $forceName = $playDat['forceName'];
             $deployName = $playDat['deployName'];
             return view('layouts/playMulti', compact("deployName", "forceName", "viewPath", "maxPlayers","players","visibility", "game", "users", "wargame", "me", "path", "others", "arg"));
         }
@@ -663,6 +658,49 @@ class WargameController extends Controller
             header("HTTP/1.1 404 Not Found");
         }
         return compact('success', "emsg");
+    }
+
+    public function terrainInit(CouchService $cs, WargameService $ws,  $game = "MartianCivilWar", $arg = false, $terrainDocId = false)
+    {
+        $user = Auth::user()['name'];
+
+
+        $battle = Battle::getBattle($game, null, $arg);
+
+
+        if (method_exists($battle, 'terrainGen')) {
+            $cs->setDb("rest");
+            $terrainDoc = $cs->get($terrainDocId);
+            $mapId = $terrainDoc->hexStr->map;
+            $mapDoc = $cs->get($mapId);
+            $battle->terrainGen($mapDoc, $terrainDoc);
+        }else{
+            echo "No TerrainGen ";
+            return;
+        }
+
+        $mapUrl = $battle->terrain->mapUrl;
+        $mapWidth = $battle->terrain->mapWidth;
+        if($mapWidth && $mapWidth !== "auto"){
+            $mapWidth = preg_replace("/[^\d]*(\d*)[^\d]*/","$1", $mapWidth);
+            $battle->terrain->mapUrl = $ws->resizeImage($mapUrl, $mapWidth, "images");
+            $ws->rotateImage($battle->terrain->mapUrl, "images");
+        }
+        $battle->terrain->smallMapUrl = $ws->resizeImage($mapUrl);
+//        $this->rotateImage($mapUrl);
+        $battle->terrainName = false;
+        $wargameDoc = $battle->save();
+
+        $terrainName = "terrain-$game";
+        $ws->saveTerrainDoc(urldecode($terrainName.".".$arg), $battle);
+
+        if($mapDoc->map->isDefault){
+            $ws->saveTerrainDoc(urldecode($terrainName), $battle);
+
+        }
+        $ret = new \stdClass();
+        $ret->ok = true;
+        return response()->json($ret);
     }
 
 

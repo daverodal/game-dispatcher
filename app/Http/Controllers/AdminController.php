@@ -120,4 +120,13 @@ class AdminController extends Controller
         }
         return redirect('/admin/allgames');
     }
+
+    function getDeleteGameType(AdminService $ad){
+        $killGame = \Input::get('killGame',false);
+
+        if($killGame){
+            $ad->deleteGame($_GET['killGame']);
+        }
+        return redirect('/admin/games');
+    }
 }

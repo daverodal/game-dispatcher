@@ -18,12 +18,11 @@ return [
     | array format for simplicity. Here you can tweak the fetch style.
     |
     */
-
     'hostname' => 'localhost',
     'port'=>5984,
     'username'=>'',
     'password'=>'',
-    'restName'=>'rest',
-    'dbName'=>'mydatabase',
-    'userName'=>'users'
+    'rest'=> env('COUCH_REST', 'rest'),
+    'mydatabase'=> env('COUCH_MYDATABASE', 'mydatabase'),
+    'users'=> env('COUCH_USERS','users')
 ];

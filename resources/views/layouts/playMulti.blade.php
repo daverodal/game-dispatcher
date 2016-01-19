@@ -33,16 +33,15 @@
 <body ng-controller="SimpleRadio">
 @include("wargame::".$viewPath)
 <?php
-global $force_name;
-$playerOne = $force_name[1];
+$playerOne = $forceName[1];
 if ($players[1]) {
     $playerOne = $players[1];
 }
-$playerTwo = $force_name[2];
+$playerTwo = $forceName[2];
 if ($players[2]) {
     $playerTwo = $players[2];
 }
-$playerThree = isset($force_name[3]) ? $force_name[3] : '';
+$playerThree = isset($forceName[3]) ? $forceName[3] : '';
 if (!empty($players[3])) {
     $playerThree = $players[3];
 }

@@ -24,17 +24,18 @@ namespace App\Services;
 
 class CouchService extends \GuzzleHttp\Client
 {
-    public $db = "rest";
+    public $dbName = "mydatabase";
+    public $db = "";
 
-    public function setDb($db){
-        $prevDb = $this->db;
-        $this->db = $db;
+    public function setDb($newDb){
+        $prevDb = $this->dbName;
+        $this->dbName = $newDb;
+        $this->db = \Config::get('couch')[$newDb];
         return $prevDb;
     }
 
     public function get($id){
         $resp = $this->request('GET', $this->db . "/$id");
-
         return json_decode((string)$resp->getBody());
     }
 
