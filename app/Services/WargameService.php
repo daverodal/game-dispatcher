@@ -486,6 +486,7 @@ class  WargameService{
 
     public function saveTerrainDoc($terrainDocName, $wargameDoc){
         $ter = false;
+        $prevDb = $this->cs->setDb('mydatabase');
         try {
             $ter = $this->cs->get($terrainDocName);
         } catch (\GuzzleHttp\Exception\BadResponseException  $e) {
@@ -501,6 +502,7 @@ class  WargameService{
             $this->cs->delete($terrainDocName, $ter->_rev);
             $this->cs->post($data);
         }
+        $prevDb = $this->cs->setDb($prevDb);
     }
 
 
