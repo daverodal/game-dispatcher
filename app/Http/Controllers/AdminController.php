@@ -110,7 +110,7 @@ class AdminController extends Controller
         if ($gameName) {
             try {
                 $doc = $cs->get($gameName);
-                if ($doc->createUser == $user) {
+                if ($doc->createUser == $user || Auth::user()['is_admin']) {
                     if ($doc && $doc->_id && $doc->_rev) {
                         $cs->delete($doc->_id, $doc->_rev);
                     }

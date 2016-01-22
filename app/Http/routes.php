@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('front');
-});
+Route::get('/', 'FrontController@anyIndex');
 
 /*
 |--------------------------------------------------------------------------
