@@ -13,7 +13,7 @@
 
         </ul>
         Or
-        <a href="{{url("wargame/leaveGame")}}">back to lobby</a>
+        <a href="{{url("wargame/leave-game")}}">back to lobby</a>
         <a href="{{url("users/logout")}}">Logout</a>
     </div>
 @endsection

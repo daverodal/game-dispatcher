@@ -6,7 +6,7 @@
             <header class='coolBox'><h2>{{$plainGenre}}</h2>
             <a class='breadcrumb' href='{{url('wargame/unattached-game')}}'>back</a>
                         Or
-            <a href="<?= url("wargame/leaveGame"); ?>">back to lobby</a>
+            <a href="<?= url("wargame/leave-game"); ?>">back to lobby</a>
             <a href="<?= url("users/logout"); ?>">Logout</a>
             </header>
             <ul id = "theGamesGrid" >
