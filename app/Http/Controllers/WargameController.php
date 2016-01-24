@@ -416,7 +416,7 @@ class WargameController extends Controller
                 $data = array("_id" => $doc->wargame->terrainName, "docType" => "terrain", "terrain" => $doc->wargame->terrain);
                 /* totally throw the old one away */
 
-                $cs>delete($doc->wargame->terrainName, $ter->_rev);
+                $cs->delete($doc->wargame->terrainName, $ter->_rev);
                 $cs->post($data);
 
             }
@@ -694,7 +694,7 @@ class WargameController extends Controller
         $terrainName = "terrain-$game";
         $ws->saveTerrainDoc(urldecode($terrainName.".".$arg), $battle);
 
-        if($mapDoc->map->isDefault){
+        if(!empty($mapDoc->map->isDefault)){
             $ws->saveTerrainDoc(urldecode($terrainName), $battle);
 
         }
