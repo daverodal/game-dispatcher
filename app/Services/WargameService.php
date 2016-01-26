@@ -457,7 +457,8 @@ class  WargameService{
 
         }
 
-        return \Wargame\Battle::transformChanges($doc, $last_seq, $user);
+        $class = $doc->className;
+        return $class::transformChanges($doc, $last_seq, $user);
     }
 
     public function enterMulti($wargame, $playerOne, $playerTwo, $visibility, $playerThree, $playerFour)

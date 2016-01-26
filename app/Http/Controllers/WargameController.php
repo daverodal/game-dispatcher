@@ -371,7 +371,7 @@ class WargameController extends Controller
         }
 
 //        $this->load->model('users/users_model');
-        $battle = Battle::getBattle( $game, null, $arg, $opts);
+        $battle = Battle::battleFromName( $game, $arg, $opts);
         $opts = [];
         foreach($_GET as $k=>$v){
             $opts[] = $k;
@@ -637,7 +637,9 @@ class WargameController extends Controller
         preg_match("/^([0-9]+)-/", $click, $matches);
         $click = $matches[1];
         try {
-            $battle = Battle::getBattle($game, $doc->wargame, $doc->wargame->arg);
+            $battle = Battle::battleFromDoc($doc);
+
+//            $battle = Battle::getBattle($game, $doc->wargame, $doc->wargame->arg, false, $doc->className);
             $doSave = $battle->poke($event, $id, $x, $y, $user, $click);
             $success = false;
             if ($doSave) {
@@ -665,7 +667,7 @@ class WargameController extends Controller
         $user = Auth::user()['name'];
 
 
-        $battle = Battle::getBattle($game, null, $arg);
+        $battle = Battle::battleFromName($game, $arg);
 
 
         if (method_exists($battle, 'terrainGen')) {
