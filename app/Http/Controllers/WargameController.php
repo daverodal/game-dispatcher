@@ -185,8 +185,7 @@ class WargameController extends Controller
 //            $theGame->value->scenarios = $theScenarios;
 
             $gameFeed = strtolower($game);
-            //$feed = file_get_contents("http://davidrodal.com/pubs/category/$gameFeed/feed");
-            $feed = false;
+            $feed = file_get_contents("http://davidrodal.com/pubs/category/$gameFeed/feed");
             $theGameMeta = (array)$theGame->value;
             $theGameMeta['options'] = isset($theGameMeta['options'])? $theGameMeta['options'] : [];
             unset($theGameMeta->scenarios);

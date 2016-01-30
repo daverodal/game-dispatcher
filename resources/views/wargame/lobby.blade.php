@@ -71,11 +71,10 @@
         <div class="game-view" id="content" ng-controller="LobbyController">
             <a class="logout logoutUpper" href="{{url('logout')}}">Logout</a>
 
-            <?php if ($myName == "Markarian") { ?>
-            @if(\Auth::user()['is_admin'])
-                <h1><a href="{{url('admin')}}">Admin </a></h1>
-            @endif
-            <?php } ?>
+            @can('admin')
+            <h1><a href="{{url('admin')}}">Admin </a></h1>
+            @endcan
+
             <h2>Welcome {{$myName}}</h2>
 
             <h3>You can <a id="create" href="{{url('wargame/unattached-game')}}"><button class="create-button">Start New Game</button></a></h3>

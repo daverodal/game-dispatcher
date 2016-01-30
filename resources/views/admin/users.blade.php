@@ -28,8 +28,8 @@
                         <li class="users-row">
                             <span class="users-layout">{{$user['name']}}</span>
                             <span class="users-layout">{{$user['email']}}</span>
-                                <span class="users-layout">{{$user['is_admin']}}</span>
-                            <span class="users-layout">{{$user['is_editor']}}</span>
+                                <span class="users-layout">@if($user->can('admin'))Yes @else No @endif</span>
+                            <span class="users-layout">@if($user->can('editor')) Yes @else No @endif</span>
 
                         </li>
                     @endforeach
