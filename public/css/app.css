@@ -2925,7 +2925,8 @@ html {
   border-radius: 15px;
   margin: 40px;
   padding: 20px;
-  box-shadow: 10px 10px 10px rgba(20, 20, 20, 0.7); }
+  box-shadow: 10px 10px 10px rgba(20, 20, 20, 0.7);
+  width: auto; }
 
 .clearWrapper {
   background: transparent;
