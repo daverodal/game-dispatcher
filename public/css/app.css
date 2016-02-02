@@ -51,6 +51,31 @@ html {
     #myOtherGames .lobbyRow .colFive:last-child, #myOtherGames .lobbyHeader .colFive:last-child, #publicGames .lobbyRow .colFive:last-child, #publicGames .lobbyHeader .colFive:last-child {
       margin-right: 0; }
 
+.form-group {
+  max-width: 100em;
+  margin-left: auto;
+  margin-right: auto; }
+  .form-group::after {
+    clear: both;
+    content: "";
+    display: table; }
+  .form-group .col-sm-3 {
+    text-align: right;
+    float: left;
+    display: block;
+    margin-right: 2.3576515979%;
+    width: 6.1721527019%; }
+    .form-group .col-sm-3:last-child {
+      margin-right: 0; }
+  .form-group .col-sm-6 input, .form-group .col-sm-6 textarea {
+    float: none;
+    float: left;
+    display: block;
+    margin-right: 2.3576515979%;
+    width: 65.8807828007%; }
+    .form-group .col-sm-6 input:last-child, .form-group .col-sm-6 textarea:last-child {
+      margin-right: 0; }
+
 #myGames {
   max-width: 100em;
   margin-left: auto;
@@ -208,7 +233,7 @@ a {
 .logoutUpper {
   float: right; }
 
-.logout {
+.tabbable .nav-tabs li.logout a, .logout {
   color: white;
   text-shadow: 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00;
   text-decoration: none; }
@@ -354,6 +379,27 @@ a {
     width: 23.2317613015%; }
     .users-row .users-layout:last-child {
       margin-right: 0; }
+
+.coolBox.alert-danger {
+  background: #ffbfca; }
+
+.coolBox.alert-info {
+  background-color: #abdeff; }
+
+.label-danger {
+  background-color: #d9534f; }
+
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em; }
 
 /*!
  *  Font Awesome 4.5.0 by @davegandy - http://fontawesome.io - @fontawesome
@@ -2476,6 +2522,31 @@ a {
     #myOtherGames .lobbyRow .colFive:last-child, #myOtherGames .lobbyHeader .colFive:last-child, #publicGames .lobbyRow .colFive:last-child, #publicGames .lobbyHeader .colFive:last-child {
       margin-right: 0; }
 
+.form-group {
+  max-width: 100em;
+  margin-left: auto;
+  margin-right: auto; }
+  .form-group::after {
+    clear: both;
+    content: "";
+    display: table; }
+  .form-group .col-sm-3 {
+    text-align: right;
+    float: left;
+    display: block;
+    margin-right: 2.3576515979%;
+    width: 6.1721527019%; }
+    .form-group .col-sm-3:last-child {
+      margin-right: 0; }
+  .form-group .col-sm-6 input, .form-group .col-sm-6 textarea {
+    float: none;
+    float: left;
+    display: block;
+    margin-right: 2.3576515979%;
+    width: 65.8807828007%; }
+    .form-group .col-sm-6 input:last-child, .form-group .col-sm-6 textarea:last-child {
+      margin-right: 0; }
+
 #myGames {
   max-width: 100em;
   margin-left: auto;
@@ -2633,7 +2704,7 @@ a {
 .logoutUpper {
   float: right; }
 
-.logout {
+.tabbable .nav-tabs li.logout a, .logout {
   color: white;
   text-shadow: 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00;
   text-decoration: none; }
@@ -2773,6 +2844,27 @@ a {
     width: 23.2317613015%; }
     .users-row .users-layout:last-child {
       margin-right: 0; }
+
+.coolBox.alert-danger {
+  background: #ffbfca; }
+
+.coolBox.alert-info {
+  background-color: #abdeff; }
+
+.label-danger {
+  background-color: #d9534f; }
+
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em; }
 
 html {
   box-sizing: border-box; }
@@ -2935,9 +3027,6 @@ html {
   box-shadow: none;
   padding: 0;
   margin: 0; }
-
-input {
-  margin-left: 15px; }
 
 a {
   color: #333; }

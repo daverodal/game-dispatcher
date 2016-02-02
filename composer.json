@@ -15,7 +15,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "guzzlehttp/guzzle":"~6.0",
-        "daverodal/wargaming": "dev-master"
+        "daverodal/wargaming": "dev-master",
+        "cmgmyr/messenger": "~2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

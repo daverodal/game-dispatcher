@@ -74,7 +74,7 @@ class AdminController extends Controller
 //        var_dump($_GET);
         $dir = \Input::get('dir',false);
         if($dir){
-            $infoPath =  base_path("vendor/daverodal/wargaming/$dir/info.json");
+            $infoPath =  base_path("vendor/daverodal/wargaming/Wargame/$dir/info.json");
 
             $info = json_decode(file_get_contents($infoPath));
 
@@ -82,7 +82,8 @@ class AdminController extends Controller
             return redirect('admin/games');
         }
 
-        return;
+
+        return view('admin.addGame');
 //        $this->load->view('users/games_view',compact("games"));
 //        var_dump($this->users_model->getUsersByEmail());
     }

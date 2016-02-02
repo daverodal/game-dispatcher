@@ -1,62 +1,117 @@
 $max-width: 100em;
-#myOtherGames, #publicGames{
+#myOtherGames, #publicGames {
   @include outer-container;
-  .lobbyRow, .lobbyHeader{
-    .colOne { @include span-columns(3);}
-    .colTwo {@include span-columns(3);
-      word-break:break-all;
+  .lobbyRow, .lobbyHeader {
+    .colOne {
+      @include span-columns(3);
     }
-    .colThree {@include span-columns(2);}
-    .colFour {@include span-columns(2);}
-    .colFive {@include span-columns(2);@include omega;}
+    .colTwo {
+      @include span-columns(3);
+      word-break: break-all;
+    }
+    .colThree {
+      @include span-columns(2);
+    }
+    .colFour {
+      @include span-columns(2);
+    }
+    .colFive {
+      @include span-columns(2);
+      @include omega;
+    }
   }
 }
+
+.form-group {
+  @include outer-container;
+  .col-sm-3 {
+      text-align:right;
+
+    @include span-columns(1);
+  }
+  .col-sm-6 {
+
+    input, textarea {
+      float:none;
+      @include span-columns(8);
+    }
+  }
+}
+
 $grid-columns: 12;
-#myGames{
+#myGames {
   @include outer-container;
-  .lobbyRow, .lobbyHeader{
-    span{}
-    .colOne { @include span-columns(2);}
-    .colTwo {@include span-columns(3 );
-      word-break:break-all;
+  .lobbyRow, .lobbyHeader {
+    span {
     }
-    .colThree {@include span-columns(2 );}
-    .colFour {@include span-columns(2 );}
-    .colFive {@include span-columns(3);@include omega;}
+    .colOne {
+      @include span-columns(2);
+    }
+    .colTwo {
+      @include span-columns(3);
+      word-break: break-all;
+    }
+    .colThree {
+      @include span-columns(2);
+    }
+    .colFour {
+      @include span-columns(2);
+    }
+    .colFive {
+      @include span-columns(3);
+      @include omega;
+    }
   }
 }
-#myMultiGames{
+
+#myMultiGames {
   @include outer-container;
-  .lobbyRow, .lobbyHeader{
-    span{}
-    .colOne { @include span-columns(1.5);}
-    .colTwo {@include span-columns(2.5 );
-      word-break:break-all;
+  .lobbyRow, .lobbyHeader {
+    span {
     }
-    .colThree {@include span-columns(2 );}
-    .colFour {@include span-columns(2 );}
-    .colFive {@include span-columns(2);}
-    .colSix {@include span-columns(2);@include omega;}
+    .colOne {
+      @include span-columns(1.5);
+    }
+    .colTwo {
+      @include span-columns(2.5);
+      word-break: break-all;
+    }
+    .colThree {
+      @include span-columns(2);
+    }
+    .colFour {
+      @include span-columns(2);
+    }
+    .colFive {
+      @include span-columns(2);
+    }
+    .colSix {
+      @include span-columns(2);
+      @include omega;
+    }
   }
 }
-.lobbyRow, .lobbyHeader{
-  clear:both;
+
+.lobbyRow, .lobbyHeader {
+  clear: both;
   padding: 5px 0;
   word-break: break-word;
 }
-.clear{
-  clear:both;
+
+.clear {
+  clear: both;
 }
 
-#multiPlayerGames{
-  background-color:rgba(170,170,170,.4);
-  padding-bottom:20px;
-  border:5px solid rgba(130,130,130,.4);
-  h2{
-    color:black;
+#multiPlayerGames {
+  background-color: rgba(170, 170, 170, .4);
+  padding-bottom: 20px;
+  border: 5px solid rgba(130, 130, 130, .4);
+  h2 {
+    color: black;
   }
 }
-body{
+
+body {
   background-repeat: no-repeat;
   color: #666;
   background-position: center top;
@@ -81,7 +136,6 @@ li {
   list-style: none;
 }
 
-
 .bold {
   font-family: Lucida;
   font-weight: bold;
@@ -94,6 +148,7 @@ li {
   color: white;
   text-shadow: 0px 0px 3px green, 0px 0px 3px green, 0px 0px 3px green, 0px 0px 3px green;
 }
+
 .gameOver {
   color: white;
   text-shadow: 0px 0px 3px red, 0px 0px 3px red, 0px 0px 3px red, 0px 0px 3px red;
@@ -107,59 +162,60 @@ a {
   color: black;
   font-size: 120%;
 }
-.logoutUpper{
-  float:right;
+
+.logoutUpper {
+  float: right;
 }
-.logout {
+.tabbable .nav-tabs li.logout a, .logout {
   color: white;
   text-shadow: 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00;
   text-decoration: none;
 }
 
 #create .create-button {
-  cursor:pointer;
+  cursor: pointer;
   background: rgb(192, 192, 192);
-  padding:15px;
+  padding: 15px;
   animation: pulsate 2s linear infinite;
   animation-direction: alternate;
-  border-radius:10px;
-    font-size:30px;
-    color: white;
-    text-shadow: 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0;
-    text-decoration: underline;
-    //border-bottom: 3px solid #afa;
-    font-family: sans-serif;
-    font-style: italic;
+  border-radius: 10px;
+  font-size: 30px;
+  color: white;
+  text-shadow: 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0, 0 0 3px #0c0;
+  text-decoration: underline;
+  //border-bottom: 3px solid #afa;
+  font-family: sans-serif;
+  font-style: italic;
 }
 
 @keyframes pulsate {
-  0% {box-shadow:0 0 0 #333}
+  0% {
+    box-shadow: 0 0 0 #333
+  }
 
   100% {
-  box-shadow:10px 10px 10px #333}
+    box-shadow: 10px 10px 10px #333
+  }
 }
-
 
 .game-view ul {
   padding: 5px 10px 15px;
   border-radius: 10px;
   background: rgba(92, 92, 92, 0.50);
   color: white;
-  a{
-    color:white;
+  a {
+    color: white;
   }
   .lobbyRow:hover {
     background: rgba(0, 0, 0, .5);
   }
 
-  .lobbyHeader:hover, .lobbySpacer:hover{
-    background-color:transparent;
+  .lobbyHeader:hover, .lobbySpacer:hover {
+    background-color: transparent;
   }
 }
 
-
-
-#content{
+#content {
   color: black;
   min-width: 900px;
 
@@ -171,21 +227,21 @@ a {
   margin: 0 auto;
 }
 
-.attribution{
-  &:before{
-    content:"Image by: ";
+.attribution {
+  &:before {
+    content: "Image by: ";
     font-style: italic;
   }
   max-width: 100em;
   margin-left: auto;
   margin-right: auto;
 
-  background-color:rgba(255,255,255,.9);
+  background-color: rgba(255, 255, 255, .9);
   text-align: center;
 
   padding: 5px 10px 15px;
   border-radius: 10px;
-  margin-bottom:15px;
+  margin-bottom: 15px;
 }
 
 .tabbable {
@@ -219,27 +275,26 @@ a {
 
     }
   }
-  .Thanks h1{
-    font-size:1.3em;
+  .Thanks h1 {
+    font-size: 1.3em;
   }
-  .Thanks h2{
-    font-size:1.1em;
+  .Thanks h2 {
+    font-size: 1.1em;
   }
-  .Welcome{
-    h1{
-      font-size:.8em;
+  .Welcome {
+    h1 {
+      font-size: .8em;
     }
-    h2{
-      font-size:1.0em;
-      font-style:italic;
+    h2 {
+      font-size: 1.0em;
+      font-style: italic;
     }
-    .coolBox{
-      margin-top:100px;
+    .coolBox {
+      margin-top: 100px;
     }
-    font-size:1.2em;
+    font-size: 1.2em;
   }
 }
-
 
 .coolBox {
   font-size: 22px;
@@ -249,11 +304,11 @@ a {
   margin: 40px;
   padding: 20px;
   box-shadow: 10px 10px 10px rgba(20, 20, 20, .7);
-  width:50%;
-  margin:0 auto;
+  width: 50%;
+  margin: 0 auto;
 }
 
-.wideCoolBox{
+.wideCoolBox {
   font-size: 22px;
   background: rgba(255, 255, 255, .9);
   border: 1px solid #333;
@@ -261,13 +316,39 @@ a {
   margin: 40px;
   padding: 20px;
   box-shadow: 10px 10px 10px rgba(20, 20, 20, .7);
-  width:90%;
-  margin:0 auto;
+  width: 90%;
+  margin: 0 auto;
 }
 
-.users-row{
+.users-row {
   @include outer-container;
-  .users-layout{
+  .users-layout {
     @include span-columns(3);
   }
+}
+
+.coolBox.alert-danger{
+  background: #ffbfca;
+}
+
+.coolBox.alert-info{
+  background-color: #abdeff;
+}
+
+.label-danger {
+  background-color: #d9534f;
+
+}
+
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
 }

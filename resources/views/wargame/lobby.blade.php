@@ -60,11 +60,9 @@
 </head>
 <body >
 <my-tabs>
-    <my-pane title="Welcome">
+    <my-pane title="Messages">
         <div class="coolBox">
-            <h1>Welcome to davidrodal.com.</h1>
-            <h2><?=$item->title?></h2>
-            <h2><?=$item->content?></h2>
+            <h1>Message Board</h1>
         </div>
     </my-pane>
     <my-pane title="My Games"  is-selected="true" >
@@ -892,13 +890,14 @@ Public License instead of this License.  But first, please read
         </div>
 
     </my-pane>
+    <my-pane title="Logout"></my-pane>
 </my-tabs>
 </body>
 <script type="text/ng-template"  id="/tabs.html">
     <div class="tabbable">
         <ul class="nav nav-tabs">
-            <li ng-repeat="pane in panes" ng-class="{active:pane.selected}">
-                <a href="" ng-click="select(pane)">@{{pane.title}}</a>
+            <li ng-repeat="pane in panes" ng-class="[pane.title.toLowerCase(), {active:pane.selected}]">
+                <a href="" ng-click="select(pane)">@{{pane.title}}  @include('messenger.unread-count')</a>
             </li>
         </ul>
         <div class="tab-content" ng-transclude>
@@ -923,13 +922,21 @@ Public License instead of this License.  But first, please read
                             angular.forEach(panes, function(pane) {
                                 pane.selected = false;
                             });
+                            if(pane.title === "Messages"){
+
+                                window.location = '/messages';
+                            }
+                            if(pane.title === "Logout"){
+
+                                window.location = '/logout';
+                            }
                             pane.selected = true;
                         };
 
                         this.addPane = function(pane) {
 
                             if (panes.length === 0 ) {
-                                $scope.select(pane);
+//                                $scope.select(pane);
                             }
                             if((pane.isSelected && !location.hash) || ('#'+pane.title == location.hash)){
                                 $scope.select(pane);
