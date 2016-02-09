@@ -8,6 +8,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/daverodal/wargaming"
+        },
+        {
+            "type": "path",
+            "url": "../rebellion"
         }
     ],
 
@@ -16,6 +20,7 @@
         "laravel/framework": "5.2.*",
         "guzzlehttp/guzzle":"~6.0",
         "daverodal/wargaming": "dev-master",
+        "daverodal/rebellion": "dev-master",
         "cmgmyr/messenger": "~2.0"
     },
     "require-dev": {
