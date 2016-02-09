@@ -32,6 +32,7 @@ Route::group(['middleware' => ['web','auth']], function () {
     Route::put('rest/hexStrs/{id}','MapsController@putHexstrs');
     Route::post('rest/hexStrs','MapsController@postHexstrs');
     Route::delete('rest/hexStrs/{id}','MapsController@deleteHexstrs');
+    Route::get('rest/cloneFile/{id}','MapsController@cloneFile');
     Route::get('/home', 'HomeController@index');
     Route::controller('rest','MapsController');
     Route::controller('admin','AdminController');

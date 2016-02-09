@@ -127,4 +127,39 @@ class MapsController extends Controller
         $client->delete($doc->_id, $doc->_rev);
         return json_encode(new \stdClass());
     }
+
+    function cloneFile(CouchService $client, $stuff)
+    {
+        $client->setDb('rest');
+        $doc = $client->get($stuff);
+        if ($doc->docType == "hexMapData") {
+            unset($doc->_id);
+            unset($doc->_rev);
+            $hexStr = $doc->map->hexStr;
+            $doc->map->hexStr = "";
+            $ret = $client->post($doc);
+            $mapId = $ret->id;
+            $mapRev = $ret->rev;
+            if ($ret->ok === true) {
+                echo "good ";
+                if ($hexStr) {
+                    echo "better '";
+                    $hexDoc = $client->get($hexStr);
+                    unset($hexDoc->_id);
+                    unset($hexDoc->_rev);
+                    $hexDoc->hexStr->map = $mapId;
+                    $hexRet = $client->post($hexDoc);
+                    if ($hexRet->ok) {
+                        echo "Best";
+                        $doc->_id = $mapId;
+                        $doc->_rev = $mapRev;
+                        $doc->map->hexStr = $hexRet->id;
+                        $client->put($doc->_id, $doc);
+                        echo "BFF forever ";
+                    }
+                }
+            }
+        }
+    }
+
 }
