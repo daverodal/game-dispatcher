@@ -27,5 +27,5 @@ elixir(function(mix) {
     mix.copy('bower_components/neat/app/assets/stylesheets/', 'resources/assets/sass/neat');
     mix.copy('resources/assets/images', 'public/images');
     mix.sass('app.scss');
-    mix.sass('../../../vendor/daverodal/wargaming/Wargame/TMCW/**/all.scss',"public/vendor/amph/css/gameout.css");
+    //mix.sass('../../../vendor/daverodal/wargaming/Wargame/TMCW/**/all.scss',"public/vendor/amph/css/gameout.css");
 });
