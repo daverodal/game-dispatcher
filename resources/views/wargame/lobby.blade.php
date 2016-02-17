@@ -885,7 +885,16 @@ Public License instead of this License.  But first, please read
     </my-pane>
     <my-pane title="Profile">
         <div class="coolBox">
-            <h2>Welcome {myName}</h2>
+            <h2>Welcome {{$myName}}</h2>
+
+            <ul>
+            @foreach (Auth::user()->friends as $friend)
+                <li>
+                    <span>{{ $friend->name }}</span>
+                    <span><a href="#">Remove friend</a></span>
+                </li>
+            @endforeach
+            </ul>
             <a href="{{url('users/change-password/')}}">Change Password</a>
         </div>
 

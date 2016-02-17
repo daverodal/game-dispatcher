@@ -545,6 +545,12 @@ class WargameController extends Controller
         return redirect("wargame/change-wargame/$wargame");
     }
 
+    public function getAddFriend($id){
+        $user = \App\User::find($id);
+        Auth::user()->addFriend($user);
+        return redirect('wargame/play');
+    }
+
 
     public function enterHotseat($wargame, CouchService $cs )
     {
@@ -560,12 +566,6 @@ class WargameController extends Controller
         }
         $doc->playerStatus = "hot seat";
         $doc->wargame->players[1] = $doc->wargame->players[2] = $user;
-//        foreach($doc->wargame->players as $k => $v){
-//            if($v != $user){
-//                $doc->wargame->players[$k] = "";
-//            }
-//        }
-//        $doc->wargame->players[1] = $user;
         $doc->wargame->gameRules->turnChange = true;
         $cs->put($doc->_id, $doc);
         return true;
