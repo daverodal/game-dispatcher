@@ -899,7 +899,7 @@ Public License instead of this License.  But first, please read
             @endforeach
             </ul>
             </div>
-            <li> Friends you could have.</li>
+            <h2> Friends you could have.</h2>
             <div class="coolBox">
             <ul>
                 @foreach ($notFriends as $friend)
