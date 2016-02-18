@@ -67,7 +67,7 @@
     </my-pane>
     <my-pane title="My Games"  is-selected="true" >
         <div class="game-view" id="content" ng-controller="LobbyController">
-            <a class="logout logoutUpper" href="{{url('logout')}}">Logout</a>
+            <a class="logout logoutUpper" href="{{url('/logout')}}">Logout</a>
 
             @can('admin')
             <h1><a href="{{url('admin')}}">Admin </a></h1>
@@ -185,7 +185,7 @@
             <footer class="attribution">
                 By Paul Mercuri [Public domain or Public domain], <a target='blank' href="http://commons.wikimedia.org/wiki/File%3AArmored_Knight_Mounted_on_Cloaked_Horse.JPG">via Wikimedia Commons</a>`
             </footer>
-            <a class="logout" href="{{url('users/logout')}}">Logout</a>
+            <a class="logout" href="{{url('/logout')}}">Logout</a>
         </div>
 
     </my-pane>

@@ -14,6 +14,6 @@
         </ul>
         Or
         <a href="{{url("wargame/leave-game")}}">back to lobby</a>
-        <a href="{{url("users/logout")}}">Logout</a>
+        <a href="{{url("/logout")}}">Logout</a>
     </div>
 @endsection

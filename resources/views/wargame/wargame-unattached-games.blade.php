@@ -7,7 +7,7 @@
             <a class='breadcrumb' href='{{url('wargame/unattached-game')}}'>back</a>
                         Or
             <a href="<?= url("wargame/leave-game"); ?>">back to lobby</a>
-            <a href="<?= url("users/logout"); ?>">Logout</a>
+            <a href="<?= url("/logout"); ?>">Logout</a>
             </header>
             <ul id = "theGamesGrid" >
             @foreach ($games as $game)
