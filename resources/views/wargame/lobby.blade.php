@@ -60,12 +60,8 @@
 </head>
 <body >
 <my-tabs>
-    <my-pane title="Messages">
-        <div class="coolBox">
-            <h1>Message Board</h1>
-        </div>
-    </my-pane>
-    <my-pane title="My Games"  is-selected="true" >
+
+    <my-pane title="Home"  is-selected="true" >
         <div class="game-view" id="content" ng-controller="LobbyController">
             <a class="logout logoutUpper" href="{{url('/logout')}}">Logout</a>
 
@@ -188,6 +184,11 @@
             <a class="logout" href="{{url('/logout')}}">Logout</a>
         </div>
 
+    </my-pane>
+    <my-pane title="Messages">
+        <div class="coolBox">
+            <h1>Message Board</h1>
+        </div>
     </my-pane>
     <my-pane title="Thanks" class="thanks">
         <div class="coolBox">
@@ -886,16 +887,30 @@ Public License instead of this License.  But first, please read
     <my-pane title="Profile">
         <div class="coolBox">
             <h2>Welcome {{$myName}}</h2>
+            <h2>Friends you have.</h2>
 
+            <div class="coolBox">
             <ul>
             @foreach (Auth::user()->friends as $friend)
                 <li>
                     <span>{{ $friend->name }}</span>
-                    <span><a href="#">Remove friend</a></span>
+                    <span><a href="remove-friend/{{$friend->id}}">Remove friend</a></span>
                 </li>
             @endforeach
             </ul>
-            <a href="{{url('users/change-password/')}}">Change Password</a>
+            </div>
+            <li> Friends you could have.</li>
+            <div class="coolBox">
+            <ul>
+                @foreach ($notFriends as $friend)
+                    <li>
+                        <span>{{ $friend->name }}</span>
+                        <span><a href="add-friend/{{$friend->id}}">Add friend</a></span>
+                    </li>
+                @endforeach
+            </ul>
+                </div>
+            {{--<a href="{{url('users/change-password/')}}">Change Password</a>--}}
         </div>
 
     </my-pane>
@@ -905,8 +920,8 @@ Public License instead of this License.  But first, please read
 <script type="text/ng-template"  id="/tabs.html">
     <div class="tabbable">
         <ul class="nav nav-tabs">
-            <li ng-repeat="pane in panes" ng-class="[pane.title.toLowerCase(), {active:pane.selected}]">
-                <a href="" ng-click="select(pane)">@{{pane.title}}  @include('messenger.unread-count')</a>
+            <li ng-repeat="pane in panes" ng-class="{active:pane.selected}" >
+                <a href="" class="ng-class: pane.title.toLowerCase();" ng-click="select(pane)">@{{pane.title}} @include('messenger.unread-count')</a>
             </li>
         </ul>
         <div class="tab-content" ng-transclude>
@@ -947,7 +962,7 @@ Public License instead of this License.  But first, please read
                             if (panes.length === 0 ) {
 //                                $scope.select(pane);
                             }
-                            if((pane.isSelected && !location.hash) || ('#'+pane.title == location.hash)){
+                            if((pane.isSelected)){
                                 $scope.select(pane);
                             }
                             panes.push(pane);

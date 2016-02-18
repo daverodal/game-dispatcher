@@ -9,6 +9,7 @@ namespace App\Services;
 use Auth;
 use \DateTime;
 use Input;
+use App\User;
 
 class  WargameService{
     public $cs;
@@ -117,10 +118,18 @@ class  WargameService{
 //                $content = $item->children('http://purl.org/rss/1.0/modules/content/');
 //                $item->content = $content->encoded;
 //            }
+
+        $notFriends = User::where('id', '!=', Auth::user()->id);
+        if (Auth::user()->friends->count()) {
+            $notFriends->whereNotIn('id', Auth::user()->friends->modelKeys());
+        }
+        $notFriends = $notFriends->get();
+
+
         $item = new \stdClass();
         $item->content = "no content";
         $item->title = "Title This ";
-        return compact("item", "lobbies", "otherGames", "myName");
+        return compact("item", "lobbies", "otherGames", "myName", "notFriends");
     }
 
     public function gameView($wargame){

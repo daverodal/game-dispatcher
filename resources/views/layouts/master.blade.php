@@ -65,9 +65,9 @@
 
   <div class="tabbable">
     <ul class="nav nav-tabs">
+      <li><a href="{{URL::to('wargame/play')}}">Home</a></li>
       <li class="{{$indexTab or ''}}"><a href="{{URL::to('messages')}}">Messages @include('messenger.unread-count')</a></li>
       <li class="{{$createTab or ''}}"><a href="{{URL::to('messages/create')}}">New Message</a></li>
-      <li><a href="{{URL::to('wargame/play')}}">Back</a></li>
       <li class="logout"><a href="{{url('/logout')}}">Logout</a></li>
 
     </ul>

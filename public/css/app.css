@@ -233,7 +233,7 @@ a {
 .logoutUpper {
   float: right; }
 
-.tabbable .nav-tabs li.logout a, .logout {
+.tabbable .nav-tabs li a.logout, .logout {
   color: white;
   text-shadow: 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00;
   text-decoration: none; }
@@ -2704,7 +2704,7 @@ a {
 .logoutUpper {
   float: right; }
 
-.tabbable .nav-tabs li.logout a, .logout {
+.tabbable .nav-tabs li a.logout, .logout {
   color: white;
   text-shadow: 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00, 0 0 3px #c00;
   text-decoration: none; }

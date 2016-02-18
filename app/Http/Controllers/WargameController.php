@@ -12,9 +12,9 @@ use Illuminate\Http\Request;
 use App\Services\CouchService;
 use Auth;
 use Input;
-use \DateTime;
-use \Wargame\Battle;
-use \App\Services\WargameService;
+use Wargame\Battle;
+use App\Services\WargameService;
+use App\User;
 
 
 
@@ -546,11 +546,17 @@ class WargameController extends Controller
     }
 
     public function getAddFriend($id){
-        $user = \App\User::find($id);
+        $user = User::find($id);
         Auth::user()->addFriend($user);
         return redirect('wargame/play');
     }
 
+    public function getRemoveFriend($id)
+    {
+        $user = User::find($id);
+        Auth::user()->removeFriend($user);
+        return redirect('wargame/play');
+    }
 
     public function enterHotseat($wargame, CouchService $cs )
     {
