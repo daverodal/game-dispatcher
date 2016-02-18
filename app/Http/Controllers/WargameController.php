@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Services\CouchService;
 use Auth;
 use Input;
+use DateTime;
 use Wargame\Battle;
 use App\Services\WargameService;
 use App\User;
@@ -505,14 +506,26 @@ class WargameController extends Controller
             $maxPlayers = 2;
         }
         if ($playerOne == "") {
-            $users = $ad->getUsersByUsername();
-            foreach ($users as $k => $val) {
+            $getUsers = $ad->getUsersByUsername();
+            $users = [];
+            foreach ($getUsers as $k => $val) {
                 if ($val['name'] == $user) {
                     unset($users[$k]);
                     continue;
                 }
-                $users[$k] = $val;
+                $insert = [];
+                $insert['name'] = $val['name'];
+                $users[$k] = $insert;
             }
+
+            $friends = [];
+            $getFriends = Auth::user()->friends()->get();
+            foreach ($getFriends as $k => $val) {
+                $insert = [];
+                $insert['name'] = $val['name'];
+                $friends[$k] = $insert;
+            }
+
 
             $doc = $cs->get(urldecode($wargame));
             if (!$doc || $doc->createUser != $user) {
@@ -533,7 +546,7 @@ class WargameController extends Controller
             $playDat = $className::getPlayerData($scenario);
             $forceName = $playDat['forceName'];
             $deployName = $playDat['deployName'];
-            return view('layouts/playMulti', compact("deployName", "forceName", "viewPath", "maxPlayers","players","visibility", "game", "users", "wargame", "me", "path", "others", "arg"));
+            return view('layouts/playMulti', compact("friends","deployName", "forceName", "viewPath", "maxPlayers","players","visibility", "game", "users", "wargame", "me", "path", "others", "arg"));
         }
 
         if ($playerTwo == "") {

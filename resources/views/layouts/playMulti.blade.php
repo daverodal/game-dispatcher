@@ -76,10 +76,24 @@ if (!empty($players[3])) {
         <div class="clear"></div>
         <div class="right">
             <ul ng-if="player.myName == playerOne.myName">
-                <li ng-repeat="user in users | orderBy: 'key'"><a ng-class="player.otherColor" href="{{$path}}/{{$wargame}}/{{$me}}/@{{user.name}}/@{{publicGame}}">@{{user.name}}</a></li>
+                <li>
+                    <form>
+                        <input ng-init="pals=friends.length > 0" type="radio" ng-model="pals" ng-value="true" selected>  friends
+                        <input type="radio" ng-model="pals" ng-value="false"> all
+                    </form>
+                </li>
+                <li ng-if="pals == true" ng-repeat="friend in friends | orderBy: 'key'"><a ng-class="player.otherColor" href="{{$path}}/{{$wargame}}/{{$me}}/@{{friend.name}}/@{{publicGame}}">@{{friend.name}}</a></li>
+                <li ng-if="pals == false" ng-repeat="user in users | orderBy: 'key'"><a ng-class="player.otherColor" href="{{$path}}/{{$wargame}}/{{$me}}/@{{user.name}}/@{{publicGame}}">@{{user.name}}</a></li>
             </ul>
             <ul ng-if="player.myName == playerTwo.myName">
-                <li ng-repeat="user in users | orderBy: 'key'"><a ng-class="player.otherColor" href="{{$path}}/{{$wargame}}/@{{user.name}}/{{$me}}/@{{publicGame}}">@{{user.name}}</a></li>
+                <li>
+                    <form>
+                        <input ng-init="pals=friends.length > 0" type="radio" ng-model="pals" ng-value="true" selected>  friends
+                        <input type="radio" ng-model="pals" ng-value="false"> all
+                    </form>
+                </li>
+                <li ng-if="pals == true" ng-repeat="friend in friends | orderBy: 'key'"><a ng-class="player.otherColor" href="{{$path}}/{{$wargame}}/@{{friend.name}}/{{$me}}/@{{publicGame}}">@{{friend.name}}</a></li>
+                <li ng-if="pals == false" ng-repeat="user in users | orderBy: 'key'"><a ng-class="player.otherColor" href="{{$path}}/{{$wargame}}/@{{user.name}}/{{$me}}/@{{publicGame}}">@{{user.name}}</a></li>
             </ul>
         </div>
         <div class="clear"></div>
@@ -143,7 +157,16 @@ if (!empty($players[3])) {
                 for(var i in users){
                     usersArray.push(users[i]);
                 }
+
                 $scope.users = usersArray;
+
+                var friends = JSON.parse('<?php echo json_encode($friends);?>');
+                var friendsArray = [];
+                for(var i in friends){
+                    friendsArray.push(friends[i]);
+                }
+                $scope.friends = friendsArray;
+
                 $scope.numPlayers = 2;
                 $scope.thirdPlayer = {};
                 $scope.macsPlayers = '{{$maxPlayers}}';
