@@ -574,12 +574,12 @@ class  WargameService{
         imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
 
 // Output
-        $f = "$dir/".basename($filename,'.png'). ".png";
-        imagepng($image_p, "js/$f");
+        $f = "js/$dir/".basename($filename,'.png'). ".png";
+        imagepng($image_p, "$f");
         imagedestroy($image_p);
         imagedestroy($image);
 
-        return dirname($filename)."/".$f;
+        return url($f);
 
     }
 }
