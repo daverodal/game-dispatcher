@@ -32,7 +32,7 @@ class WargameController extends Controller
         foreach($rows as $row){
             $doc = $cs->get($row->id);
             if(isset($doc->docType)){
-                if($doc->docType === 'hexMapData') {
+                if($doc->docType === 'hexMapStrs') {
                     echo $row->id." ";
                     echo $doc->docType . "<br>";
                     $cs->delete($doc->_id, $doc->_rev);
