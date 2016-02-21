@@ -493,6 +493,7 @@ class  WargameService{
         }
         $doc->wargame->gameRules->turnChange = true;
         $this->cs->put($doc->_id, $doc);
+        event(new \App\Events\Analytics\RecordGameEvent(['docId'=>$doc->_id, 'type'=>'multi-entered', 'className'=> $doc->className, 'scenario'=>$doc->wargame->scenario, 'arg'=>$doc->wargame->arg, 'time'=>time()]));
         return true;
     }
 

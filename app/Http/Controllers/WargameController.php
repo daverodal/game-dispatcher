@@ -25,6 +25,23 @@ class WargameController extends Controller
     public function getIndex(){
     }
 
+    public function getCull(CouchService $cs){
+        $cs->setDb('mydatabase');
+        $docs = $cs->get('_all_docs');
+        $rows = $docs->rows;
+        foreach($rows as $row){
+            $doc = $cs->get($row->id);
+            if(isset($doc->docType)){
+                if($doc->docType === 'hexMapData') {
+                    echo $row->id." ";
+                    echo $doc->docType . "<br>";
+                    $cs->delete($doc->_id, $doc->_rev);
+                }
+            }else{
+            }
+        }
+        return;
+    }
     public function getPlay(Request $req, WargameService $ws){
 
         $wargame = $req->session()->get('wargame');
@@ -425,11 +442,13 @@ class WargameController extends Controller
 
         }
 
-        $doc->className = get_class($battle);
+        $className = $doc->className = get_class($battle);
         $doc->chats = array();
         $doc->gameName = $game;
 
         $doc = $cs->put($doc->_id, $doc);
+        event(new \App\Events\Analytics\RecordGameEvent(['docId'=>$doc->id, 'type'=>'game-created', 'className'=> $className, 'scenario'=>$battle->scenario, 'arg'=>$battle->arg, 'time'=>time()]));
+
         return redirect("wargame/play-as/$game");
 
     }
@@ -473,6 +492,7 @@ class WargameController extends Controller
         if ($ret) {
             return redirect("wargame/change-wargame/$newWargame");
         } else {
+
             return redirect("wargame/play");
         }
     }
@@ -587,6 +607,8 @@ class WargameController extends Controller
         $doc->wargame->players[1] = $doc->wargame->players[2] = $user;
         $doc->wargame->gameRules->turnChange = true;
         $cs->put($doc->_id, $doc);
+        event(new \App\Events\Analytics\RecordGameEvent(['docId'=>$doc->_id, 'type'=>'hotseat-entered', 'className'=> $doc->className, 'scenario'=>$doc->wargame->scenario, 'arg'=>$doc->wargame->arg, 'time'=>time()]));
+
         return true;
     }
 
@@ -657,8 +679,13 @@ class WargameController extends Controller
         try {
             $battle = Battle::battleFromDoc($doc);
 
+            $isGameOver = $battle->victory->gameOver;
 //            $battle = Battle::getBattle($game, $doc->wargame, $doc->wargame->arg, false, $doc->className);
             $doSave = $battle->poke($event, $id, $x, $y, $user, $click);
+            $gameOver = $battle->victory->gameOver;
+            if(!$isGameOver && $gameOver){
+                event(new \App\Events\Analytics\RecordGameEvent(['docId'=>$doc->_id, 'winner'=>$battle->victory->winner, 'type'=>'game-victory', 'className'=> $doc->className, 'scenario'=>$battle->scenario, 'arg'=>$battle->arg, 'time'=>time()]));
+            }
             $success = false;
             if ($doSave) {
                 $doc->wargame = $battle->save();

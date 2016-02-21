@@ -52,4 +52,7 @@ class CouchService extends \GuzzleHttp\Client
         $resp = $this->request('DELETE', $this->db."/$id?rev=$rev");
         return json_decode((string)$resp->getBody());
     }
+    public function createDb($name){
+        $resp = $this->request('POST', "$name");
+    }
 }

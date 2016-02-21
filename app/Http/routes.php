@@ -52,6 +52,6 @@ Route::get('wargame',function(){
     return redirect('wargame/play');
 });
 
-Route::get('/register', function () {
-    return redirect('/');
-});
+//Route::get('/register', function () {
+//    return redirect('/');
+//});
