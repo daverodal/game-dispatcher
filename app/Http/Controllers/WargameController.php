@@ -714,7 +714,9 @@ class WargameController extends Controller
         if($mapWidth && $mapWidth !== "auto"){
             $mapWidth = preg_replace("/[^\d]*(\d*)[^\d]*/","$1", $mapWidth);
             $battle->terrain->mapUrl = $ws->resizeImage($mapUrl, $mapWidth, "images");
-            $ws->rotateImage($battle->terrain->mapUrl, "images");
+            if(!empty($mapDoc->map->trueRows)){
+                $ws->rotateImage($battle->terrain->mapUrl, "images");
+            }
         }
         $battle->terrain->smallMapUrl = $ws->resizeImage($mapUrl);
 //        $this->rotateImage($mapUrl);
