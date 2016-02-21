@@ -24,6 +24,7 @@ return [
     'password'=>env('COUCH_PASSWORD', ''),
     'rest'=> env('COUCH_REST', 'rest'),
     'mydatabase'=> env('COUCH_MYDATABASE', 'mydatabase'),
+    'games'=> env('COUCH_GAMES', 'mydatabase'),
     'users'=> env('COUCH_USERS','users'),
     'analytics' => env('COUCH_ANALYTICS','analytics'),
 ];

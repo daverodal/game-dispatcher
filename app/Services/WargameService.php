@@ -51,7 +51,7 @@ class  WargameService{
 //            var_dump($poll);
 //            echo $this->wargame_model->getLobbyChanges(false,$poll);
         //$seq = $this->couchsag->get("/_design/newFilter/_view/getLobbies?startkey=[\"$user\"]&endkey=[\"$user\",\"zzzzzzzzzzzzzzzzzzzzzzzz\"]");
-        $this->cs->setDb('mydatabase');
+        $this->cs->setDb('games');
         $seq = $this->cs->get("_design/newFilter/_view/getLobbies?startkey=[\"$user\"]&endkey=[\"$user\",\"zzzzzzzzzzzzzzzzzzzzzzzz\"]");
         $lobbies = [];
         date_default_timezone_set("America/New_York");
@@ -137,7 +137,7 @@ class  WargameService{
         $user = Auth::user()['name'];
 
 
-        $this->cs->setDb('mydatabase');
+        $this->cs->setDb('games');
         $doc = $this->cs->get($wargame);
 
         $name = $doc->name;
@@ -203,7 +203,7 @@ class  WargameService{
 
 
     public function fetchLobby($last_seq){
-        $this->cs->setDb('mydatabase');
+        $this->cs->setDb('games');
 
         $user = Auth::user()['name'];
         if (!$user) {
@@ -221,7 +221,7 @@ class  WargameService{
         $lastSeq = $this->fetchLobbyChanges($this->cs, $user, $last_seq);
 
 
-        $this->cs->setDb('mydatabase');
+        $this->cs->setDb('games');
 
         $seq = $this->cs->get("_design/newFilter/_view/getLobbies?startkey=[\"$user\",\"hot seat\"]&endkey=[\"$user\",\"hot seat\",\"zzzzzzzzzzzzzzzzzzzzzzzz\"]");
         $lobbies = [];
@@ -404,7 +404,7 @@ class  WargameService{
          * TODO: make this have a trip switch so it won't spin out of control if the socket is down
          */
 
-        $this->cs->setDb('mydatabase');
+        $this->cs->setDb('games');
         if (!$time) {
             do {
                 $retry = false;
@@ -473,7 +473,7 @@ class  WargameService{
     public function enterMulti($wargame, $playerOne, $playerTwo, $visibility, $playerThree, $playerFour)
     {
         $user = Auth::user()['name'];
-        $this->cs->setDb('mydatabase');
+        $this->cs->setDb('games');
         try {
             $doc = $this->cs->get($wargame);
         } catch (Exception $e) {
@@ -499,7 +499,7 @@ class  WargameService{
 
     public function saveTerrainDoc($terrainDocName, $wargameDoc){
         $ter = false;
-        $prevDb = $this->cs->setDb('mydatabase');
+        $prevDb = $this->cs->setDb('games');
         try {
             $ter = $this->cs->get($terrainDocName);
         } catch (\GuzzleHttp\Exception\BadResponseException  $e) {

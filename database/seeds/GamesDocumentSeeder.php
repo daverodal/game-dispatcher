@@ -23,7 +23,7 @@ class GamesDocumentSeeder extends Seeder
             // You can set any number of default request options.
             'timeout'  => 1800.0,
         ]);
-        $guz->setDb('mydatabase');
+        $guz->setDb('games');
         $this->couchsag = $guz;
         $this->initDoc();
     }

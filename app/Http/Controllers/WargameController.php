@@ -68,7 +68,7 @@ class WargameController extends Controller
 
         $gamesAvail = $ad->getAvailGames($dir, $genre, $game);
         $plainGenre = rawurldecode($genre);
-        $cs->setDb("mydatabase");
+        $cs->setDb("games");
         $seq = $cs->get("_design/newFilter/_view/getLobbies");
         $games = array();
         $theGame = false;
@@ -322,7 +322,7 @@ class WargameController extends Controller
             $data->createDate = date("r");
             $data->createUser = Auth::user()['name'];
             $data->playerStatus = "created";
-            $cs->setDb("mydatabase");
+            $cs->setDb("games");
             $ret = $cs->post($data);
         } catch (Exception $e) {
             ;
@@ -339,7 +339,7 @@ class WargameController extends Controller
 
     function getDeleteGame(CouchService $cs, $gameName){
         $user = Auth::user()['name'];
-        $cs->setDb('mydatabase');
+        $cs->setDb('games');
         if ($gameName) {
             try {
                 $doc = $cs->get($gameName);
@@ -358,7 +358,7 @@ class WargameController extends Controller
         $user = Auth::user()['name'];
         $wargame = urldecode($req->session()->get("wargame"));
         $chat = Input::get('chat', TRUE);
-        $cs->setDb('mydatabase');
+        $cs->setDb('games');
         $doc = $cs->get(urldecode($wargame));
         if ($user != $doc->createUser) {
             return redirect("wargame/play");
@@ -379,7 +379,7 @@ class WargameController extends Controller
 //        $battle = $this->battle->getBattle($game, null, $arg, $opts);
 
 
-        $cs->setDb('mydatabase');
+        $cs->setDb('games');
         if (method_exists($battle, 'terrainInit')) {
             try{
                 $terrainName = "terrain-$game.$arg";
@@ -445,7 +445,7 @@ class WargameController extends Controller
             $wargame = $game;
         }
 //        $wargame = "MainWargame";
-        $cs->setDb('mydatabase');
+        $cs->setDb('games');
         $doc = $cs->get(urldecode($wargame));
         if (!$doc || $doc->createUser != $user) {
             redirect("wargame/play");
@@ -488,7 +488,7 @@ class WargameController extends Controller
 
         }
 //        $this->load->model('wargame/wargame_model');
-        $cs->setDb('mydatabase');
+        $cs->setDb('games');
         $doc = $cs->get($wargame);
         if(!$visibility){
             if(!empty($doc->visibility)){
@@ -576,7 +576,7 @@ class WargameController extends Controller
 
     public function enterHotseat($wargame, CouchService $cs )
     {
-        $cs->setDb('mydatabase');
+        $cs->setDb('games');
         $user = Auth::user()['name'];
         try {
             $doc = $cs->get($wargame);
@@ -603,7 +603,7 @@ class WargameController extends Controller
         if ($newWargame == false) {
             $newWargame = $wargame;
         }
-        $cs->setDb('mydatabase');
+        $cs->setDb('games');
         if ($cs->get($newWargame)) {
 
             $req->session()->put("wargame", $newWargame);
@@ -634,6 +634,7 @@ class WargameController extends Controller
     {
         $user = Auth::user()['name'];
 
+        $cs->setDb('games');
         $wargame = urldecode($req->session()->get("wargame"));
 
         $x = (int)Input::get('x', FALSE);
@@ -643,7 +644,7 @@ class WargameController extends Controller
 
 //        $this->load->model("wargame/wargame_model");
         /*  @var  Wargame_model */
-        $cs->setDb('mydatabase');
+        $cs->setDb('games');
         $doc = $cs->get(urldecode($wargame));
         $ter = false;
         if (!empty($doc->wargame->terrainName)) {

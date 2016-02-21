@@ -24,7 +24,7 @@ namespace App\Services;
 
 class CouchService extends \GuzzleHttp\Client
 {
-    public $dbName = "mydatabase";
+    public $dbName = "games";
     public $db = "";
 
     public function setDb($newDb){

@@ -46,7 +46,7 @@ class  AdminService
 
     public function getAllGames(){
 
-        $prevDb = $this->cs->setDb('mydatabase');
+        $prevDb = $this->cs->setDb('games');
 
         $seq = $this->cs->get("_design/newFilter/_view/allGames?");
         $lobbies = [];
@@ -149,7 +149,7 @@ class  AdminService
         $this->cs->setDb('users');
 
         $seq = $this->cs->get("/_design/newFilter/_view/getCustomScenarios?$reduceArgs");
-        $this->cs->setDb('mydatabase');
+        $this->cs->setDb('games');
         $rows = $seq->rows;
         $games = [];
 

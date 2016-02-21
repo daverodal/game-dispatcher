@@ -107,7 +107,7 @@ class AdminController extends Controller
 
     function getDeleteGame(CouchService $cs, $gameName){
         $user = Auth::user()['name'];
-        $cs->setDb('mydatabase');
+        $cs->setDb('games');
         if ($gameName) {
             try {
                 $doc = $cs->get($gameName);
