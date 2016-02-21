@@ -25,23 +25,6 @@ class WargameController extends Controller
     public function getIndex(){
     }
 
-    public function getCull(CouchService $cs){
-        $cs->setDb('mydatabase');
-        $docs = $cs->get('_all_docs');
-        $rows = $docs->rows;
-        foreach($rows as $row){
-            $doc = $cs->get($row->id);
-            if(isset($doc->docType)){
-                if($doc->docType === 'hexMapData') {
-                    echo $row->id." ";
-                    echo $doc->docType . "<br>";
-                    $cs->delete($doc->_id, $doc->_rev);
-                }
-            }else{
-            }
-        }
-        return;
-    }
     public function getPlay(Request $req, WargameService $ws){
 
         $wargame = $req->session()->get('wargame');
