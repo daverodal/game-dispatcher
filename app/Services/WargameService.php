@@ -172,8 +172,9 @@ class  WargameService{
                 }
                 $newUnit[$key] = $value;
             }
-            $newUnit['class'] = $aUnit->nationality;
-            $newUnit['type'] = $aUnit->class;
+            $newUnit['nationality'] = $aUnit->nationality;
+            $newUnit['class'] = $aUnit->class;
+            $newUnit['type'] = $aUnit->nationality;
             $newUnit['unitSize'] = $aUnit->name;
             $newUnit['unitDesig'] = $aUnit->unitDesig;
             if ($aUnit->name == "infantry-1") {

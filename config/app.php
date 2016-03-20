@@ -158,7 +158,7 @@ return [
         App\Providers\CouchServiceProvider::class,
         App\Providers\BattleProvider::class,
         Wargame\WargameServiceProvider::class,
-        Wargame\Rebellion\RebellionServiceProvider::class,
+        Wargame\Medieval\MedievalServiceProvider::class,
         Cmgmyr\Messenger\MessengerServiceProvider::class,
 
     ],
