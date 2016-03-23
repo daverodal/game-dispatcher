@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "angularjs": "v1.3.13",
-    "angular-modal-service": "~0.6.9",
+    "angular-modal-service": "v0.6.9",
     "angular-sanitize": "~1.4.8",
     "bourbon": "~4.2.6",
     "neat": "~1.7.2",
