@@ -6,8 +6,8 @@
     "type": "project",
     "repositories": [
         {
-            "type": "vcs",
-            "url": "https://github.com/daverodal/wargaming"
+            "type": "path",
+            "url": "../wargaming"
         },
         {
             "type": "path",
