@@ -16,7 +16,7 @@ use DateTime;
 use Wargame\Battle;
 use App\Services\WargameService;
 use App\User;
-
+use App\Services\AnalyticsService;
 
 
 class WargameController extends Controller
@@ -61,6 +61,13 @@ class WargameController extends Controller
     public function getSetplay(Request $req, $id){
         $req->session()->put('wargame', $id);
         return redirect('wargame/play');
+    }
+
+    public function getTestAnalytics(AnalyticsService $as){
+        $displayData = $gamesAvail = $as->getVictories();
+
+        return view("wargame/wargame-analytics", compact("displayData"));
+
     }
 
     function getUnattachedGame(AdminService $ad, CouchService $cs, Request $req, $dir = false, $genre = false, $game = false, $theScenario = false)
