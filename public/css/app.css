@@ -3088,42 +3088,46 @@ li.game {
     clear: both;
     content: "";
     display: table; }
-  #analytics-grid .grid-row .colOne {
-    float: left;
-    display: block;
-    margin-right: 4.8291579146%;
-    width: 21.378131564%; }
-    #analytics-grid .grid-row .colOne:last-child {
+  #analytics-grid .grid-row {
+    height: 1em; }
+    #analytics-grid .grid-row:hover {
+      background: lightgray; }
+    #analytics-grid .grid-row .colOne {
+      float: left;
+      display: block;
+      margin-right: 4.8291579146%;
+      width: 21.378131564%; }
+      #analytics-grid .grid-row .colOne:last-child {
+        margin-right: 0; }
+    #analytics-grid .grid-row .colTwo {
+      float: left;
+      display: block;
+      margin-right: 4.8291579146%;
+      width: 21.378131564%;
+      word-break: break-all; }
+      #analytics-grid .grid-row .colTwo:last-child {
+        margin-right: 0; }
+    #analytics-grid .grid-row .colThree {
+      float: left;
+      display: block;
+      margin-right: 4.8291579146%;
+      width: 21.378131564%; }
+      #analytics-grid .grid-row .colThree:last-child {
+        margin-right: 0; }
+    #analytics-grid .grid-row .colFour {
+      float: left;
+      display: block;
+      margin-right: 4.8291579146%;
+      width: 21.378131564%; }
+      #analytics-grid .grid-row .colFour:last-child {
+        margin-right: 0; }
+    #analytics-grid .grid-row .colFive {
+      float: left;
+      display: block;
+      margin-right: 4.8291579146%;
+      width: 12.6423684045%;
       margin-right: 0; }
-  #analytics-grid .grid-row .colTwo {
-    float: left;
-    display: block;
-    margin-right: 4.8291579146%;
-    width: 21.378131564%;
-    word-break: break-all; }
-    #analytics-grid .grid-row .colTwo:last-child {
-      margin-right: 0; }
-  #analytics-grid .grid-row .colThree {
-    float: left;
-    display: block;
-    margin-right: 4.8291579146%;
-    width: 21.378131564%; }
-    #analytics-grid .grid-row .colThree:last-child {
-      margin-right: 0; }
-  #analytics-grid .grid-row .colFour {
-    float: left;
-    display: block;
-    margin-right: 4.8291579146%;
-    width: 21.378131564%; }
-    #analytics-grid .grid-row .colFour:last-child {
-      margin-right: 0; }
-  #analytics-grid .grid-row .colFive {
-    float: left;
-    display: block;
-    margin-right: 4.8291579146%;
-    width: 12.6423684045%;
-    margin-right: 0; }
-    #analytics-grid .grid-row .colFive:last-child {
-      margin-right: 0; }
+      #analytics-grid .grid-row .colFive:last-child {
+        margin-right: 0; }
 
 /*# sourceMappingURL=app.css.map */

@@ -2,6 +2,10 @@ $max-width: 100em;
 #analytics-grid {
   @include outer-container;
   .grid-row {
+    height:1em;
+    &:hover{
+      background:lightgray;
+    }
     .colOne {
       @include span-columns(1.5);
     }
