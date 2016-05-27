@@ -922,21 +922,6 @@ svg marker#head {
   margin-top: -31px;
   margin-left: -36px; }
 
-@-webkit-keyframes fade {
-  0% {
-    width: 71px;
-    opacity: .5; }
-  30% {
-    width: 71px;
-    margin-top: 0px;
-    margin-left: 0px;
-    opacity: .5; }
-  100% {
-    width: 261px;
-    margin-left: -95px;
-    margin-top: -95px;
-    opacity: 0.1; } }
-
 @keyframes fade {
   0% {
     width: 71px;
@@ -951,18 +936,6 @@ svg marker#head {
     margin-left: -95px;
     margin-top: -95px;
     opacity: 0.1; } }
-
-@-webkit-keyframes breath {
-  0% {
-    width: 71px; }
-  50% {
-    width: 161px;
-    margin-left: -45px;
-    margin-top: -45px; }
-  100% {
-    width: 71px;
-    margin-left: 0px;
-    margin-top: 0px; } }
 
 @keyframes breath {
   0% {
@@ -1510,7 +1483,6 @@ svg marker#head {
   z-index: 0;
   border-radius: 0px;
   border: 0px;
-  -webkit-transform: rotate(180deg);
   transform: rotate(180deg); }
 
 /*# sourceMappingURL=rebellionAll.css.map */

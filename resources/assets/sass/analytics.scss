@@ -2,9 +2,12 @@ $max-width: 100em;
 #analytics-grid {
   @include outer-container;
   .grid-row {
+    &:nth-child(even) {
+      background: lightgray;
+    }
     height:1em;
     &:hover{
-      background:lightgrey;
+      background:powderblue;
     }
     .colOne {
       @include span-columns(1.5);

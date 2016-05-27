@@ -914,6 +914,12 @@ Public License instead of this License.  But first, please read
         </div>
 
     </my-pane>
+    <my-pane title="Analytics" class="thanks">
+        <div class="coolBox">
+            <h1>Analytics</h1>
+        </div>
+    </my-pane>
+
     <my-pane title="Logout"></my-pane>
 </my-tabs>
 </body>
@@ -949,6 +955,10 @@ Public License instead of this License.  But first, please read
                             if(pane.title === "Messages"){
 
                                 window.location = '/messages';
+                            }
+                            if(pane.title === "Analytics"){
+
+                                window.location = '/wargame/test-analytics';
                             }
                             if(pane.title === "Logout"){
 

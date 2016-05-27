@@ -3063,8 +3063,10 @@ li.game {
     display: table; }
   #analytics-grid .grid-row {
     height: 1em; }
+    #analytics-grid .grid-row:nth-child(even) {
+      background: lightgray; }
     #analytics-grid .grid-row:hover {
-      background: lightgrey; }
+      background: powderblue; }
     #analytics-grid .grid-row .colOne {
       float: left;
       display: block;
