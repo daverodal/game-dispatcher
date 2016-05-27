@@ -4,7 +4,7 @@ $max-width: 100em;
   .grid-row {
     height:1em;
     &:hover{
-      background:lightgray;
+      background:lightgrey;
     }
     .colOne {
       @include span-columns(1.5);

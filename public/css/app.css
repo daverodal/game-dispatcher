@@ -242,9 +242,7 @@ a {
   cursor: pointer;
   background: silver;
   padding: 15px;
-  -webkit-animation: pulsate 2s linear infinite;
   animation: pulsate 2s linear infinite;
-  -webkit-animation-direction: alternate;
   animation-direction: alternate;
   border-radius: 10px;
   font-size: 30px;
@@ -253,12 +251,6 @@ a {
   text-decoration: underline;
   font-family: sans-serif;
   font-style: italic; }
-
-@-webkit-keyframes pulsate {
-  0% {
-    box-shadow: 0 0 0 #333; }
-  100% {
-    box-shadow: 10px 10px 10px #333; } }
 
 @keyframes pulsate {
   0% {
@@ -416,7 +408,7 @@ a {
 
 .fa {
   display: inline-block;
-  font: normal normal normal 14px / 1 FontAwesome;
+  font: normal normal normal 14px/1 FontAwesome;
   font-size: inherit;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
@@ -491,52 +483,35 @@ a {
   margin-left: .3em; }
 
 .fa-spin {
-  -webkit-animation: fa-spin 2s infinite linear;
   animation: fa-spin 2s infinite linear; }
 
 .fa-pulse {
-  -webkit-animation: fa-spin 1s infinite steps(8);
   animation: fa-spin 1s infinite steps(8); }
-
-@-webkit-keyframes fa-spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg); }
-  100% {
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg); } }
 
 @keyframes fa-spin {
   0% {
-    -webkit-transform: rotate(0deg);
     transform: rotate(0deg); }
   100% {
-    -webkit-transform: rotate(359deg);
     transform: rotate(359deg); } }
 
 .fa-rotate-90 {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
-  -webkit-transform: rotate(90deg);
   transform: rotate(90deg); }
 
 .fa-rotate-180 {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
-  -webkit-transform: rotate(180deg);
   transform: rotate(180deg); }
 
 .fa-rotate-270 {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-  -webkit-transform: rotate(270deg);
   transform: rotate(270deg); }
 
 .fa-flip-horizontal {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);
-  -webkit-transform: scale(-1, 1);
   transform: scale(-1, 1); }
 
 .fa-flip-vertical {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
-  -webkit-transform: scale(1, -1);
   transform: scale(1, -1); }
 
 :root .fa-rotate-90,
@@ -2713,9 +2688,7 @@ a {
   cursor: pointer;
   background: silver;
   padding: 15px;
-  -webkit-animation: pulsate 2s linear infinite;
   animation: pulsate 2s linear infinite;
-  -webkit-animation-direction: alternate;
   animation-direction: alternate;
   border-radius: 10px;
   font-size: 30px;
@@ -3091,7 +3064,7 @@ li.game {
   #analytics-grid .grid-row {
     height: 1em; }
     #analytics-grid .grid-row:hover {
-      background: lightgray; }
+      background: lightgrey; }
     #analytics-grid .grid-row .colOne {
       float: left;
       display: block;
