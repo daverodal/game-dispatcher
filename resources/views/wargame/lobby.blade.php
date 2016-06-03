@@ -178,7 +178,7 @@
 
 
             </ul>
-            <a class="logout" href="{{url('/logout')}}">Logout</a>
+            <a class="logout logout-lower" href="{{url('/logout')}}">Logout</a>
             <footer class="attribution">
                 By Paul Mercuri [Public domain or Public domain], <a target='blank' href="http://commons.wikimedia.org/wiki/File%3AArmored_Knight_Mounted_on_Cloaked_Horse.JPG">via Wikimedia Commons</a>`
             </footer>
