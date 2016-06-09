@@ -36,7 +36,8 @@ class LogSuccessfulLogout
         $doc = $this->cs->get('userLogins');
         $gnu = new \stdClass();
         $gnu->name = $user;
-        $gnu->time = date("Y-m-d H:i:s");
+        date_default_timezone_set("America/New_York");
+        $gnu->time = date("D M jS Y, g:i:s a T");
         $gnu->action = "logout";
         $doc->logins[] = $gnu;
         $this->cs->put($doc->_id, $doc);
