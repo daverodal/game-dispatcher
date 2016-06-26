@@ -31,6 +31,13 @@
                         </div>
                         <p ng-bind-html="scenario.longDescription"
                            class="scenarioDescription long-description selected"></p>
+                        <p ng-show="scenario.units">
+                            <ul>
+                                <li ng-repeat="unit in scenario.units">
+                                   @{{ unit.num }} @{{unit.nationality}} @{{ unit.class }} @{{ unit.combat }} @{{ unit.movement }} <span ng-show="unit.range > 1">@{{ unit.range }}</span>
+                                </li>
+                            </ul>
+                        </p>
                         <div class="clear"></div>
                     </div>
 

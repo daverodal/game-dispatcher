@@ -70,6 +70,18 @@ class WargameController extends Controller
 
     }
 
+    function getCloneScenario(AdminService $ad,$dir = false, $genre = false, $game = false, $theScenario = false){
+        $cloneScenario = $ad->getScenarioByName($dir, $genre, $game, $theScenario);
+        if($cloneScenario !== false){
+            dd($ad->cloneScenario('Mollwitz','Americas','FreemansFarm1777',uniqid(), $cloneScenario));
+        }
+
+    }
+
+    function getDeleteScenario(AdminService $ad){
+        $cloneScenario = $ad->deleteScenarioByName('Mollwitz','Americas','FreemansFarm1777','576ffdd3408fc');
+    }
+
     function getUnattachedGame(AdminService $ad, CouchService $cs, Request $req, $dir = false, $genre = false, $game = false, $theScenario = false)
     {
 
@@ -133,7 +145,7 @@ class WargameController extends Controller
                 $terrain = $cs->get($terrainName);
             }catch(\GuzzleHttp\Exception\BadResponseException $e){echo $terrainName." ".$e->getMessage();               }
             if(!$terrain){
-                $terrain = $this->couchsag->get("terrain-".$game);
+                $terrain = $cs->get("terrain-".$game);
             }
 
             $bigMapUrl = $mapUrl = $terrain->terrain->mapUrl;
@@ -152,7 +164,7 @@ class WargameController extends Controller
                     $terrain = $cs->get($terrainName);
                 }catch(\GuzzleHttp\Exception\BadResponseException $e){}
                 if(!$terrain){
-                    $terrain = $this->couchsag->get("terrain-".$game);
+                    $terrain = $cs->get("terrain-".$game);
                 }
 
                 $thisScenario = $theGame->value->scenarios->$theScenario;
@@ -174,10 +186,10 @@ class WargameController extends Controller
                     $terrainName .= ".$theScenario";
                 }
                 try {
-                    $terrain = $this->couchsag->get($terrainName);
+                    $terrain = $cs->get($terrainName);
                 }catch(\GuzzleHttp\Exception\BadResponseException $e){}
                 if(!$terrain){
-                    $terrain = $this->couchsag->get("terrain-".$game);
+                    $terrain = $cs->get("terrain-".$game);
                 }
                 $thisScenario = $customScenario->value;
                 $thisScenario->sName = $theScenario;
@@ -237,7 +249,6 @@ class WargameController extends Controller
             unset($theGame->value);
             $theGame = (array)$theGame;
             $theGameMeta['description'] = '';
-
             return view("wargame/wargame-unattached-game", compact("theScenarios", "editor", "backgroundImage", "backgroundAttr","bigMapUrl", "mapUrl", "theScenario", "plainGenre", "theGame", "games", "nest","siteUrl","theGameMeta"));
         } else {
             foreach ($gamesAvail as $gameAvail) {

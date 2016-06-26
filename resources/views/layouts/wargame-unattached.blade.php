@@ -140,6 +140,10 @@
 <script>
 </script>
 <script type="text/javascript">
+    var paramUnits = false;
+    <?php if(isset($theGameMeta['params']->units)){?>
+        paramUnits = '<?php echo json_encode($theGameMeta['params']->units);?>';
+    <?php };?>
     var jString = '<?php echo addslashes(json_encode($theScenarios));?>';
     var scenarioApp = angular.module('scenarioApp', ['angularModalService','ngSanitize']);
     scenarioApp.controller('CustomController', ['$scope', 'close', function($scope, close) {
@@ -166,9 +170,13 @@
     scenarioApp.controller('ScenarioController', ['$scope', 'ModalService', function ($scope, ModalService) {
         $scope.predicate = '';
         $scope.scenarios = $.parseJSON(jString);
+        $scope.defaultUnits = $.parseJSON(paramUnits);
         for (var i in $scope.scenarios) {
             $scope.scenario = $scope.scenarios[i];
             break;
+        }
+        if(!$scope.scenario.units){
+            $scope.scenario.units = $scope.defaultUnits;
         }
         $scope.game = '<?=$theGame['game'];?>';
         $scope.editor = '<?=$editor;?>';
@@ -193,6 +201,9 @@
             }
             a.selected = 'selected';
             $scope.scenario = a;
+            if(!$scope.scenario.units){
+                $scope.scenario.units = $scope.defaultUnits;
+            }
             $scope.lastScenario = a;
         }
         $scope.updateOptions = function(){

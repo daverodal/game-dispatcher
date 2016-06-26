@@ -158,16 +158,16 @@ class  AdminService
                 $game = $row->value;
                 $game->key = $row->key;
             }else{
-                $game = new stdClass();
+                $game = new \stdClass();
                 $game->dir = $row->key[0];
                 $game->genre = $row->key[1];
                 $game->game = $row->key[2];
                 $game->scenario = $row->key[3];
+                $game->id = $row->id;
                 $game->value = $row->value;
             }
             $games[] = $game;
         }
-
         return $games;
     }
 
@@ -186,4 +186,51 @@ class  AdminService
         $this->cs->setDb($prevDb);
     }
 
+    public function getScenarioByName($dir, $genre, $game, $scenarioName){
+        $scenarios = $this->getCustomScenarios($dir, $genre, $game);
+
+        foreach($scenarios as $scenario){
+            $theScenario = $scenario->scenario;
+ 
+            $thisScenario = $scenario->value;
+            $thisScenario->id = $scenario->id;
+            $thisScenario->sName = $theScenario;
+            if($scenarioName === $theScenario){
+                return $thisScenario;
+            }
+        }
+        return false;        
+        
+    }
+
+    public function deleteScenarioByName($dir, $genre, $game, $scenarioName){
+        $scenario = $this->getScenarioByName($dir, $genre, $game, $scenarioName);
+        if($scenario === false){
+            return;
+        }
+        $prevDb = $this->cs->setDb('users');
+        try{
+            $doc = $this->cs->get($scenario->id);
+        }catch(\GuzzleHttp\Exception\BadResponseException $e){}
+
+        $this->cs->delete($scenario->id, $doc->_rev);
+        $this->cs->setDb($prevDb);
+    }
+
+    public function cloneScenario( $dir, $genre, $game, $scenarioName, $scenario){
+        $games = new \stdClass();
+        $games->$game = new \stdClass();
+        $games->$game->path = $dir;
+        $games->$game->genre = $genre;
+        $games->$game->scenarios = new \stdClass();
+        $scenario->sName = $scenarioName;
+        $scenario->description .= " Clone";
+        $games->$game->scenarios->$scenarioName = $scenario;
+        $doc = new \stdClass();
+        $doc->docType = "scenariosAvail";
+        $doc->games = $games;
+        $prevDb = $this->cs->setDb('users');
+        $this->cs->post($doc);
+        $this->cs->setDb($prevDb);
+    }
 }
