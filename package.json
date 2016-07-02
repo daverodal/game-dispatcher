@@ -1,6 +1,7 @@
 {
   "private": true,
   "devDependencies": {
+    "angular-right-click": "^0.1.0",
     "gulp": "^3.8.8"
   },
   "dependencies": {
