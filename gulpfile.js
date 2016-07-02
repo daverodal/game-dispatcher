@@ -25,6 +25,9 @@ elixir(function(mix) {
 
     mix.copy('bower_components/bourbon/app/assets/stylesheets/', 'resources/assets/sass/bourbon');
     mix.copy('bower_components/neat/app/assets/stylesheets/', 'resources/assets/sass/neat');
+
+    mix.copy('node_modules/angular-right-click/src/ng-right-click.js', 'public/js');
+
     mix.copy('resources/assets/images', 'public/images');
     mix.sass('app.scss');
     mix.sass('vendor/wargame/rebellion/rebellion/rebellionAll.scss');
