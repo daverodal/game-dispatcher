@@ -174,22 +174,22 @@ if (!empty($players[3])) {
                     "myName": "<?=$playerTwo;?>",
                     "theirName": "<?=$playerOne;?>",
                     "theirOtherName": "<?=$playerThree;?>",
-                    "color": "<?=$playerTwo;?>",
-                    "otherColor": "<?=$playerOne;?>"
+                    "color": "<?=implode('-', explode(' ', $playerTwo));?>",
+                    "otherColor": "<?=implode('-', explode(' ', $playerOne));?>"
                 };
                 $scope.playerOne = {
                     "myName": "<?=$playerOne;?>",
                     "theirName": "<?=$playerTwo;?>",
                     "theirOtherName": "<?=$playerThree;?>",
-                    "color": "<?=$playerOne;?>",
-                    "otherColor": "<?=$playerTwo;?>"
+                    "color": "<?=implode('-', explode(' ', $playerOne));?>",
+                    "otherColor": "<?=implode('-', explode(' ', $playerTwo));?>"
                 };
                 $scope.playerThree = {
                     "myName": "<?=$playerThree;?>",
                     "theirName": "<?=$playerOne;?>",
                     "theirOtherName": "<?=$playerTwo;?>",
-                    "color": "<?=$playerThree;?>",
-                    "otherColor": "<?=$playerTwo;?>"
+                    "color": "<?=implode('-', explode(' ', $playerThree));?>",
+                    "otherColor": "<?=implode('-', explode(' ', $playerTwo));?>"
                 };
             }]);
 </script>
