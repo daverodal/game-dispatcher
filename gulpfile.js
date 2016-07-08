@@ -31,4 +31,5 @@ elixir(function(mix) {
     mix.copy('resources/assets/images', 'public/images');
     mix.sass('app.scss');
     mix.sass('vendor/wargame/rebellion/rebellion/rebellionAll.scss');
+    mix.browserify('testme.js')
 });
