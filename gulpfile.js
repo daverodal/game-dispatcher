@@ -13,6 +13,12 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
 
+    /*mix.scripts(['../../../bower_components/angularjs/angular.js',
+        '../../../bower_components/angular-sanitize/angular-sanitize.js',
+        '../../../bower_components/angular-modal-service/dst/angular-modal-service.js',
+        '../../../bower_components/jquery/dist/jquery.js',
+        '../../../bower_components/jquery-ui/jquery-ui.js']);*/
+
     mix.copy('bower_components/angularjs/angular.js', 'public/js');
     mix.copy('bower_components/angular-sanitize/angular-sanitize.js', 'public/js');
     mix.copy('bower_components/angular-modal-service/dst/angular-modal-service.js', 'public/js');
@@ -29,6 +35,14 @@ elixir(function(mix) {
     mix.copy('node_modules/angular-right-click/src/ng-right-click.js', 'public/js');
 
     mix.copy('resources/assets/images', 'public/images');
-    mix.sass('app.scss');
-    mix.sass('vendor/wargame/rebellion/rebellion/rebellionAll.scss');
+    if(!elixir.config.production){
+        mix.sass('app.scss');
+        mix.sass('vendor/wargame/rebellion/rebellion/rebellionAll.scss');
+    }else{
+        console.log("SKIPPING SASS!");
+    }
+
+    mix.browserify('main.js', 'public/javascripts/main.js');
+
+
 });
