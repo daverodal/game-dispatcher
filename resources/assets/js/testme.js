@@ -1,4 +1,4 @@
-require("./totaljerks.js");
+// require("./totaljerks.js");
 
 /*alert("you jerkse");*/
 
