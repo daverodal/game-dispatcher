@@ -30,7 +30,6 @@
     <script src="{{ asset('js/jquery.js')}}"></script>
     <script src="{{ asset('js/jquery-ui.js')}}"></script>
     <script src="{{ asset('js/angular.js')}}"></script>
-    <script src="{{ asset('js/testme.js')}}"></script>
     <link href="{{ asset('css/app.css')}}" rel="stylesheet" type="text/css">
     <script src="{{ asset('javascripts/main.js')}}"></script>
 
