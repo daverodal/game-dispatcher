@@ -130,7 +130,7 @@ lobbyApp.controller('LobbyController', ['$scope', '$http', 'sync', function($sco
 
     sync.register("results", function(results){
         for(var i in results){
-            id = results[0].id;
+            var id = results[0].id;
             if(id.match(/^_/)){
                 continue;
             }
@@ -153,7 +153,6 @@ lobbyApp.controller('LobbyController', ['$scope', '$http', 'sync', function($sco
 }]);
 
 lobbyApp.factory('sync',function(){
-
     var Sync = require("./sync.js");
     var sync = new Sync(fetchUrl);
     return sync;
