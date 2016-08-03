@@ -22,6 +22,9 @@ $max-width: 100em;
   }
 }
 
+.sort-col{
+  cursor:pointer;
+}
 .form-group {
   @include outer-container;
   .col-sm-3 {

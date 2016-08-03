@@ -58,6 +58,55 @@ lobbyApp.directive('myTabs', function() {
 
 lobbyApp.controller('LobbyController', ['$scope', '$http', 'sync', function($scope, $http, sync){
 
+    $scope.lobbySort = 'timestamp';
+    $scope.lobbySortDir = false;
+    $scope.multiSort = 'timestamp';
+    $scope.multiSortDir = false;
+    $scope.otherSort = 'timestamp';
+    $scope.otherSortDir = false;
+    $scope.publicSort = 'timestamp';
+    $scope.publicSortDir = false;
+    
+    $scope.otherColSort = function(column){
+        debugger;
+        if(column === $scope.otherSort){
+            $scope.otherSortDir = !$scope.otherSortDir;
+            return;
+        }
+        $scope.otherSort = column;
+        $scope.otherSortDir = false;
+    };
+
+    $scope.publicColSort = function(column){
+        debugger;
+        if(column === $scope.publicSort){
+            $scope.publicSortDir = !$scope.publicSortDir;
+            return;
+        }
+        $scope.publicSort = column;
+        $scope.publicSortDir = false;
+    };
+    
+    $scope.multiColSort = function(column){
+        debugger;
+        if(column === $scope.multiSort){
+            $scope.multiSortDir = !$scope.multiSortDir;
+            return;
+        }
+        $scope.multiSort = column;
+        $scope.multiSortDir = false;
+    };
+
+    $scope.colSort = function(column){
+        debugger;
+        if(column === $scope.lobbySort){
+            $scope.lobbySortDir = !$scope.lobbySortDir;
+            return;
+        }
+        $scope.lobbySort = column;
+        $scope.lobbySortDir = false;
+    };
+
     sync.register('lobbies', function(lobbies){
         var myHotLobbies = [];
         for(var i in lobbies) {

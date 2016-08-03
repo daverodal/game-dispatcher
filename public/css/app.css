@@ -51,6 +51,9 @@ html {
     #myOtherGames .lobbyRow .colFive:last-child, #myOtherGames .lobbyHeader .colFive:last-child, #publicGames .lobbyRow .colFive:last-child, #publicGames .lobbyHeader .colFive:last-child {
       margin-right: 0; }
 
+.sort-col {
+  cursor: pointer; }
+
 .form-group {
   max-width: 100em;
   margin-left: auto;
@@ -2496,6 +2499,9 @@ a {
     margin-right: 0; }
     #myOtherGames .lobbyRow .colFive:last-child, #myOtherGames .lobbyHeader .colFive:last-child, #publicGames .lobbyRow .colFive:last-child, #publicGames .lobbyHeader .colFive:last-child {
       margin-right: 0; }
+
+.sort-col {
+  cursor: pointer; }
 
 .form-group {
   max-width: 100em;

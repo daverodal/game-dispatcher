@@ -258,7 +258,7 @@ class  WargameService{
             $players = implode($thePlayers, " ");
             $row->value[1] = "created " . formatDateDiff($dt) . " ago";
             $odd ^= 1;
-            $lobbies[] = array("public" => $public, "odd" => $odd ? "odd" : "", "gameName" => $gameName, "name" => $name, 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
+            $lobbies[] = array("public" => $public, "odd" => $odd ? "odd" : "", "gameName" => $gameName, "name" => $name, 'timestamp'=>$dt->getTimestamp(), 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
         }
         $seq = $this->cs->get("/_design/newFilter/_view/getLobbies?startkey=[\"$user\",\"multi\"]&endkey=[\"$user\",\"multi\",\"zzzzzzzzzzzzzzzzzzzzzzzz\"]");
 
@@ -297,7 +297,7 @@ class  WargameService{
             $players = implode($thePlayers, " ");
             $row->value[1] = "created " . formatDateDiff($dt) . " ago";
             $odd ^= 1;
-            $multiLobbies[] = array("public" => $public, "odd" => $odd ? "odd" : "", "gameName" => $gameName, "name" => $name, 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
+            $multiLobbies[] = array("public" => $public, "odd" => $odd ? "odd" : "", "gameName" => $gameName, "name" => $name,'timestamp'=>$dt->getTimestamp(), 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
         }
         $seq = $this->cs->get("/_design/newFilter/_view/getGamesImIn?startkey=[\"$user\"]&endkey=[\"$user\",\"zzzzzzzzzzzzzzzzzzzzzzzz\"]");
 
@@ -332,7 +332,7 @@ class  WargameService{
             $players = implode($thePlayers, " ");
             $row->value[1] = "created " . formatDateDiff($dt) . " ago";
             $odd ^= 1;
-            $otherGames[] = array("odd" => $odd ? "odd" : "", "name" => $name, "gameName" => $gameName, 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
+            $otherGames[] = array("odd" => $odd ? "odd" : "", "name" => $name, "gameName" => $gameName,'timestamp'=>$dt->getTimestamp(), 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
         }
         $seq = $this->cs->get("/_design/newFilter/_view/publicGames");
 
@@ -360,11 +360,11 @@ class  WargameService{
             $players = implode($thePlayers, " ");
             $row->value[1] = "created " . formatDateDiff($dt) . " ago";
             $odd ^= 1;
-            $publicGames[] = array("odd" => $odd ? "odd" : "", "name" => $name, "gameName" => $gameName, 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
+            $publicGames[] = array("odd" => $odd ? "odd" : "", "name" => $name, "gameName" => $gameName, 'timestamp'=>$dt->getTimestamp(), 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
         }
         $results = $lastSeq->results;
         $last_seq = $lastSeq->last_seq;
-        return compact("lobbies", "multiLobbies", "otherGames", "last_seq", "results", "publicGames");
+        return compact("lobbies", "multiLobbies", "otherGames", "last_seq", "publicGames");
     }
 
 

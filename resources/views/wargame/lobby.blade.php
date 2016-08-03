@@ -81,15 +81,15 @@
                     <h2>Multi games you created:</h2>
                     <ul id="myMultiGames">
                         <li class="bold lobbyHeader">
-                            <span class="colOne">Name</span>
-                            <span class="colTwo">Game</span>
-                            <span class="colThree">Turn</span>
-                            <span class="colFour">Date</span>
-                            <span class="colFive">Players Involved</span>
+                            <span class="sort-col colOne" ng-click="multiColSort('name')">Name</span>
+                            <span class="sort-col colTwo" ng-click="multiColSort('gameName')">Game</span>
+                            <span class="sort-col colThree"  ng-click="multiColSort('turn')">Turn</span>
+                            <span class="sort-col colFour" ng-click="multiColSort('timestamp')">Date</span>
+                            <span class="sort-col colFive"  ng-click="multiColSort('players')">Players Involved</span>
                             <span class="colSix">Actions</span>
                         </li>
                         <li class="bold lobbySpacer">&nbsp;</li>
-                        <li ng-class-odd="'odd'" ng-repeat="myMultiGame in myMultiGames" class="lobbyRow">
+                        <li ng-class-odd="'odd'" ng-repeat="myMultiGame in myMultiGames   | orderBy:multiSort:multiSortDir" class="lobbyRow">
                             <a ng-href="{{url('wargame/change-wargame')}}/@{{myMultiGame.id}}">
                                 <span class="colOne">@{{myMultiGame.name}}</span>
                                 <span class="colTwo">@{{myMultiGame.gameName}}</span>
@@ -110,14 +110,14 @@
                     <h2>Games you were invited to:</h2>
                     <ul id="myOtherGames">
                         <li class="lobbyHeader bold">
-                            <span class="colOne">Name</span>
-                            <span class="colTwo">Game</span>
-                            <span class="colThree">Turn</span>
-                            <span class="colFour">Date</span>
-                            <span class="colFive">Players Involved</span>
+                            <span class="sort-col colOne" ng-click="otherColSort('name')">Name</span>
+                            <span class="sort-col colTwo" ng-click="otherColSort('gameName')">Game</span>
+                            <span class="sort-col colThree"  ng-click="otherColSort('turn')">Turn</span>
+                            <span class="sort-col colFour"  ng-click="otherColSort('timeStamp')">Date</span>
+                            <span class="sort-col colFive" ng-click="otherColSort('players')">Players Involved</span>
                         </li>
                         <li class="lobbySpacer">&nbsp;</li>
-                        <li ng-class-odd="'odd'" ng-repeat="myOtherGame in myOtherGames" class="lobbyRow">
+                        <li ng-class-odd="'odd'" ng-repeat="myOtherGame in myOtherGames  | orderBy:otherSort:otherSortDir" class="lobbyRow">
                             <a ng-href="{{url('wargame/change-wargame')}}/@{{myOtherGame.id}}">
                                 <span class="colOne">@{{myOtherGame.name}}</span>
                                 <span class="colTwo">@{{myOtherGame.gameName}}</span>
@@ -133,14 +133,14 @@
             <h2>HOTSEAT games you created:</h2>
             <ul id="myGames">
                 <li class="bold lobbyHeader">
-                    <span class="colOne">Name</span>
-                    <span class="colTwo">Game</span>
-                    <span class="colThree">Turn</span>
-                    <span class="colFour">Date</span>
+                    <span class="sort-col colOne" ng-click="colSort('name')">Name</span>
+                    <span class="sort-col colTwo" ng-click="colSort('gameName')">Game</span>
+                    <span class="sort-col colThree" ng-click="colSort('turn')">Turn</span>
+                    <span class="sort-col colFour" ng-click="colSort('timestamp')">Date</span>
                     <span class="colFive">Actions</span>
                 </li>
                 <li class="bold lobbySpacer">&nbsp;</li>
-                <li ng-class-odd="'odd'" ng-repeat="myHotGame in myHotGames" class="lobbyRow">
+                <li ng-class-odd="'odd'" ng-repeat="myHotGame in myHotGames | orderBy:lobbySort:lobbySortDir" class="lobbyRow">
 
 
                     <a ng-href="{{url('wargame/change-wargame')}}/@{{myHotGame.id}}">
@@ -158,15 +158,15 @@
             <h2>Public Games: (you can observe but not play)</h2>
             <ul id="publicGames">
                 <li class="lobbyHeader bold">
-                    <span class="colOne">Name</span>
-                    <span class="colTwo">Game</span>
-                    <span class="colThree">Turn</span>
-                    <span class="colFour">Date</span>
-                    <span class="colFive">Players Involved</span>
+                    <span class="sort-col colOne"  ng-click="publicColSort('name')">Name</span>
+                    <span class="sort-col colTwo"  ng-click="publicColSort('gameName')">Game</span>
+                    <span class="sort-col colThree" ng-click="publicColSort('turn')">Turn</span>
+                    <span class="sort-col colFour"  ng-click="publicColSort('timestamp')">Date</span>
+                    <span class="sort-col colFive"  ng-click="publicColSort('players')">Players Involved</span>
                 </li>
                 <li class="lobbySpacer">&nbsp;</li>
 
-                <li ng-class-odd="'odd'" ng-repeat="myPublicGame in myPublicGames | orderBy : [ 'players','date']" class="lobbyRow">
+                <li ng-class-odd="'odd'" ng-repeat="myPublicGame in myPublicGames | orderBy:publicSort:publicSortDir" class="lobbyRow">
                     <a ng-href="{{url('wargame/change-wargame')}}/@{{myPublicGame.id}}">
                         <span class="colOne">@{{myPublicGame.name}}</span>
                         <span class="colTwo">@{{myPublicGame.gameName}}</span>
