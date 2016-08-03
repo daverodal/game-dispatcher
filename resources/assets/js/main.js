@@ -68,7 +68,6 @@ lobbyApp.controller('LobbyController', ['$scope', '$http', 'sync', function($sco
     $scope.publicSortDir = false;
     
     $scope.otherColSort = function(column){
-        debugger;
         if(column === $scope.otherSort){
             $scope.otherSortDir = !$scope.otherSortDir;
             return;
@@ -78,7 +77,6 @@ lobbyApp.controller('LobbyController', ['$scope', '$http', 'sync', function($sco
     };
 
     $scope.publicColSort = function(column){
-        debugger;
         if(column === $scope.publicSort){
             $scope.publicSortDir = !$scope.publicSortDir;
             return;
@@ -88,7 +86,6 @@ lobbyApp.controller('LobbyController', ['$scope', '$http', 'sync', function($sco
     };
     
     $scope.multiColSort = function(column){
-        debugger;
         if(column === $scope.multiSort){
             $scope.multiSortDir = !$scope.multiSortDir;
             return;
@@ -98,7 +95,6 @@ lobbyApp.controller('LobbyController', ['$scope', '$http', 'sync', function($sco
     };
 
     $scope.colSort = function(column){
-        debugger;
         if(column === $scope.lobbySort){
             $scope.lobbySortDir = !$scope.lobbySortDir;
             return;
