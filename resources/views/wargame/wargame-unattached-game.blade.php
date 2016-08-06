@@ -47,7 +47,7 @@
                         <a ng-if="editor" target='_blank' ng-href="@{{histEditLink}}">Edit</a>
                         <?php //echo $theGame->value->histEditLink;?>
 
-                        {!! $theGameMeta['longDesc'] or 'love' !!}
+                        {!! $theGameMeta['longDesc'] or '' !!}
                     </div>
                 </li>
                 <li class='rightGrid'>
@@ -56,7 +56,7 @@
                     <?php
                     echo "<h3>Designer Notes</h3><div class='coolBox wordpress-wrapper'>";
                     //            echo $theGameMeta['playerEditLink'];?>
-                    {!! $theGameMeta['playerNotes'] or 'love' !!}
+                    {!! $theGameMeta['playerNotes'] or '' !!}
 
                 </li>
             </ul>
