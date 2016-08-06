@@ -60,7 +60,6 @@ module.exports =  function(baseUrl) {
 //                    jqXHR.abort();
                     },
                     success: function (data, textstatus, jqXHR) {
-                        debugger;
                         var now = ((new Date()).getTime()) / 1000;
                         that.fetchTimes.push(now);
                         if (that.fetchTimes.length > 10) {
