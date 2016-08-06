@@ -42,6 +42,7 @@ elixir(function(mix) {
         console.log("SKIPPING SASS!");
     }
 
+    mix.version(['vendor/wargame/mollwitz/css','vendor/wargame/medieval/css']);
     mix.browserify('main.js', 'public/javascripts/main.js');
 
 
