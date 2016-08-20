@@ -3195,4 +3195,7 @@ html {
   border: 0px;
   transform: rotate(180deg); }
 
+.unit .unit-numbers .infoLen7, .unit .unit-numbers .infoLen8 {
+  letter-spacing: -1px; }
+
 /*# sourceMappingURL=rebellionAll.css.map */

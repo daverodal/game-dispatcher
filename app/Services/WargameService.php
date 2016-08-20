@@ -12,6 +12,8 @@ use Input;
 use App\User;
 
 class  WargameService{
+
+    static $providers = [];
     public $cs;
     static $viewBase = false;
     public $couch;
@@ -41,6 +43,15 @@ class  WargameService{
         $ret['curPath'] = $curPath;
         return [$viewPath, $ret];
     }
+
+    public static function addProvider($provider){
+        static::$providers[] = $provider;
+    }
+
+    public static function getProviders(){
+        return static::$providers;
+    }
+
     public function lobbyView(){
 
         $user = Auth::user()['name'];

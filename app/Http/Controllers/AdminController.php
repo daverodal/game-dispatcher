@@ -71,31 +71,34 @@ class AdminController extends Controller
 
     function getAddGame(CouchService $cs){
 
-//        var_dump($_GET);
+       $providersPaths  = \App\Services\WargameService::getProviders();
+
         $dir = \Input::get('dir',false);
         if($dir){
-            $infoPath =  base_path("vendor/daverodal/wargaming/Wargame/$dir/info.json");
-
-            $info = json_decode(file_get_contents($infoPath));
-
-            $games = $this->addGame($cs, $info);
+            foreach($providersPaths as $path){
+                $infoPath = "$path/$dir/info.json";
+                if(file_exists($infoPath)){
+                    $info = json_decode(file_get_contents($infoPath));
+                    $this->addGame($cs, $info);
+                }
+            }
             return redirect('admin/games');
         }
-
-
         return view('admin.addGame');
-//        $this->load->view('users/games_view',compact("games"));
-//        var_dump($this->users_model->getUsersByEmail());
     }
 
 
     public function addGame(CouchService $cs, $games){
 
+        $isProduction = config('app.env') === 'production';
         $prevDb = $cs->setDb('users');
         $doc = $cs->get("gnuGamesAvail");
         if($doc->docType == "gnuGamesAvail"){
             foreach($games as $name => $game) {
                 if(!empty($game->disabled) === true){
+                    continue;
+                }
+                if($isProduction && empty($game->production)){
                     continue;
                 }
                 $doc->games->$name = $game;
