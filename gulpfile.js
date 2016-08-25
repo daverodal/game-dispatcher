@@ -45,7 +45,8 @@ elixir(function(mix) {
     mix.browserify('main.js', 'public/javascripts/main.js');
     mix.browserify('common.js', 'public/javascripts/common.js');
     mix.browserify('ang.js', 'public/javascripts/ang.js');
-    mix.version(['javascripts/ang.js','css/app.css', 'javascripts/common.js','javascripts/main.js', 'js/sync.js','vendor/wargame/mollwitz/css','vendor/wargame/medieval/css']);
+    mix.version(['javascripts/ang.js','css/app.css', 'javascripts/common.js','javascripts/main.js', 'js/sync.js','vendor/wargame/mollwitz/css',
+        'vendor/wargame/medieval/css','vendor/wargame/tmcw/css','vendor/wargame/spi/css']);
 
 
 });
