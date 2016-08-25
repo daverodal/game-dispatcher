@@ -1,3 +1,4 @@
+require("./common.js");
 var lobbyApp = angular.module('lobbyApp', []);
 lobbyApp.directive('myTabs', function() {
     return {

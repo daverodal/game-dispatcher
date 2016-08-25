@@ -23,11 +23,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <script src="{{ asset('js/jquery.js')}}"></script>
-  <script src="{{ asset('js/jquery-ui.js')}}"></script>
-  <script src="{{ asset('js/sync.js')}}"></script>
-  <script src="{{ asset('js/angular.js')}}"></script>
-  <link href="{{ asset('css/app.css')}}" rel="stylesheet" type="text/css">
+  <script src="{{ elixir('javascripts/common.js')}}"></script>
+  <link href="{{ elixir('css/app.css')}}" rel="stylesheet" type="text/css">
   <style type="text/css">
 
     body{

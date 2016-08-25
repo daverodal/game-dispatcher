@@ -30,12 +30,8 @@
     <meta charset="UTF-8">
     <script src="{{ asset('js/jquery.js')}}"></script>
     <script src="{{ asset('js/jquery-ui.js')}}"></script>
-    <script src="{{ asset('js/sync.js')}}"></script>
-    <script src="{{ asset('js/angular.js')}}"></script>
-    <link href="{{ asset('css/app.css')}}" rel="stylesheet" type="text/css">
-
-    <script src="{{ asset('js/angular-sanitize.js')}}"></script>
-    <script src="{{ asset('js/angular-modal-service.js')}}"></script>
+    <script src="{{ elixir('javascripts/common.js')}}"></script>
+    <link href="{{ elixir('css/app.css')}}" rel="stylesheet" type="text/css">
 
     <meta charset="UTF-8">
 
@@ -130,9 +126,6 @@
 </head>
 <body ng-controller="ScenarioController">
 @yield('content');
-<div ng-controller="RecursiveController">
-    <recursive-rules data="[]"></recursive-rules>
-</div>
 <footer class="unattached attribution">
     <?=$backgroundAttr;?>
 </footer>
@@ -175,8 +168,10 @@
             $scope.scenario = $scope.scenarios[i];
             break;
         }
-        if(!$scope.scenario.units){
-            $scope.scenario.units = $scope.defaultUnits;
+        if($scope.scenario) {
+            if (!$scope.scenario.units) {
+                $scope.scenario.units = $scope.defaultUnits;
+            }
         }
         $scope.game = '<?=$theGame['game'];?>';
         $scope.editor = '<?=$editor;?>';
@@ -185,7 +180,9 @@
         $scope.histEditLink = '<?=isset($theGameMeta['histEditLink']) ? $theGameMeta['histEditLink'] : false;?>';
 
         $scope.lastScenario = $scope.scenario;
-        $scope.scenario.selected = 'selected';
+        if($scope.scenario){
+            $scope.scenario.selected = 'selected';
+        }
         $scope.imageUpdating = true;
         $scope.setOptions = "";
 
@@ -244,48 +241,6 @@
         };
     });
 
-    scenarioApp.controller('RecursiveController', ['$scope', function($scope) {
-
-                $scope.typeOf = function(val){
-                    return (typeof val) === 'object';
-                };
-                $scope.data = [
-                    "love",
-                    "peace",
-                    "war",
-                    ['gold',
-                        'fire',
-                        'water',['gax','electric']],
-                    'weapons'
-                ];
-            }])
-            .directive('recursiveRules',function(){
-                return {
-                    restrict:'E',
-                    scope:{
-                        data: '='
-                    },
-                    template:'<ol><li recursive-rule ng-repeat="datum in data" data="datum"></li></ol>'
-                }
-            })
-            .directive('recursiveRule', function ($compile) {
-                return {
-                    restrict: "A",
-                    replace: true,
-                    scope: {
-                        data: '='
-                    },
-                    template: '',
-                    link: function (scope, element, attrs) {
-                        if (angular.isArray(scope.data)) {
-                            element.append("Dude! <recursive-rules data='data'></recursive-rules>");
-                        }else{
-                            element.append('@{{data}}');
-                        }
-                        $compile(element.contents())(scope);
-                    }
-                }
-            });
 
 </script>
 </html>
