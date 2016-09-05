@@ -471,7 +471,7 @@ class  WargameService{
             $last_seq = 0;
 
             if (is_object($ret) === true) {
-                $wargame = $ret->body->id;
+                $wargame = $ret->id;
                 $req->session()->put("wargame", $wargame);
             }
             $doc = $this->cs->get($wargame);
