@@ -568,6 +568,7 @@ class  WargameService{
 
     public function resizeImage($filename, $new_width = 500, $dir = 'smallImages')
     {
+        ini_set( 'memory_limit', 1024 . 'M' );
 
 // Get new dimensions
         list($width, $height, $type) = getimagesize($filename);
@@ -580,7 +581,7 @@ class  WargameService{
                 $image = imagecreatefrompng($filename);
                 break;
             case IMAGETYPE_JPEG:
-                $image = imagecreatefromjpeg($filename);
+                    $image = imagecreatefromjpeg($filename);
                 break;
         }
         imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);

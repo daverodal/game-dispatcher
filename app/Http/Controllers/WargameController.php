@@ -110,7 +110,11 @@ class WargameController extends Controller
                 $backgroundImage = "Yorktown80.jpg";
                 $backgroundAttr = 'John Trumbull [Public domain], <a target="_blank" href="https://commons.wikimedia.org/wiki/File%3AYorktown80.JPG">via Wikimedia Commons</a>';
             }
-
+            if(preg_match("/Great Northern/", $genre)){
+                $backgroundImage = "Battle_of_Poltava_1709.png";
+                $backgroundAttr = 'John Trumbull [Public domain], <a target="_blank" href="https://commons.wikimedia.org/wiki/File%3AYorktown80.JPG">via Wikimedia Commons</a>';
+            }
+            $backgroundAttr = 'By Louis Caravaqe [Public domain], <a target="_blank"  href="https://commons.wikimedia.org/wiki/File%3ABattle_of_Poltava_1709.PNG">via Wikimedia Commons</a>';
             if(preg_match("/Napoleonic/", $genre)){
                 $backgroundImage = "Napoleon.jpg";
                 $backgroundAttr = 'Jacques-Louis David [Public domain], <a href="https://commons.wikimedia.org/wiki/File%3AJacques-Louis_David_-_Napoleon_at_the_St._Bernard_Pass_-_WGA06083.jpg">via Wikimedia Commons</a>';
