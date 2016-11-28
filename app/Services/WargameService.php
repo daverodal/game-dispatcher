@@ -14,6 +14,7 @@ use App\User;
 class  WargameService{
 
     static $providers = [];
+    static $battleMaps = [];
     public $cs;
     static $viewBase = false;
     public $couch;
@@ -46,6 +47,14 @@ class  WargameService{
 
     public static function addProvider($provider){
         static::$providers[] = $provider;
+    }
+
+    public static function addBattleMap($battleMap){
+        static::$battleMaps[] = $battleMap;
+    }
+
+    public static function getBattleMaps(){
+        return static::$battleMaps;
     }
 
     public static function getProviders(){
