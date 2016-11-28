@@ -18,7 +18,7 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */?>
-<?php $count = Auth::user()->newMessagesCount(); ?>
+<?php $count = Auth::user()->newThreadsCount(); ?>
 @if($count > 0)
     <span ng-show="pane.title === 'Messages'" class="label label-danger">{!! $count !!}</span>
 @endif
