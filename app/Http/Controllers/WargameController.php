@@ -748,6 +748,8 @@ class WargameController extends Controller
             }
         }
         $battle->terrain->smallMapUrl = $ws->resizeImage($mapUrl);
+        $battle->terrain->smallMapUrl = preg_replace("/localhost/", "davidrodal.com", $battle->terrain->smallMapUrl);
+
 //        $this->rotateImage($mapUrl);
         $battle->terrainName = false;
         $wargameDoc = $battle->save();
