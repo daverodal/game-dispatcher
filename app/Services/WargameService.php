@@ -559,7 +559,12 @@ class  WargameService{
     {
 
 // Get new dimensions
-        list($width, $height, $type) = getimagesize($filename);
+        $imageArray = @getimagesize($filename);
+        if(!is_array($imageArray )){
+            echo "Cannot rotate image\n";
+            return;
+        }
+        list($width, $height, $type) = $imageArray;
 
 // Resample
         switch($type){
