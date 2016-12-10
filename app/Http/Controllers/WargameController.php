@@ -134,7 +134,7 @@ class WargameController extends Controller
                 $backgroundAttr = 'By Greg Goebel [Public domain], <a target="blank" href="http://commons.wikimedia.org/wiki/File%3AM110_8_inch_self_propelled_howitzer_tank_military.jpg">via Wikimedia Commons</a>';
             }
 
-            if(preg_match("/Modern/", $genre)){
+            if(preg_match("/Mid/", $genre)){
                 $backgroundImage = "BWP-1_Baltops_2016_0283.jpg";
                 $backgroundAttr = '<a rel="nofollow" class="external text" href="http://konflikty.pl">Konflikty.pl</a> [Attribution or Attribution], <a target="_blank" href="https://commons.wikimedia.org/wiki/File%3ABWP-1_Baltops_2016_0283.jpg">via Wikimedia Commons</a>';
             }
