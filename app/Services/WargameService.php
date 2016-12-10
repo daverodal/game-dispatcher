@@ -534,7 +534,22 @@ class  WargameService{
             /* totally throw the old one away */
 
             $this->cs->delete($terrainDocName, $ter->_rev);
-            $this->cs->post($data);
+            $retry = 0;
+            $done = false;
+            do {
+                try {
+                    $this->cs->post($data);
+                    $done = true;
+                } catch (\Exception $e) {
+                    $retry++;
+                    if($e->getCode() !== 409){
+                        throw($e);
+                    }
+                    if($retry >= 3){
+                        throw($e);
+                    }
+                }
+            }while(!$done);
         }
         $prevDb = $this->cs->setDb($prevDb);
     }

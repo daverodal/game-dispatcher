@@ -24,6 +24,11 @@ class MapsController extends Controller
     }
 
     public function getMaps(CouchService $client ){
+        echo $this->fetchMaps($client);
+    }
+
+
+    public function fetchMaps(CouchService $client ){
         $seq = $client->get('_design/restFilter/_view/getMaps');
 
         $rows = $seq->rows;
@@ -33,7 +38,7 @@ class MapsController extends Controller
             $map->id = $val->key;
             $maps[] = $map;
         }
-        echo json_encode(['maps' => $maps]);
+        return json_encode(['maps' => $maps]);
 
     }
 
