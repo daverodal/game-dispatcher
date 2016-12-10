@@ -621,7 +621,8 @@ class  WargameService{
         imagedestroy($image_p);
         imagedestroy($image);
 
-        return url($f);
+        $url = config('publish.hostname'). "/$f";
+        return $url;
 
     }
 }
