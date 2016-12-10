@@ -134,6 +134,11 @@ class WargameController extends Controller
                 $backgroundAttr = 'By Greg Goebel [Public domain], <a target="blank" href="http://commons.wikimedia.org/wiki/File%3AM110_8_inch_self_propelled_howitzer_tank_military.jpg">via Wikimedia Commons</a>';
             }
 
+            if(preg_match("/Modern/", $genre)){
+                $backgroundImage = "BWP-1_Baltops_2016_0283.jpg";
+                $backgroundAttr = '<a rel="nofollow" class="external text" href="http://konflikty.pl">Konflikty.pl</a> [Attribution or Attribution], <a target="_blank" href="https://commons.wikimedia.org/wiki/File%3ABWP-1_Baltops_2016_0283.jpg">via Wikimedia Commons</a>';
+            }
+
             if(preg_match("/early/", $genre)){
                 $backgroundImage = "French-Marne-Machinegun.jpg";
                 $backgroundAttr = 'By Unknown or not provided (U.S. National Archives and Records Administration) [Public domain], <a target="_blank" href="https://commons.wikimedia.org/wiki/File%3AFrench_troopers_under_General_Gouraud%2C_with_their_machine_guns_amongst_the_ruins_of_a_cathedral_near_the_Marne..._-_NARA_-_533679.tif">via Wikimedia Commons</a>';
