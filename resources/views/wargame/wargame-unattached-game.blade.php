@@ -53,11 +53,11 @@
                 <li class='rightGrid'>
                     <div class='spinner-div' ng-if="imageUpdating"><i class="fa fa-spinner fa-spin"></i></div>
                     <img id="mapImage" imageonload ng-src="@{{scenario.mapUrl}}">
-                    <?php
-                    echo "<h3>Designer Notes</h3><div class='coolBox wordpress-wrapper'>";
-                    //            echo $theGameMeta['playerEditLink'];?>
-                    {!! $theGameMeta['playerNotes'] or '' !!}
-
+                    <h3>Designer Notes {!! $theGameMeta['playerEditLink'] or '' !!}
+                    </h3>
+                    <div class='coolBox wordpress-wrapper'>
+                        {!! $theGameMeta['playerNotes'] or '' !!}
+                    </div>
                 </li>
             </ul>
             @endif

@@ -237,7 +237,7 @@ class WargameController extends Controller
                         $theGameMeta['longDesc'] = $str;
                         $theGameMeta['histEditLink'] = $editLink;
                     }
-                    if (preg_match("/Player/", $entry->title)) {
+                    if (preg_match("/Player/", $entry->title) || preg_match("/Designer/", $entry->title)) {
                         $content = $entry->children('http://purl.org/rss/1.0/modules/content/');
                         $str = $content->encoded;
 
@@ -249,8 +249,8 @@ class WargameController extends Controller
 //                            $theGame->value->playerEditLink = "<a target='blank' href='$editLink'>edit</a>";
                             $theGameMeta['playerEditLink'] = "<a target='blank' href='$editLink'>edit</a>";
                         }
-                        $theGameMeta['playerNotes'] = $str;
-                        $theGame->value->playerNotes = $str;
+                        $theGameMeta['designerNotes'] = $str;
+                        $theGame->value->designerNotes = $str;
 
                     }
                 }
@@ -724,6 +724,11 @@ class WargameController extends Controller
 
 
         $battle = Battle::battleFromName($game, $arg);
+        if($battle === false){
+            $ret = new \stdClass();
+            $ret->ok = false;
+            return response()->json($ret);
+        }
 
 
         if (method_exists($battle, 'terrainGen')) {

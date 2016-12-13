@@ -64,6 +64,9 @@ class PublishAll extends Command
             }
             $pickup = true;
             $this->info($map->gameName." ".$map->scenarioName);
+            if(trim($map->gameName) == false){
+                continue;
+            }
             $this->wc->terrainInit($this->cs, $this->ws, $map->gameName, $map->scenarioName, $map->hexStr);
         }
 //        var_dump(method_exists($wc, 'terrainInit'));
