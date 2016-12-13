@@ -91,11 +91,8 @@ class WargameController extends Controller
         $seq = $cs->get("_design/newFilter/_view/getLobbies");
         $games = array();
         $theGame = false;
+        $editor = Auth::user()->is_editor;
         $siteUrl = url("wargame/unattached-game/");
-        $editor = false;
-        if($req->session()->get("editor")){
-            $editor = true;
-        }
 
 
         $backgroundImage = "Egyptian_Pharaoh_in_a_War-Chariot,_Warrior,_and_Horses._(1884)_-_TIMEA.jpg";
@@ -235,7 +232,9 @@ class WargameController extends Controller
 //                        $theGame->value->longDesc = $str;
 //                        $theGame->value->histEditLink = $editLink;
                         $theGameMeta['longDesc'] = $str;
-                        $theGameMeta['histEditLink'] = $editLink;
+                        if($editor) {
+                            $theGameMeta['histEditLink'] = $editLink;
+                        }
                     }
                     if (preg_match("/Player/", $entry->title) || preg_match("/Designer/", $entry->title)) {
                         $content = $entry->children('http://purl.org/rss/1.0/modules/content/');
@@ -247,7 +246,9 @@ class WargameController extends Controller
                         if(preg_match("/p=(\d+)$/",$entry->guid,$matches)){
                             $editLink = "http://davidrodal.com/pubs/wp-admin/post.php?post=".$matches[1]."&action=edit";
 //                            $theGame->value->playerEditLink = "<a target='blank' href='$editLink'>edit</a>";
-                            $theGameMeta['playerEditLink'] = "<a target='blank' href='$editLink'>edit</a>";
+                            if($editor){
+                                $theGameMeta['playerEditLink'] = "<a target='blank' href='$editLink'>edit</a>";
+                            }
                         }
                         $theGameMeta['designerNotes'] = $str;
                         $theGame->value->designerNotes = $str;

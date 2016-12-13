@@ -56,7 +56,7 @@
                     <h3>Designer Notes {!! $theGameMeta['playerEditLink'] or '' !!}
                     </h3>
                     <div class='coolBox wordpress-wrapper'>
-                        {!! $theGameMeta['playerNotes'] or '' !!}
+                        {!! $theGameMeta['designerNotes'] or '' !!}
                     </div>
                 </li>
             </ul>
