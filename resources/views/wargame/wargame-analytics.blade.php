@@ -6,8 +6,8 @@
                 <li class="grid-row">
                     <span class="colOne">{{$gameName}}</span>
                     <span class="colTwo">Tie: {{$gameData[0]}}</span>
-                    <span class="colThree"> Player One: {{$gameData[1]}}</span>
-                    <span class="colFour">Player Two: {{$gameData[2]}}</span>
+                    <span class="colThree"> {{$gameData['playerOne']}}: {{$gameData[1]}}</span>
+                    <span class="colFour">{{$gameData['playerTwo']}}: {{$gameData[2]}}</span>
                 </li>
             @endforeach
 

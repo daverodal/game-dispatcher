@@ -3180,6 +3180,7 @@ li.game {
     content: "";
     display: table; }
   #analytics-grid .grid-row {
+    clear: both;
     height: 1em; }
     #analytics-grid .grid-row:nth-child(even) {
       background: lightgray; }

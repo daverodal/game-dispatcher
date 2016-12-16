@@ -2255,9 +2255,6 @@ h5 {
 #topStatus {
   float: right; }
 
-.unit.pushed .shadow-mask {
-  background-color: rgba(0, 0, 0, 0.5) !important; }
-
 #muteButton, #arrowButton {
   cursor: pointer;
   text-decoration: underline; }
@@ -2274,7 +2271,8 @@ h5 {
 
 .specialHexesVP {
   background: transparent !important;
-  color: white; }
+  color: white;
+  font-size: 60px; }
 
 #display {
   display: none;
@@ -2328,7 +2326,8 @@ h5 {
     #header #headerContent #zoomWrapper #zoom .defaultZoom {
       cursor: pointer; }
   #header #headerContent .dropDownSelected {
-    background: white; }
+    background: white;
+    color: black; }
   #header #headerContent .dropDown .WrapperLabel {
     margin: 0;
     border: none;
@@ -2667,6 +2666,11 @@ fieldset {
       position: absolute;
       right: 19px;
       top: 3px; }
+  #crt .crt-odds {
+    font-size: 16px; }
+  #crt #crtDetails {
+    text-align: right;
+    float: left; }
 
 #crt h3 {
   vertical-align: bottom; }
@@ -2694,7 +2698,6 @@ fieldset {
 
 .roll, #odds {
   padding-top: 3px;
-  background: #84b5ff;
   margin-right: 14px; }
 
 #odds {
@@ -2813,28 +2816,26 @@ fieldset {
   width: 32px;
   height: 32px;
   border: solid 3px black; }
-
-.unit .shadow-mask {
-  top: 0px;
-  left: 0px;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  background: transparent;
-  z-index: 1; }
-
-.unit .unit-numbers {
-  text-align: center;
-  color: black; }
-
-.unit .unitSize {
-  font-size: 9px;
-  text-align: center;
-  color: black; }
-
-.unit .unit-numbers {
-  height: 12px;
-  font-size: 11px; }
+  .unit.pushed .shadow-mask {
+    background-color: rgba(0, 0, 0, 0.5) !important; }
+  .unit .shadow-mask {
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background: transparent;
+    z-index: 1; }
+  .unit .unit-numbers {
+    text-align: center;
+    color: black; }
+  .unit .unitSize {
+    font-size: 9px;
+    text-align: center;
+    color: black; }
+  .unit .unit-numbers {
+    height: 12px;
+    font-size: 11px; }
 
 .arrowClone, .arrow, .heading {
   position: absolute;
@@ -2861,6 +2862,9 @@ fieldset {
 #crtDetails {
   display: none; }
 
+.game-name {
+  word-break: break-all; }
+
 .unitOdds {
   position: absolute;
   background: white;
@@ -2884,9 +2888,6 @@ fieldset {
   .unitOdds.determinedColor {
     background: red;
     color: white; }
-    .unitOdds.determinedColor:hover {
-      background: transparent;
-      color: transparent; }
   .unitOdds.pinnedColor {
     background: #ff00ff;
     color: white; }
@@ -2895,16 +2896,22 @@ fieldset {
       color: transparent; }
 
 svg {
-  z-index: 1;
-  display: none; }
-  svg g {
+  z-index: 1; }
+  svg g.unit-path {
     opacity: .6;
     fill: red;
     stroke: red; }
-    svg g:hover, svg g .hover {
+    svg g.unit-path:hover, svg g.unit-path.hover {
+      z-index: 3000;
+      fill: #26d5ff;
+      stroke: #26d5ff;
       opacity: 1.0; }
   svg marker#head {
     fill: red; }
+
+.negative {
+  color: #ECECEC;
+  background: black; }
 
 .ruleComment {
   font-style: italic;

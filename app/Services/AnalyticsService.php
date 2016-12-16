@@ -21,7 +21,7 @@ class AnalyticsService
 
     public function getVictories(){
         
-        $query = "/_design/gameEvents/_view/byEventType?group=true&group_level=3&startkey=[\"game-victory\"]&endkey=[\"game-victory%20\"]";
+        $query = "/_design/gameEvents/_view/byEventType?group=true&group_level=4&startkey=[\"game-victory\"]&endkey=[\"game-victory%20\"]";
         $prevDb = $this->cs->setDb('analytics');
 
         $seq = $this->cs->get($query);
@@ -29,18 +29,22 @@ class AnalyticsService
         $display = [];
         foreach($rows as $row){
             $name = $row->key[1];
+            $className = $name;
             $name = preg_replace("/.*\\\\/", "", $name);
+            $scenario = $row->key[2];
 
-            $playerId = $row->key[2];
-            if(empty($display[$name])){
-                $display[$name] = [0,0,0];
+            $playerId = $row->key[3];
+            $compName = "$name - $scenario";
+
+            if(empty($display[$compName])){
+                $display[$compName] = [0,0,0];
             }
-            $display[$name][$playerId] = $row->value;
+
+            $pData = $className::getPlayerData($scenario)['forceName'];
+            $display[$compName][$playerId] = $row->value;
+            $display[$compName]['playerOne'] = $pData[1];
+            $display[$compName]['playerTwo'] = $pData[2];
         }
-//        foreach($display as $gameName => $gameData){
-//            $dName = preg_replace("/.*\\\\/", "", $gameName);
-//            echo "$dName ".$gameData[0]." ".$gameData[1]." ". $gameData[2]."<br>";
-//        }
         return $display;
     }
 }
