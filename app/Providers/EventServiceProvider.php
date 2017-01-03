@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\Analytics\RecordGameEvent'=> [
             'App\Listeners\Analytics\RecordGameEventListener'
+        ],
+        'App\Events\Params\ParamEvent'=> [
+            'App\Listeners\Params\ParamEventListener'
         ]
     ];
 

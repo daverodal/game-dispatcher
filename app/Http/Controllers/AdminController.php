@@ -68,6 +68,29 @@ class AdminController extends Controller
     }
 
 
+    function getDeleteBug(CouchService $cs, $gameName){
+
+        $user = Auth::user()['name'];
+        $cs->setDb('params');
+        if ($gameName) {
+            try {
+                $doc = $cs->get($gameName);
+                if (Auth::user()['is_admin']) {
+                    if ($doc && $doc->_id && $doc->_rev) {
+                        $cs->delete($doc->_id, $doc->_rev);
+                    }
+                }
+            } catch (Exception $e) {
+            }
+        }
+        return redirect('/admin/allbugs');
+    }
+
+    function getAllbugs(AdminService $ad){
+        $lobbies = $ad->getAllBugs();
+        return view('admin.allBugs',['lobbies'=>$lobbies]);
+
+    }
 
     function getAddGame(CouchService $cs){
 

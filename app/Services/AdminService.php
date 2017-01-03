@@ -44,6 +44,28 @@ class  AdminService
 
     }
 
+    public function getAllBugs(){
+
+        $prevDb = $this->cs->setDb('params');
+
+        $seq = $this->cs->get("_design/paramEvents/_view/getBugReports?");
+        $lobbies = [];
+        date_default_timezone_set("America/New_York");
+        $odd = 0;
+
+        foreach($seq->rows as $row){
+            $id = $row->id;
+            $keys = $row->key;
+            $clicks = $row->value;
+            $odd ^= 1;
+
+            $lobbies[] =  array("odd"=>$odd ? "odd":"","id"=>$id, "clicks" => $clicks, "keys"=>$keys);
+        }
+        $this->cs->setDb($prevDb);
+
+        return $lobbies;
+    }
+
     public function getAllGames(){
 
         $prevDb = $this->cs->setDb('games');

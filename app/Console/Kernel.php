@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\MakeLinks::class,
-        Commands\PublishAll::class
+        Commands\PublishAll::class,
+        Commands\ClicksPlay::class
         // Commands\Inspire::class,
     ];
 

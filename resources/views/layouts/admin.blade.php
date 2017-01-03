@@ -188,6 +188,8 @@
     <div class="boxed" ><a href="{{ url('admin/games') }}">All Games Avail</a></div>
     <div class="boxed" ><a href="{{ url('admin/users') }}">Users</a></div>
     <div class="boxed" ><a href="{{ url('admin/logins') }}">Logins</a></div>
+    <div class="boxed" ><a href="{{ url('admin/allbugs') }}">Bugs</a></div>
+
 </div>
     @yield('content')
 </body>

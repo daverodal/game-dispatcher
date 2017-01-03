@@ -10,6 +10,7 @@ use Auth;
 use \DateTime;
 use Input;
 use App\User;
+use Wargame\Battle;
 
 class  WargameService{
 
@@ -177,6 +178,7 @@ class  WargameService{
         $units = $doc->wargame->force->units;
 
         $playerData = array($doc->wargame->players[$player]);
+        $playersData = $doc->wargame->players;
         if (!$units) {
             $units = array();
         }
@@ -219,8 +221,161 @@ class  WargameService{
         $deployName = $playDat['deployName'];
         $docName = $name;
         $name = $gameName;
-        return compact("className", "deployName", "forceName", "scenario", "scenarioArray", "name", "arg", "player", "mapUrl", "units", "playerData", "gameName", "wargame", "user");
+        return compact("docName","playDat", "className", "deployName", "forceName", "scenario", "scenarioArray", "name", "arg", "player", "mapUrl", "units", "playersData", "playerData", "gameName", "wargame", "user");
       }
+
+    public function playClicks($wargame, $clicks){
+      foreach($clicks as $click){
+          $this->doPoke($wargame, $click->event, $click->id, 0, 0, $click->user, $click->dieRoll);
+
+      }
+    }
+
+    public function createWargame( $name)
+    {
+        $cs = $this->cs;
+        date_default_timezone_set("America/New_York");
+//        $data = array('docType' => "wargame", "_id" => $name, "name" => $name, "chats" => array(),"createDate"=>date("r"),"createUser"=>$this->session->userdata("user"),"playerStatus"=>"created");
+//        $data = array('docType' => "wargame", "name" => $name, "chats" => array(),"createDate"=>date("r"),"createUser"=>$this->session->userdata("user"),"playerStatus"=>"created");
+        try {
+            $data = new \stdClass();
+            $data->docType = "wargame";
+            $data->name = $name;
+            $data->chats = array();
+            $data->createDate = date("r");
+            $data->createUser = Auth::user()['name'];
+            $data->playerStatus = "created";
+            $cs->setDb("games");
+            $ret = $cs->post($data);
+        } catch (Exception $e) {
+            ;
+            return $e->getMessage();
+        }
+        return $ret;
+    }
+
+    public function gameUnitInit($doc, $game, $arg,  $opts){
+        $doc->opts = $opts;
+        $battle = Battle::battleFromName( $game, $arg, $opts);
+
+
+        $cs = $this->cs;
+        $cs->setDb('games');
+        if (method_exists($battle, 'terrainInit')) {
+            try{
+                $terrainName = "terrain-$game.$arg";
+                $terrainDoc = $cs->get($terrainName);
+            }catch(\GuzzleHttp\Exception\BadResponseException $e){}
+            if(empty($terrainDoc)){
+                try{
+                    $terrainName = "terrain-$game";
+                    $terrainDoc = $cs->get($terrainName);
+                }catch(\GuzzleHttp\Exception\BadResponseException $e){var_dump($e->getMessage());}
+            }
+            $battle->terrainName = $terrainName;
+            $battle->terrainInit($terrainDoc);
+        }
+        if (method_exists($battle, 'init')) {
+            $battle->init();
+        }
+        $doc->wargame = $battle->save();
+        $click = $doc->_rev;
+        $matches = array();
+        preg_match("/^([0-9]+)-/", $click, $matches);
+        $click = $matches[1];
+        $doc->wargame->gameRules->phaseClicks[] = $click + 1;
+        /* should probably get rid of this old code for genTerrain */
+        if (isset($doc->wargame->genTerrain)) {
+            try {
+                $ter = $cs->get($doc->wargame->terrainName);
+            } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+            };
+            if (empty($ter)) {
+                $data = array("_id" => $doc->wargame->terrainName, "docType" => "terrain", "terrain" => $doc->wargame->terrain);
+                $cs->post($data);
+            } else {
+                $data = array("_id" => $doc->wargame->terrainName, "docType" => "terrain", "terrain" => $doc->wargame->terrain);
+                /* totally throw the old one away */
+
+                $cs->delete($doc->wargame->terrainName, $ter->_rev);
+                $cs->post($data);
+
+            }
+            unset($doc->wargame->terrain);
+            $doc->wargame->genTerrain = false;
+
+        }
+
+        $className = $doc->className = get_class($battle);
+        $doc->chats = array();
+        $doc->gameName = $game;
+
+        $doc = $cs->put($doc->_id, $doc);
+        event(new \App\Events\Analytics\RecordGameEvent(['docId'=>$doc->id, 'type'=>'game-created', 'className'=> $className, 'scenario'=>$battle->scenario, 'arg'=>$battle->arg, 'time'=>time()]));
+
+    }
+    public function doPoke($wargame, $event, $id, $x, $y, $user, $dieRoll = false){
+        $this->cs->setDb('games');
+
+        $doc = $this->cs->get(urldecode($wargame));
+        $ter = false;
+        if (!empty($doc->wargame->terrainName)) {
+            try {
+                $ter = $this->cs->get($doc->wargame->terrainName);
+            }catch(\GuzzleHttp\Exception\BadResponseException $e){var_dump($e->getMessage());}
+            $doc->wargame->terrain = $ter->terrain;
+        }
+//        $this->load->library("battle");
+        $game = !empty($doc->gameName) ? $doc->gameName : '';
+        $emsg = false;
+        $click = $doc->_rev;
+        $matches = array();
+
+        preg_match("/^([0-9]+)-/", $click, $matches);
+        $click = $matches[1];
+        try {
+            $battle = Battle::battleFromDoc($doc);
+
+            $isGameOver = $battle->victory->gameOver;
+            $startingAttackerId = $battle->gameRules->attackingForceId;
+            if($event === SAVE_GAME_EVENT){
+                event(new \App\Events\Params\ParamEvent(['opts'=>$doc->opts, 'docType'=>'bug-report', 'type'=>'click-history', 'attackingForceId'=>$startingAttackerId, 'history'=>$battle->clickHistory, 'className'=> $doc->className,'arg'=>$battle->arg,'time'=>time()]));
+                $success = true;
+                $emsg = "";
+                return compact('success', "emsg");
+            }
+//            $battle = Battle::getBattle($game, $doc->wargame, $doc->wargame->arg, false, $doc->className);
+            if($dieRoll !== false){
+                $battle->combatRules->dieRoll = $dieRoll;
+            }
+            $doSave = $battle->poke($event, $id, $x, $y, $user, $click);
+            $gameOver = $battle->victory->gameOver;
+            $saveDeploy = $battle->victory->saveDeploy;
+            if(!$isGameOver && $gameOver){
+                event(new \App\Events\Analytics\RecordGameEvent(['docId'=>$doc->_id, 'winner'=>$battle->victory->winner, 'type'=>'game-victory', 'className'=> $doc->className, 'scenario'=>$battle->scenario, 'arg'=>$battle->arg, 'time'=>time()]));
+            }
+            if($saveDeploy){
+                event(new \App\Events\Params\ParamEvent(['opts'=>$doc->opts, 'type'=>'click-history', 'attackingForceId'=>$startingAttackerId, 'history'=>$battle->clickHistory, 'className'=> $doc->className,'arg'=>$battle->arg,'time'=>time()]));
+            }
+            $success = false;
+            if ($doSave) {
+                $doc->wargame = $battle->save();
+
+                $this->cs->put($doc->_id, $doc);
+                $success = true;
+
+            }
+            if ($doSave === 0) {
+                $success = true;
+            }
+        } catch (Exception $e) {
+            $emsg = $e->getMessage() . " \nFile: " . $e->getFile() . " \nLine: " . $e->getLine() . " \nCode: " . $e->getCode();
+            $success = false;
+        }
+
+        return compact('success', "emsg");
+    }
+
 
 
     public function fetchLobby($last_seq){
