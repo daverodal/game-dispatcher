@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Services\CouchService;
 
 class ParamsDocumentSeeder extends Seeder
 {
