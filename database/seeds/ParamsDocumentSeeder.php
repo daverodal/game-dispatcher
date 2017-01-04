@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Services\CouchService;
 
 class ParamsDocumentSeeder extends Seeder
 {
@@ -11,11 +10,12 @@ class ParamsDocumentSeeder extends Seeder
      * @return void
      */
     public $couchsag;
+
     public function run()
     {
         $conf = \Config::get('couch');
-        echo "kewl";
         var_dump($conf);
+        echo "boss";
         $user = $conf['username'];
         $pass = $conf['password'];
         $host = $conf['hostname'];
@@ -32,7 +32,6 @@ class ParamsDocumentSeeder extends Seeder
         $this->initDoc();
     }
 
-
     public function initDoc()
     {
 
@@ -48,10 +47,11 @@ class ParamsDocumentSeeder extends Seeder
                     return values.length;
                 }
             }";
+
         $views->getBugReports = new StdClass();
         $views->getBugReports->map = "function(doc){
             if(doc.docType === 'bug-report'){
-                        emit([doc.className, doc.arg, doc.attackingForceId], doc.history);
+                        emit([doc.className, doc.arg, doc.attackingForceId], doc.history.length);
                 }
             }";
 
@@ -74,6 +74,5 @@ class ParamsDocumentSeeder extends Seeder
             echo "Died ".$e->getMessage();
         }
     }
-
 
 }
