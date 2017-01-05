@@ -225,8 +225,10 @@ class  WargameService{
       }
 
     public function playClicks($wargame, $clicks){
-      foreach($clicks as $click){
-          $this->doPoke($wargame, $click->event, $click->id, 0, 0, $click->user, $click->dieRoll);
+        $user = Auth::user()['name'];
+
+        foreach($clicks as $click){
+          $this->doPoke($wargame, $click->event, $click->id, 0, 0, $user, $click->dieRoll);
 
       }
     }
