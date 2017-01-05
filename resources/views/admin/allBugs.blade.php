@@ -7,8 +7,8 @@
     <h2>Welcome Markarian</h2>
     <div class="container dark-boxed">
         <div class="row bold">
-            <span class="col-md-2">Creator</span><span class="col-md-2">Game</span><span class="col-md-2">Name</span>
-            <span class="col-md-1">Type</span><span class="col-md-3">Date</span><span class="col-md-1">Watch</span><span class="col-md-1">Delete</span></li>
+            <span class="col-md-2">Game CLass</span><span class="col-md-2">Scenario</span><span class="col-md-2"># Clicks</span>
+            <span class="col-md-1">Message From the Damned</span><span class="col-md-3">Action</span><span class="col-md-1">Delete</span></li>
         </div>
         <div class="row bold">&nbsp;</div>
             @foreach ($lobbies as $lobby)
@@ -18,6 +18,7 @@
                     <span class="col-md-2">{{$lobby['keys'][0]}}</span>
                     <span class="col-md-2">{{$lobby['keys'][1]}}</span>
                     <span class="col-md-2">{{$lobby['clicks']}}</span>
+                    <span class="col-md-2">{{$lobby['msg']}}</span>
 
 
                     <a href="/wargame/make-new-game/{{$lobby['id']}}"><span class="col-md-1">Spawn</span></a>

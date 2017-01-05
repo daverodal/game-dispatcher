@@ -52,7 +52,7 @@ class ParamsDocumentSeeder extends Seeder
         $views->getBugReports = new StdClass();
         $views->getBugReports->map = "function(doc){
             if(doc.docType === 'bug-report'){
-                        emit([doc.className, doc.arg, doc.attackingForceId], doc.history.length);
+                        emit([doc.className, doc.arg, doc.attackingForceId], [doc.history.length,doc.msg]);
                 }
             }";
 

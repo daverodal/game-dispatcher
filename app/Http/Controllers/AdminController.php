@@ -115,8 +115,8 @@ class AdminController extends Controller
 
         $isProduction = config('app.env') === 'production';
         $prevDb = $cs->setDb('users');
-        $doc = $cs->get("gnuGamesAvail");
-        if($doc->docType == "gnuGamesAvail"){
+        $doc = $cs->get("gamesAvail");
+        if($doc->docType == "gamesAvail"){
             foreach($games as $name => $game) {
                 if(!empty($game->disabled) === true){
                     continue;

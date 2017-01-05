@@ -339,7 +339,9 @@ class  WargameService{
             $isGameOver = $battle->victory->gameOver;
             $startingAttackerId = $battle->gameRules->attackingForceId;
             if($event === SAVE_GAME_EVENT){
-                event(new \App\Events\Params\ParamEvent(['opts'=>$doc->opts, 'docType'=>'bug-report', 'type'=>'click-history', 'attackingForceId'=>$startingAttackerId, 'history'=>$battle->clickHistory, 'className'=> $doc->className,'arg'=>$battle->arg,'time'=>time()]));
+                $msg = Input::get('msg', 'defar');
+
+                event(new \App\Events\Params\ParamEvent(['opts'=>$doc->opts, 'docType'=>'bug-report', 'type'=>'click-history', 'attackingForceId'=>$startingAttackerId, 'history'=>$battle->clickHistory, 'className'=> $doc->className,'arg'=>$battle->arg,'time'=>time(), 'msg'=>$msg]));
                 $success = true;
                 $emsg = "";
                 return compact('success', "emsg");

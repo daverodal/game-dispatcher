@@ -56,10 +56,11 @@ class  AdminService
         foreach($seq->rows as $row){
             $id = $row->id;
             $keys = $row->key;
-            $clicks = $row->value;
+            $clicks = $row->value[0];
+            $msg = $row->value[1];
             $odd ^= 1;
 
-            $lobbies[] =  array("odd"=>$odd ? "odd":"","id"=>$id, "clicks" => $clicks, "keys"=>$keys);
+            $lobbies[] =  array("msg"=>$msg, "odd"=>$odd ? "odd":"","id"=>$id, "clicks" => $clicks, "keys"=>$keys);
         }
         $this->cs->setDb($prevDb);
 
@@ -120,7 +121,7 @@ class  AdminService
         }
         $prevDb = $this->cs->setDb('users');
 
-        $seq = $this->cs->get("/_design/newFilter/_view/gnuGetAvailGames?$reduceArgs");
+        $seq = $this->cs->get("/_design/newFilter/_view/getAvailGames?$reduceArgs");
         $this->cs->setDb($prevDb);
         $rows = $seq->rows;
         $games = [];
@@ -199,8 +200,8 @@ class  AdminService
             return false;
         }
         $prevDb = $this->cs->setDb('users');
-        $doc = $this->cs->get("gnuGamesAvail");
-        if(!$doc->docType == "gnuGamesAvail"){
+        $doc = $this->cs->get("gamesAvail");
+        if(!$doc->docType == "gamesAvail"){
             return false;
         }
         unset($doc->games->$killGame);
