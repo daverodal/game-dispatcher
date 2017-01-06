@@ -615,7 +615,7 @@ class WargameController extends Controller
         $user = Auth::user()['name'];
 
         $cs->setDb('games');
-        $wargame = urldecode($req->session()->get("wargame"));
+        $wargame = (string)Input::get('wargame', FALSE);
 
         $x = (int)Input::get('x', FALSE);
         $y = (int)Input::get('y', FALSE);
