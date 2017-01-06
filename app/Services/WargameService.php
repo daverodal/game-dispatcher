@@ -159,7 +159,13 @@ class  WargameService{
 
 
         $this->cs->setDb('games');
-        $doc = $this->cs->get($wargame);
+        try {
+            $doc = $this->cs->get($wargame);
+        }catch(\Exception $e){
+            if($e->getCode() === 404){
+                    return false;
+            }
+        }
 
         $name = $doc->name;
         $gameName = $doc->gameName;

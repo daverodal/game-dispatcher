@@ -25,9 +25,9 @@ class WargameController extends Controller
     public function getIndex(){
     }
 
-    public function getPlay(Request $req, WargameService $ws){
+    public function getPlay(Request $req, WargameService $ws, $wargame = false){
 
-        $wargame = $req->session()->get('wargame');
+//        $wargame = $req->session()->get('wargame');
 
 
         if (!$wargame) {
@@ -37,6 +37,9 @@ class WargameController extends Controller
 
         }
         $ret = $ws->gameView($wargame);
+        if($ret === false){
+            return redirect("/wargame/play");
+        }
         $className = $ret['className'];
         $viewPath = WargameService::viewBase($className).".view";
         if(view()->exists("wargame::$viewPath")){
@@ -585,11 +588,11 @@ class WargameController extends Controller
 
             $req->session()->put("wargame", $newWargame);
         }
-        return redirect("/wargame/play");
+        return redirect("/wargame/play/$newWargame");
     }
 
 
-    public function getFetch(Request $req, CouchService $cs, WargameService $ws, $last_seq = '')
+    public function getFetch(Request $req, CouchService $cs, WargameService $ws, $wargame, $last_seq = '')
     {
         $user = Auth::user()['name'];
 
@@ -598,7 +601,7 @@ class WargameController extends Controller
             return;
         }
 
-        $wargame = urldecode($req->session()->get("wargame"));
+//        $wargame = urldecode($req->session()->get("wargame"));
         $ret = $ws->grabChanges($req, $wargame, $last_seq, $user);
         return $ret;
     }
