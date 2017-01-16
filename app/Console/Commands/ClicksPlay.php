@@ -11,8 +11,6 @@ use App\Services\CouchService;
 use App\Http\Controllers\MapsController;
 use App\Http\Controllers\WargameController;
 
-use Auth;
-use User;
 
 class ClicksPlay extends Command
 {
@@ -21,7 +19,7 @@ class ClicksPlay extends Command
      *
      * @var string
      */
-    protected $signature = 'clicks:play {--list} {--gameClicks} {wargame?} {clicksId?}';
+    protected $signature = 'clicks:play {--list} {--gameClicks} {clicksId?} {wargame?} ';
 
     /**
      * The console command description.
@@ -35,12 +33,11 @@ class ClicksPlay extends Command
      *
      * @return void
      */
-    public function __construct( CouchService $cs, WargameService $ws, WargameController $wc, Auth $au)
+    public function __construct( CouchService $cs, WargameService $ws, WargameController $wc)
     {
         $this->cs = $cs;
         $this->ws = $ws;
         $this->wc = $wc;
-        $this->au = $au;
 
         parent::__construct();
     }
@@ -52,8 +49,6 @@ class ClicksPlay extends Command
      */
     public function handle()
     {
-
-        dd(new User());
 
         $list = $this->option('list');
         $gameClicks = $this->option('gameClicks');

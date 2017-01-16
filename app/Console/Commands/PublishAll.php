@@ -18,7 +18,7 @@ class PublishAll extends Command
      *
      * @var string
      */
-    protected $signature = 'publish:all {continueFrom?}';
+    protected $signature = 'publish:all {continueFrom?} {continueFromScenario?}';
 
     /**
      * The console command description.
@@ -50,6 +50,7 @@ class PublishAll extends Command
     public function handle()
     {
         $continueFrom = $this->argument('continueFrom');
+        $continueFromScenario = $this->argument(('continueFromScenario'));
 
         $mapsJson = $this->mc->fetchMaps($this->cs);
         $maps = json_decode($mapsJson);
@@ -59,8 +60,11 @@ class PublishAll extends Command
             $pickup = true;
         }
         foreach($maps->maps as $map){
-            if($map->gameName !== $continueFrom && !$pickup){
+            if($map->gameName !== $continueFrom &&  !$pickup){
                 continue;
+                if($continueFromScenario && $map->scenarioName !== $continueFromScenario){
+                    continue;
+                }
             }
             $pickup = true;
             $this->info($map->gameName." ".$map->scenarioName);

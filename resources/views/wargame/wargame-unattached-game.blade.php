@@ -22,11 +22,14 @@
                     </div>
                     <div class="coolBox">
                         <p class='softVoice'> Click on a scenario below</p>
-                        <div ng-repeat="(sName, scenario) in scenarios" ng-click="clickityclick(scenario)"
+                        <div class="kewl-box" ng-repeat="(sName, scenario) in scenarios" ng-click="clickityclick(scenario)"
                              class="clearWrapper">
                             <span class="scenarioWrapper @{{scenario.selected}}">@{{scenario.description}}</span>
+                            <div class="clear"></div>
                             <a class='scenarioWrapper play'
-                               ng-click="showCustom('<?= url("wargame/create-wargame/") ?>/'+game+'/'+scenario.sName+'?'+setOptions)">Play &raquo;</a>
+                               ng-click="showCustom('<?= url("wargame/create-wargame/hotseat/") ?>/'+game+'/'+scenario.sName+'?'+setOptions)">Play Solo&raquo;</a>
+                            <a class='scenarioWrapper play'
+                               ng-click="showCustom('<?= url("wargame/create-wargame/multi/") ?>/'+game+'/'+scenario.sName+'?'+setOptions)">Play Multi&raquo;</a>
                             <div class="clear"></div>
                         </div>
                         <p ng-bind-html="scenario.longDescription"

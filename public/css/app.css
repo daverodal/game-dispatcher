@@ -3082,7 +3082,7 @@ html {
   border-radius: 10px;
   padding: 5px;
   display: block;
-  margin: 20px 0 0; }
+  margin: 0; }
 
 .scenarioWrapper {
   float: left;
@@ -3161,7 +3161,9 @@ li.game {
 
 .play {
   background: #cfc;
-  border-color: #9f9; }
+  border-color: #9f9;
+  margin-left: 20px;
+  margin-top: 10px; }
   .play:hover {
     border-color: #9f9; }
 
@@ -3170,6 +3172,12 @@ li.game {
   border-radius: 10px;
   border: 10px solid #9f9;
   background: #cfc; }
+
+.kewl-box {
+  border: 3px solid gray;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 10px; }
 
 #analytics-grid {
   max-width: 100em;

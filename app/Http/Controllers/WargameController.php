@@ -62,7 +62,7 @@ class WargameController extends Controller
 
 
     public function getSetplay(Request $req, $id){
-        $req->session()->put('wargame', $id);
+//        $req->session()->put('wargame', $id);
         return redirect('wargame/play');
     }
 
@@ -338,9 +338,9 @@ class WargameController extends Controller
             $this->enterHotSeat($wargame, $cs);
             $cs->setDb('games');
             if ($cs->get($wargame)) {
-                $req->session()->put("wargame", $wargame);
+//                $req->session()->put("wargame", $wargame);
                 $cs->setDb('games');
-                $ws->playClicks($wargame, $paramObj->history);
+                return redirect("/wargame/play/$wargame");
             }
             return redirect("/wargame/play");
 
@@ -348,21 +348,46 @@ class WargameController extends Controller
         }
     }
 
-    public function postCreateWargame(WargameService $ws, Request $req,$game, $scenario)
+    public function postCreateWargame(CouchService $cs, WargameService $ws, Request $req,$type,$game, $scenario)
     {
 
         $message = "";
         $wargame = Input::get('wargame');
+        $user = Auth::user()['name'];
+
         if ($wargame) {
             $ret = $ws->createWargame($wargame);
             if (is_object($ret) === true) {
-                $req->session()->put("wargame" , $ret->id);
-                $opts = "";
+//                $req->session()->put("wargame" , $ret->id);
+//                $opts = "";
+//
+//                foreach($_GET as $k => $v){
+//                    $opts .= "$k=$v&";
+//                }
+//                return redirect("/wargame/unit-init/$game/$scenario?$opts");
 
-                foreach($_GET as $k => $v){
-                    $opts .= "$k=$v&";
+                $docId = $ret->id;
+                $doc = $cs->get($docId);
+                if ($user != $doc->createUser) {
+                    return redirect("wargame/play");
                 }
-                return redirect("/wargame/unit-init/$game/$scenario?$opts");
+
+                $opts = [];
+                foreach($_GET as $k=>$v){
+                    $opts[] = $k;
+                }
+                $ws->gameUnitInit($doc, $game, $scenario, $opts);
+
+                if($type === "hotseat"){
+                    $ret = $this->enterHotseat($docId, $cs);
+                    if ($ret) {
+                        return redirect("wargame/play/$docId");
+                    } else {
+
+                        return redirect("wargame/play");
+                    }
+                }
+                return redirect("wargame/enter-multi/$docId");
             }
             $message = "Name $wargame already used, please enter new name";
         }
@@ -375,7 +400,6 @@ class WargameController extends Controller
 
     function getLeaveGame(Request $req)
     {
-        $req->session()->forget('wargame');
         return redirect("/wargame/play");
     }
 
@@ -399,7 +423,7 @@ class WargameController extends Controller
     public function getUnitInit( Request $req,CouchService $cs, WargameService $ws, $game, $arg = false)
     {
         $user = Auth::user()['name'];
-        $wargame = urldecode($req->session()->get("wargame"));
+//        $wargame = urldecode($req->session()->get("wargame"));
         $cs->setDb('games');
         $doc = $cs->get(urldecode($wargame));
         if ($user != $doc->createUser) {
@@ -417,10 +441,11 @@ class WargameController extends Controller
     }
 
 
-    function getPlayAs(CouchService $cs, Request $req, $game = false)
+    function getPlayAs(CouchService $cs, Request $req, $game = false, $docId)
     {
         $user = Auth::user()['name'];
-        $wargame = urldecode($req->session()->get("wargame"));
+//        $wargame = urldecode($req->session()->get("wargame"));
+        $wargame = $docId;
         if (!$wargame && $game) {
             $wargame = $game;
         }
@@ -448,12 +473,12 @@ class WargameController extends Controller
         if (!$newWargame) {
             redirect("wargame/play");
         }
-        $wargame = $req->session()->get("wargame", $cs);
+//        $wargame = $req->session()->get("wargame", $cs);
 //        $this->load->model("wargame/wargame_model");
 //        $ret = $this->wargame_model->enterHotseat($newWargame);
         $ret = $this->enterHotseat($newWargame, $cs);
         if ($ret) {
-            return redirect("wargame/change-wargame/$newWargame");
+            return redirect("wargame/play/$newWargame");
         } else {
 
             return redirect("wargame/play");
@@ -578,16 +603,16 @@ class WargameController extends Controller
 
     function getChangeWargame(Request $req, CouchService $cs, $newWargame = false)
     {
-        $wargame = $req->session()->get("wargame");
-
-        if ($newWargame == false) {
-            $newWargame = $wargame;
-        }
-        $cs->setDb('games');
-        if ($cs->get($newWargame)) {
-
-            $req->session()->put("wargame", $newWargame);
-        }
+//        $wargame = $req->session()->get("wargame");
+//
+//        if ($newWargame == false) {
+//            $newWargame = $wargame;
+//        }
+//        $cs->setDb('games');
+//        if ($cs->get($newWargame)) {
+//
+//            $req->session()->put("wargame", $newWargame);
+//        }
         return redirect("/wargame/play/$newWargame");
     }
 
@@ -610,7 +635,7 @@ class WargameController extends Controller
 
 
 
-    public function postPoke(Request $req,WargameService $ws, CouchService $cs)
+    public function postPoke( Request $req,WargameService $ws, CouchService $cs)
     {
         $user = Auth::user()['name'];
 
@@ -679,5 +704,13 @@ class WargameController extends Controller
         return response()->json($ret);
     }
 
+    public function getMakePublic(WargameService $ws, $docId){
+        $ret = $ws->makePublic($docId);
+        echo json_encode(["success"=>$ret, "emsg"=>false]);
+    }
 
+    public function getMakePrivate(WargameService $ws, $docId){
+        $ret = $ws->makePrivate($docId);
+        echo json_encode(["success"=>$ret, "emsg"=>false]);
+    }
 }

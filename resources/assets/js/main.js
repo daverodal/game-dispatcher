@@ -168,9 +168,9 @@ lobbyApp.controller('LobbyController', ['$scope', '$http', 'sync', function($sco
         }
         $scope.publized = true;
         if(game.public === "public"){
-            $http.get('makePrivate/'+game.id).success(function(){console.log("MakePrivate ");$scope.publized = false;});
+            $http.get('make-private/'+game.id).success(function(){console.log("MakePrivate ");$scope.publized = false;});
         }else{
-            $http.get('makePublic/'+game.id).success(function(){console.log("MakePrivate ");$scope.publized = false;});
+            $http.get('make-public/'+game.id).success(function(){console.log("MakePrivate ");$scope.publized = false;});
         }
     };
 

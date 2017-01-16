@@ -10,6 +10,7 @@ use Auth;
 use \DateTime;
 use Input;
 use App\User;
+use League\Flysystem\Exception;
 use Wargame\Battle;
 
 class  WargameService{
@@ -153,6 +154,51 @@ class  WargameService{
         return compact("item", "lobbies", "otherGames", "myName", "notFriends");
     }
 
+    public function makePrivate($docId){
+        $user = Auth::user()['name'];
+        $this->cs->setDb('games');
+        try {
+            $doc = $this->cs->get($docId);
+        }catch(\Exception $e){
+            if($e->getCode() === 404){
+                return false;
+            }
+        }
+
+        if($user !== $doc->createUser){
+            return false;
+        }
+
+        $doc->visibility = "private";
+
+        $this->cs->put($docId, $doc);
+        return true;
+
+    }
+
+    public function makePublic($docId){
+        $user = Auth::user()['name'];
+        $this->cs->setDb('games');
+        try {
+            $doc = $this->cs->get($docId);
+        }catch(\Exception $e){
+            if($e->getCode() === 404){
+                return false;
+            }
+        }
+
+        if($user !== $doc->createUser){
+            return false;
+        }
+
+        $doc->visibility = "public";
+
+        $this->cs->put($docId, $doc);
+        return true;
+
+    }
+
+
     public function gameView($wargame){
 
         $user = Auth::user()['name'];
@@ -170,15 +216,18 @@ class  WargameService{
         $name = $doc->name;
         $gameName = $doc->gameName;
         if (!$gameName) {
-            return redirect("/wargame/unattached-game/");
+            return false;
         }
         if ($doc->playerStatus && $doc->playerStatus == "created") {
-            redirect("/wargame/play-as");
+            return false;
         }
         $players = $doc->wargame->players;
         $player = array_search($user, $players);
         if ($player === false) {
             $player = 0;
+            if($doc->visibility !== "public"){
+                return false;
+            }
         }
 //        $this->load->library('battle');
         $units = $doc->wargame->force->units;
@@ -232,6 +281,9 @@ class  WargameService{
 
     public function playClicks($wargame, $clicks){
         $user = Auth::user()['name'];
+        $user = "Markarian";
+        ini_set( 'memory_limit', 1024 . 'M' );
+
 
         foreach($clicks as $click){
           $this->doPoke($wargame, $click->event, $click->id, 0, 0, $user, $click->dieRoll);
@@ -325,7 +377,19 @@ class  WargameService{
     public function doPoke($wargame, $event, $id, $x, $y, $user, $dieRoll = false){
         $this->cs->setDb('games');
 
-        $doc = $this->cs->get(urldecode($wargame));
+        $retry = 0;
+        $doc = false;
+        do {
+            try {
+                $doc = $this->cs->get(urldecode($wargame));
+            } catch (Exception $e) {
+                if ($retry > 3) {
+                    $success = fail;
+                    $emsg = $e->getMessage();
+                    return compact('success', "emsg");
+                }
+            }
+        }while(!$doc);
         $ter = false;
         if (!empty($doc->wargame->terrainName)) {
             try {
@@ -363,6 +427,8 @@ class  WargameService{
             $saveDeploy = $battle->victory->saveDeploy;
             if(!$isGameOver && $gameOver){
                 event(new \App\Events\Analytics\RecordGameEvent(['docId'=>$doc->_id, 'winner'=>$battle->victory->winner, 'type'=>'game-victory', 'className'=> $doc->className, 'scenario'=>$battle->scenario, 'arg'=>$battle->arg, 'time'=>time()]));
+                event(new \App\Events\Params\ParamEvent(['opts'=>$doc->opts, 'docType'=>'bug-report', 'type'=>'click-history', 'attackingForceId'=>$startingAttackerId, 'history'=>$battle->clickHistory, 'className'=> $doc->className,'arg'=>$battle->arg,'time'=>time(), 'msg'=>"Game Over Event"]));
+
             }
             if($saveDeploy){
                 event(new \App\Events\Params\ParamEvent(['opts'=>$doc->opts, 'type'=>'click-history', 'attackingForceId'=>$startingAttackerId, 'history'=>$battle->clickHistory, 'className'=> $doc->className,'arg'=>$battle->arg,'time'=>time()]));
@@ -425,6 +491,8 @@ class  WargameService{
             $filename = array_shift($keys);
 
             $id = $row->id;
+            $className = $row->value[0];
+
             $dt = new DateTime($row->value[1]);
             $thePlayers = $row->value[2];
             $playerTurn = $thePlayers[$playerTurn];
@@ -443,7 +511,7 @@ class  WargameService{
             $players = implode($thePlayers, " ");
             $row->value[1] = "created " . formatDateDiff($dt) . " ago";
             $odd ^= 1;
-            $lobbies[] = array("public" => $public, "odd" => $odd ? "odd" : "", "gameName" => $gameName, "name" => $name, 'timestamp'=>$dt->getTimestamp(), 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
+            $lobbies[] = array("className" => $className, "public" => $public, "odd" => $odd ? "odd" : "", "gameName" => $gameName, "name" => $name, 'timestamp'=>$dt->getTimestamp(), 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
         }
         $seq = $this->cs->get("/_design/newFilter/_view/getLobbies?startkey=[\"$user\",\"multi\"]&endkey=[\"$user\",\"multi\",\"zzzzzzzzzzzzzzzzzzzzzzzz\"]");
 
@@ -461,6 +529,8 @@ class  WargameService{
             $public = array_shift($keys);
             $filename = array_shift($keys);
             $id = $row->id;
+            $className = $row->value[0];
+
             $dt = new DateTime($row->value[1]);
             $thePlayers = $row->value[2];
             $playerTurn = $thePlayers[$playerTurn];
@@ -482,7 +552,7 @@ class  WargameService{
             $players = implode($thePlayers, " ");
             $row->value[1] = "created " . formatDateDiff($dt) . " ago";
             $odd ^= 1;
-            $multiLobbies[] = array("public" => $public, "odd" => $odd ? "odd" : "", "gameName" => $gameName, "name" => $name,'timestamp'=>$dt->getTimestamp(), 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
+            $multiLobbies[] = array("className" => $className, "public" => $public, "odd" => $odd ? "odd" : "", "gameName" => $gameName, "name" => $name,'timestamp'=>$dt->getTimestamp(), 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
         }
         $seq = $this->cs->get("/_design/newFilter/_view/getGamesImIn?startkey=[\"$user\"]&endkey=[\"$user\",\"zzzzzzzzzzzzzzzzzzzzzzzz\"]");
 
@@ -499,6 +569,7 @@ class  WargameService{
             $playerTurn = array_shift($keys);
             $filename = array_shift($keys);
             $id = $row->id;
+            $className = $row->value[0];
             $dt = new DateTime($row->value[1]);
             $thePlayers = $row->value[2];
             $playerTurn = $thePlayers[$playerTurn];
@@ -517,7 +588,7 @@ class  WargameService{
             $players = implode($thePlayers, " ");
             $row->value[1] = "created " . formatDateDiff($dt) . " ago";
             $odd ^= 1;
-            $otherGames[] = array("odd" => $odd ? "odd" : "", "name" => $name, "gameName" => $gameName,'timestamp'=>$dt->getTimestamp(), 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
+            $otherGames[] = array("className" => $className, "odd" => $odd ? "odd" : "", "name" => $name, "gameName" => $gameName,'timestamp'=>$dt->getTimestamp(), 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
         }
         $seq = $this->cs->get("/_design/newFilter/_view/publicGames");
 
@@ -646,7 +717,7 @@ class  WargameService{
 
             if (is_object($ret) === true) {
                 $wargame = $ret->id;
-                $req->session()->put("wargame", $wargame);
+//                $req->session()->put("wargame", $wargame);
             }
             $doc = $this->cs->get($wargame);
 

@@ -19,6 +19,7 @@
                     <span class="col-md-2">{{$lobby['keys'][1]}}</span>
                     <span class="col-md-2">{{$lobby['clicks']}}</span>
                     <span class="col-md-2">{{$lobby['msg']}}</span>
+                    <span class="col-md-2">php artisan clicks:play {{$lobby['id']}}</span>
 
 
                     <a href="/wargame/make-new-game/{{$lobby['id']}}"><span class="col-md-1">Spawn</span></a>
