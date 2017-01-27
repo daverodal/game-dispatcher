@@ -6,3 +6,6 @@ require("angular");
 require("angular-sanitize");
 require("angular-modal-service");
 require("angular-right-click");
+window.$ = require("jquery");
+window.jQuery = window.$;
+require("jquery-ui");

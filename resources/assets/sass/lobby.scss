@@ -205,7 +205,6 @@ a {
   padding: 5px 10px 15px;
   border-radius: 10px;
   background: rgba(92, 92, 92, 0.50);
-  color: white;
   a {
     color: white;
   }
@@ -246,8 +245,16 @@ a {
   border-radius: 10px;
   margin-bottom: 15px;
 }
+.nav-tabs{
+  border-radius:10px;
+  border-width:3px;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
+  border-width:3px;
+  top:3px;
+}
 
-.tabbable {
+/*.tabbable {
   .nav-tabs {
     padding: 5px 10px 15px;
     border-radius: 10px;
@@ -297,7 +304,7 @@ a {
     }
     font-size: 1.2em;
   }
-}
+}*/
 
 .coolBox {
   font-size: 22px;

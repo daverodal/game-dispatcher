@@ -19,12 +19,8 @@ elixir(function(mix) {
         '../../../bower_components/jquery/dist/jquery.js',
         '../../../bower_components/jquery-ui/jquery-ui.js']);*/
 
-    mix.copy('bower_components/angular/angular.js', 'public/js');
-    mix.copy('bower_components/angular-sanitize/angular-sanitize.js', 'public/js');
-    mix.copy('bower_components/angular-modal-service/dst/angular-modal-service.js', 'public/js');
-
-    mix.copy('bower_components/jquery/dist/jquery.js', 'public/js');
     mix.copy('bower_components/jquery-ui/jquery-ui.js', 'public/js');
+
 
     mix.copy('bower_components/font-awesome/scss/', 'resources/assets/sass/font-awesome');
     mix.copy('bower_components/font-awesome/fonts/', 'public/fonts/font-awesome');
@@ -43,9 +39,10 @@ elixir(function(mix) {
     }
 
     mix.browserify('main.js', 'public/javascripts/main.js');
-    mix.browserify('common.js', 'public/javascripts/common.js');
-    mix.browserify('ang.js', 'public/javascripts/ang.js');
-    mix.version(['javascripts/ang.js','css/app.css', 'javascripts/common.js','javascripts/main.js', 'js/sync.js','vendor/wargame/mollwitz/css',
+    mix.browserify('gameMain.js', 'public/javascripts/gameMain.js');
+
+    mix.copy('resources/assets/js/sync.js', 'public/js');
+    mix.version(['css/app.css', 'javascripts/main.js', 'javascripts/gameMain.js','vendor/wargame/mollwitz/css',
         'vendor/wargame/medieval/css','vendor/wargame/tmcw/css','vendor/wargame/spi/css']);
 
 

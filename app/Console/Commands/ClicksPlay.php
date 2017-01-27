@@ -19,7 +19,7 @@ class ClicksPlay extends Command
      *
      * @var string
      */
-    protected $signature = 'clicks:play {--list} {--gameClicks} {clicksId?} {wargame?} ';
+    protected $signature = 'clicks:play {--list} {--byDeploy} {--gameClicks} {clicksId?} {wargame?} ';
 
     /**
      * The console command description.
@@ -62,18 +62,32 @@ class ClicksPlay extends Command
             return;
         }
         $this->cs->setDb('params');
-        $clicksId = "7ac90438df5c9435246dda967f2b909b";
 
         $wargame = $this->argument('wargame');
 
+        $byDeploy = $this->option('byDeploy');
+
         $clicksId = $this->argument('clicksId');
+
+
         if($gameClicks){
             $this->cs->setDb('games');
             $paramObj = $this->cs->get($clicksId);
             $this->ws->playClicks($wargame, $paramObj->wargame->clickHistory);
         }else{
             $paramObj = $this->cs->get($clicksId);
-            $this->ws->playClicks($wargame, $paramObj->history);
+            $history = $paramObj->history;
+            if($byDeploy){
+                $oldHistory = $paramObj->history;
+                $newHistory = [];
+                foreach($oldHistory as $current){
+                    if($paramObj->attackingForceId === $current->playerId){
+                        $newHistory[] = $current;
+                    }
+                }
+                $history = $newHistory;
+            }
+            $this->ws->playClicks($wargame, $history);
         }
 
     }

@@ -15,6 +15,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+/* to make module again, do this
+*/
 module.exports =  function(baseUrl) {
         this.baseUrl = baseUrl
         this.id = "Sync";
@@ -64,10 +66,11 @@ module.exports =  function(baseUrl) {
                         that.fetchTimes.push(now);
                         if (that.fetchTimes.length > 10) {
                             var then = that.fetchTimes.shift();
-                            if ((now - then) < 2) {
-                                $("#comlink").html("Comlink Down, Try refreshing Page");
-                                return;
-                            }
+                            // if ((now - then) < 2) {
+
+                            //     $("#comlink").html("Comlink Down, Try refreshing Page");
+                            //     return;
+                            // }
                         }
                         var fetchArgs = {};
                         /* bleh ajax will automagically forward on 301's and 302's not letting me know
@@ -105,13 +108,13 @@ module.exports =  function(baseUrl) {
                     complete: function (jq, textstatus) {
                         var now = ((new Date()).getTime()) / 1000;
                         that.fetchTimes.push(now);
-                        if (that.fetchTimes.length > 10) {
-                            var then = that.fetchTimes.shift();
-                            if ((now - then) < 2) {
-                                $("#comlink").html("Comlink Down, Try refreshing Page");
-                                return;
-                            }
-                        }
+                        // if (that.fetchTimes.length > 10) {
+                        //     var then = that.fetchTimes.shift();
+                        //     if ((now - then) < 2) {
+                        //         $("#comlink").html("Comlink Down, Try refreshing Page");
+                        //         return;
+                        //     }
+                        // }
 
                         if (textstatus != "success" && !that.timeTravel) {
                             that.fetch(0);

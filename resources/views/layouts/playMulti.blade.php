@@ -20,7 +20,7 @@
 <html ng-app="playMulti">
 <head>
     <meta charset="UTF-8">
-    <script src="<?= url("js/angular.js"); ?>"></script>
+    <script src="<?= url("javascripts/main.js"); ?>"></script>
     <style>
         footer {
             position: fixed;

@@ -14,6 +14,7 @@
     "jquery": "^2.2.4",
     "jquery-browserify": "^1.8.1",
     "jquery-ui": "^1.12.0",
-    "laravel-elixir": "^5.0.0"
+    "laravel-elixir": "^5.0.0",
+    "font-awesome": "^4.7.0"
   }
 }

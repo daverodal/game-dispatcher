@@ -28,8 +28,6 @@
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ elixir('css/app.css')}}" rel="stylesheet" type="text/css">
-    <script src="{{ asset('js/jquery.js')}}"></script>
-    <script src="{{ asset('js/jquery-ui.js')}}"></script>
     <script src="{{ elixir('javascripts/main.js')}}"></script>
 
     <style type="text/css">
@@ -74,10 +72,10 @@
             <h3>You can <a id="create" href="{{url('wargame/unattached-game')}}"><button class="create-button">Start New Game</button></a></h3>
             Or play an existing game:<br>
 
-            <h1>Multi Player Games</h1>
+            <h2>Multi Player Games</h2>
             <ul id="multiPlayerGames">
                 <li>
-                    <h2>Multi games you created:</h2>
+                    <h3>Multi games you created:</h3>
                     <ul id="myMultiGames">
                         <li class="bold lobbyHeader">
                             <span class="sort-col colOne" ng-click="multiColSort('name')">Name</span>
@@ -106,7 +104,7 @@
                     </ul>
                 </li>
                 <li>
-                    <h2>Games you were invited to:</h2>
+                    <h3>Games you were invited to:</h3>
                     <ul id="myOtherGames">
                         <li class="lobbyHeader bold">
                             <span class="sort-col colOne" ng-click="otherColSort('name')">Name</span>

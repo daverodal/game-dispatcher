@@ -28,9 +28,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <script src="{{ asset('js/jquery.js')}}"></script>
-    <script src="{{ asset('js/jquery-ui.js')}}"></script>
-    <script src="{{ elixir('javascripts/common.js')}}"></script>
+    <script src="{{ elixir('javascripts/main.js')}}"></script>
     <link href="{{ elixir('css/app.css')}}" rel="stylesheet" type="text/css">
 
     <meta charset="UTF-8">

@@ -431,7 +431,10 @@ class  WargameService{
 
             }
             if($saveDeploy){
-                event(new \App\Events\Params\ParamEvent(['opts'=>$doc->opts, 'type'=>'click-history', 'attackingForceId'=>$startingAttackerId, 'history'=>$battle->clickHistory, 'className'=> $doc->className,'arg'=>$battle->arg,'time'=>time()]));
+                /* lose nextPhase click */
+                $saveHistory = $battle->clickHistory;
+                array_pop($saveHistory);
+                event(new \App\Events\Params\ParamEvent(['opts'=>$doc->opts, 'docType'=>'deploy', 'attackingForceId'=>$startingAttackerId, 'history'=>$saveHistory, 'className'=> $doc->className,'arg'=>$battle->arg,'time'=>time()]));
             }
             $success = false;
             if ($doSave) {

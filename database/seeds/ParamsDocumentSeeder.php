@@ -49,6 +49,35 @@ class ParamsDocumentSeeder extends Seeder
                 }
             }";
 
+
+        $views->byDeploys = new StdClass;
+        $views->byDeploys->map = "function(doc) {
+            if(doc.docType === 'deploy'){
+                var newHistory = [];
+                for(var i in doc.history){
+                    if(doc.history[i].playerId === doc.attackingForceId){
+                    newHistory.push(doc.history[i]);
+                    }
+                }
+                opts = '';
+                for(var opt in doc.opts){
+                    if(doc.opts[opt] === 'fogDeploy'){
+                        continue;
+                    }
+                    opts += doc.opts[opt]+'&';
+                }
+                var outOpts = opts.replace(/&$/,'');
+                emit([doc.className, doc.arg, outOpts, doc.attackingForceId], doc.time);
+               }
+            }";
+        $views->byDeploys->reduce = "function(keys, values, rereduce) {
+                if (rereduce) {
+                    return sum(values);
+                } else {
+                    return values.length;
+                }
+            }";
+
         $views->getBugReports = new StdClass();
         $views->getBugReports->map = "function(doc){
             if(doc.docType === 'bug-report'){

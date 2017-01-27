@@ -1,4 +1,15 @@
-//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+$font-family-base: "Times New Roman";
+$headings-font-weight: 600;
+$icon-font-path: 'node_modules/bootstrap- sass/assets/fonts/bootstrap';
+$fa-font-path: 'node_modules/font-awesome/fonts';
+$border-radius-base: 10px;
+$nav-tabs-border-color:                     #999;
+$nav-tabs-active-link-hover-border-color:   #999 !default;
+
+$fa-font-path: "/fonts/font-awesome";
+
+@import 'node_modules/font-awesome/scss/font-awesome';
+@import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
 
 //@import "node_modules/node-bourbon/node_modules/bourbon/app/assets/stylesheets/bourbon";
 //@import "node_modules/node-neat/node_modules/bourbon-neat/app/assets/stylesheets/neat";
@@ -9,11 +20,12 @@
 //
 //}
 
+a{
+  text-decoration: underline;
+}
+
 @import "bourbon/bourbon";
 @import "neat/neat";
-@import "lobby";
-$fa-font-path: "../../fonts/font-awesome";
-@import "font-awesome/font-awesome";
 @import "lobby";
 @import "unattached";
 @import "analytics";

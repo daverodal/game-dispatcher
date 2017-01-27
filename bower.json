@@ -14,13 +14,9 @@
     "tests"
   ],
   "dependencies": {
+    "jquery-ui": "~1.11.4",
     "bourbon": "~4.2.6",
     "neat": "~1.7.2",
-    "jquery": "~2.2.0",
-    "jquery-ui": "~1.11.4",
-    "angular": "^1.5.8",
-    "angular-sanitize": "^1.5.8",
-    "angular-modal-service": "^0.10.1",
     "font-awesome": "^4.6.3",
     "angular-right-click": "^0.1.0"
   }

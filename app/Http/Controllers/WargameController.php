@@ -17,6 +17,8 @@ use Wargame\Battle;
 use App\Services\WargameService;
 use App\User;
 use App\Services\AnalyticsService;
+use App\Jobs\RunMakeGame;
+use Illuminate\Support\Facades\Artisan;
 
 
 class WargameController extends Controller
@@ -316,6 +318,61 @@ class WargameController extends Controller
 
     }
 
+    public function getApplyDeploys(Request $req, CouchService $cs, WargameService $ws, $wargame, $deploy)
+    {
+
+        $opts = "";
+        $cs->setDb('games');
+        $paramObj = $cs->get($wargame);
+
+        $class =  $paramObj->className;
+        $arg = $paramObj->wargame->arg;
+        $opts = $paramObj->opts;
+        $outOpts = "";
+        /* for checking later */
+
+        $exitCode = Artisan::call('clicks:play', ['--byDeploy'=>true,
+            'clicksId' => $deploy, 'wargame' => $wargame
+        ]);
+
+    }
+
+        public function getListDeploys(Request $req, CouchService $cs, WargameService $ws, $wargame){
+
+        $opts = "";
+        $cs->setDb('games');
+        $paramObj = $cs->get($wargame);
+
+        $class =  $paramObj->className;
+        $arg = $paramObj->wargame->arg;
+        $opts = $paramObj->opts;
+        $outOpts = "";
+        foreach($opts as $opt){
+            if($opt === "fogDeploy"){
+                continue;
+            }
+            $outOpts .= $opt."&";
+        }
+        $outOpts = preg_replace("/&$/","",$outOpts);
+
+        $class = preg_replace("/\\\\/",'\\\\\\\\', $class);
+
+        $playerId = $paramObj->wargame->gameRules->attackingForceId;
+
+        $cs->setDb('params');
+        $query = "_design/paramEvents/_view/byDeploys?reduce=false&startkey=[\"$class\",\"$arg\",\"$outOpts\",$playerId]&endkey=[\"$class\",\"$arg\",\"$outOpts\",$playerId,\"zzzzzzzzzzzzzzzzzzzzzzzz\"]";
+
+        $seq = $cs->get($query);
+        $ids = [];
+
+        foreach($seq->rows as $row){
+            $ids[] = $row->id;
+        }
+
+        return ["success"=>true, "files"=>$ids];
+
+    }
+
     public function getMakeNewGame(Request $req, CouchService $cs, WargameService $ws, $historyFile){
 
         $opts = "";
@@ -340,6 +397,8 @@ class WargameController extends Controller
             if ($cs->get($wargame)) {
 //                $req->session()->put("wargame", $wargame);
                 $cs->setDb('games');
+                $job = (new RunMakeGame( $historyFile, $wargame));
+                $this->dispatch($job);
                 return redirect("/wargame/play/$wargame");
             }
             return redirect("/wargame/play");
