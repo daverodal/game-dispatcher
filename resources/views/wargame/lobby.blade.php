@@ -60,7 +60,7 @@
 <my-tabs>
 
     <my-pane title="Home"  is-selected="true" >
-        <div class="game-view" id="content" ng-controller="LobbyController">
+        <div class="game-view" id="content" ng-controller="LobbyController as lc">
             <a class="logout logoutUpper" href="{{url('/logout')}}">Logout</a>
 
             @can('admin')
@@ -78,11 +78,11 @@
                     <h3>Multi games you created:</h3>
                     <ul id="myMultiGames">
                         <li class="bold lobbyHeader">
-                            <span class="sort-col colOne" ng-click="multiColSort('name')">Name</span>
-                            <span class="sort-col colTwo" ng-click="multiColSort('gameName')">Game</span>
-                            <span class="sort-col colThree"  ng-click="multiColSort('turn')">Turn</span>
-                            <span class="sort-col colFour" ng-click="multiColSort('timestamp')">Date</span>
-                            <span class="sort-col colFive"  ng-click="multiColSort('players')">Players Involved</span>
+                            <span class="sort-col colOne" ng-click="lc.multiColSort('name')">Name</span>
+                            <span class="sort-col colTwo" ng-click="lc.multiColSort('gameName')">Game</span>
+                            <span class="sort-col colThree"  ng-click="lc.multiColSort('turn')">Turn</span>
+                            <span class="sort-col colFour" ng-click="lc.multiColSort('timestamp')">Date</span>
+                            <span class="sort-col colFive"  ng-click="lc.multiColSort('players')">Players Involved</span>
                             <span class="colSix">Actions</span>
                         </li>
                         <li class="bold lobbySpacer">&nbsp;</li>
@@ -95,7 +95,7 @@
                                 <span class='colFive'>@{{myMultiGame.players}}</span>
                             </a>
 
-                    <span class="colSix"><a ng-click='publicGame(myMultiGame)' href='' ng-heref="@{{myMultiGame.pubLink}}">make @{{myMultiGame.pubLinkLabel}}</a>
+                    <span class="colSix"><a ng-click='lc.publicGame(myMultiGame)' href='' ng-heref="@{{myMultiGame.pubLink}}">make @{{myMultiGame.pubLinkLabel}}</a>
                         <a ng-href='{{url("wargame/play-as")}}/@{{myMultiGame.className}}/@{{myMultiGame.id}}'>edit</a> <a href='' ng-click="deleteGame(myMultiGame.id)">delete</a>
 </span>
                             <div class='clear'></div>
@@ -107,11 +107,11 @@
                     <h3>Games you were invited to:</h3>
                     <ul id="myOtherGames">
                         <li class="lobbyHeader bold">
-                            <span class="sort-col colOne" ng-click="otherColSort('name')">Name</span>
-                            <span class="sort-col colTwo" ng-click="otherColSort('gameName')">Game</span>
-                            <span class="sort-col colThree"  ng-click="otherColSort('turn')">Turn</span>
-                            <span class="sort-col colFour"  ng-click="otherColSort('timeStamp')">Date</span>
-                            <span class="sort-col colFive" ng-click="otherColSort('players')">Players Involved</span>
+                            <span class="sort-col colOne" ng-click="lc.otherColSort('name')">Name</span>
+                            <span class="sort-col colTwo" ng-click="lc.otherColSort('gameName')">Game</span>
+                            <span class="sort-col colThree"  ng-click="lc.otherColSort('turn')">Turn</span>
+                            <span class="sort-col colFour"  ng-click="lc.otherColSort('timeStamp')">Date</span>
+                            <span class="sort-col colFive" ng-click="lc.otherColSort('players')">Players Involved</span>
                         </li>
                         <li class="lobbySpacer">&nbsp;</li>
                         <li ng-class-odd="'odd'" ng-repeat="myOtherGame in myOtherGames  | orderBy:otherSort:otherSortDir" class="lobbyRow">
@@ -130,10 +130,10 @@
             <h2>HOTSEAT games you created:</h2>
             <ul id="myGames">
                 <li class="bold lobbyHeader">
-                    <span class="sort-col colOne" ng-click="colSort('name')">Name</span>
-                    <span class="sort-col colTwo" ng-click="colSort('gameName')">Game</span>
-                    <span class="sort-col colThree" ng-click="colSort('turn')">Turn</span>
-                    <span class="sort-col colFour" ng-click="colSort('timestamp')">Date</span>
+                    <span class="sort-col colOne" ng-click="lc.colSort('name')">Name</span>
+                    <span class="sort-col colTwo" ng-click="lc.colSort('gameName')">Game</span>
+                    <span class="sort-col colThree" ng-click="lc.colSort('turn')">Turn</span>
+                    <span class="sort-col colFour" ng-click="lc.colSort('timestamp')">Date</span>
                     <span class="colFive">Actions</span>
                 </li>
                 <li class="bold lobbySpacer">&nbsp;</li>
@@ -147,7 +147,7 @@
                         <span class="colFour">@{{myHotGame.date}}</span>
                         <span class='colFive'></span>
                     </a>
-                    <a ng-click='publicGame(myHotGame)' href='' ng-heref="@{{myHotGame.pubLink}}">make @{{myHotGame.pubLinkLabel}}</a> <a ng-href='{{url("wargame/play-as")}}/@{{myHotGame.className}}/@{{myHotGame.id}}'>edit</a> <a href='' ng-click="deleteGame(myHotGame.id)">delete</a>
+                    <a ng-click='lc.publicGame(myHotGame)' href='' ng-heref="@{{myHotGame.pubLink}}">make @{{myHotGame.pubLinkLabel}}</a> <a ng-href='{{url("wargame/play-as")}}/@{{myHotGame.className}}/@{{myHotGame.id}}'>edit</a> <a href='' ng-click="deleteGame(myHotGame.id)">delete</a>
 
                     <div class='clear'></div>
                 </li>
@@ -155,11 +155,11 @@
             <h2>Public Games: (you can observe but not play)</h2>
             <ul id="publicGames">
                 <li class="lobbyHeader bold">
-                    <span class="sort-col colOne"  ng-click="publicColSort('name')">Name</span>
-                    <span class="sort-col colTwo"  ng-click="publicColSort('gameName')">Game</span>
-                    <span class="sort-col colThree" ng-click="publicColSort('turn')">Turn</span>
-                    <span class="sort-col colFour"  ng-click="publicColSort('timestamp')">Date</span>
-                    <span class="sort-col colFive"  ng-click="publicColSort('players')">Players Involved</span>
+                    <span class="sort-col colOne"  ng-click="lc.publicColSort('name')">Name</span>
+                    <span class="sort-col colTwo"  ng-click="lc.publicColSort('gameName')">Game</span>
+                    <span class="sort-col colThree" ng-click="lc.publicColSort('turn')">Turn</span>
+                    <span class="sort-col colFour"  ng-click="lc.publicColSort('timestamp')">Date</span>
+                    <span class="sort-col colFive"  ng-click="lc.publicColSort('players')">Players Involved</span>
                 </li>
                 <li class="lobbySpacer">&nbsp;</li>
 

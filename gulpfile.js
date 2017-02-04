@@ -40,9 +40,10 @@ elixir(function(mix) {
 
     mix.browserify('main.js', 'public/javascripts/main.js');
     mix.browserify('gameMain.js', 'public/javascripts/gameMain.js');
+    mix.browserify('ngGameMain.js', 'public/javascripts/ngGameMain.js');
 
     mix.copy('resources/assets/js/sync.js', 'public/js');
-    mix.version(['css/app.css', 'javascripts/main.js', 'javascripts/gameMain.js','vendor/wargame/mollwitz/css',
+    mix.version(['css/app.css', 'javascripts/main.js', 'javascripts/gameMain.js','javascripts/ngGameMain.js','vendor/wargame/mollwitz/css',
         'vendor/wargame/medieval/css','vendor/wargame/tmcw/css','vendor/wargame/spi/css']);
 
 

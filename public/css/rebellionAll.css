@@ -148,7 +148,6 @@ body {
 :root .fa-rotate-270,
 :root .fa-flip-horizontal,
 :root .fa-flip-vertical {
-  -webkit-filter: none;
   filter: none; }
 
 .fa-stack {
@@ -3438,6 +3437,9 @@ html {
 
 #gameTurn6 .unit {
   float: left; }
+
+.red {
+  colore: red; }
 
 .specialHexesVP .rebelVictoryPoints {
   text-shadow: 0px 0px 1px orange, 0px 0px 1px orange, 0px 0px 1px orange, 0px 0px 2px orange, 0px 0px 2px orange, 0px 0px 2px orange, 0px 0px 3px orange, 0px 0px 3px orange, 0px 0px 3px orange, 0px 0px 4px orange, 0px 0px 4px orange, 0px 0px 4px orange, 0px 0px 5px orange, 0px 0px 5px orange, 0px 0px 5px orange, 0px 0px 6px orange, 0px 0px 6px orange, 0px 0px 6px orange, 0px 0px 7px orange, 0px 0px 7px orange, 0px 0px 7px orange, 0px 0px 8px orange, 0px 0px 8px orange, 0px 0px 8px orange, 0px 0px 9px orange, 0px 0px 9px orange, 0px 0px 9px orange, 0px 0px 10px orange, 0px 0px 10px orange, 0px 0px 10px orange, 0px 0px 1px orange, 0px 0px 1px orange, 0px 0px 1px orange, 0px 0px 2px orange, 0px 0px 2px orange, 0px 0px 2px orange, 0px 0px 3px orange, 0px 0px 3px orange, 0px 0px 3px orange, 0px 0px 4px orange, 0px 0px 4px orange, 0px 0px 4px orange, 0px 0px 5px orange, 0px 0px 5px orange, 0px 0px 5px orange, 0px 0px 6px orange, 0px 0px 6px orange, 0px 0px 6px orange, 0px 0px 7px orange, 0px 0px 7px orange, 0px 0px 7px orange, 0px 0px 8px orange, 0px 0px 8px orange, 0px 0px 8px orange, 0px 0px 9px orange, 0px 0px 9px orange, 0px 0px 9px orange, 0px 0px 10px orange, 0px 0px 10px orange, 0px 0px 10px orange; }

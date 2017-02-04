@@ -1,4 +1,5 @@
-window.Sync = require("./sync.js");
-window.$ = require("jquery");
+import Sync from "./sync.js";
+import $ from "jquery";
+window.Sync = Sync;
+window.$ = $;
 window.jQuery = window.$;
-require("jquery-ui");

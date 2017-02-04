@@ -343,7 +343,7 @@ class  WargameService{
         $matches = array();
         preg_match("/^([0-9]+)-/", $click, $matches);
         $click = $matches[1];
-        $doc->wargame->gameRules->phaseClicks[] = $click + 1;
+        $doc->wargame->gameRules->phaseClicks[] = $click + 3;
         /* should probably get rid of this old code for genTerrain */
         if (isset($doc->wargame->genTerrain)) {
             try {
@@ -689,6 +689,9 @@ class  WargameService{
 //        $time = false;
         $revision = "";
         if ($time) {
+            if($time <= 2){
+                return false;
+            }
             $doc = $this->cs->get($wargame . "?revs_info=true");
             $revs = $doc->_revs_info;
             foreach ($revs as $k => $v) {
