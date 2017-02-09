@@ -202,6 +202,7 @@ class  WargameService{
     public function gameView($wargame){
 
         $user = Auth::user()['name'];
+        $isAdmin = Auth::user()['is_admin'];
 
 
         $this->cs->setDb('games');
@@ -225,7 +226,8 @@ class  WargameService{
         $player = array_search($user, $players);
         if ($player === false) {
             $player = 0;
-            if($doc->visibility !== "public"){
+            $visibility = $doc->visibility ?? "";
+            if($visibility !== "public" && !$isAdmin){
                 return false;
             }
         }
