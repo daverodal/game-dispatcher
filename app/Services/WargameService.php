@@ -8,6 +8,7 @@
 namespace App\Services;
 use Auth;
 use \DateTime;
+use GuzzleHttp\Exception\RequestException;
 use Input;
 use App\User;
 use League\Flysystem\Exception;
@@ -381,79 +382,91 @@ class  WargameService{
 
         $retry = 0;
         $doc = false;
+        $conflictRetry = 0;
         do {
+            $conflict = false;
+            do {
+                try {
+                    $doc = $this->cs->get(urldecode($wargame));
+                } catch (Exception $e) {
+                    $doc = false;
+                    if ($retry++ > 3) {
+                        $success = false;
+                        $emsg = $e->getMessage();
+                        return compact('success', "emsg");
+                    }
+                }
+            } while (!$doc);
+            $ter = false;
+            if (!empty($doc->wargame->terrainName)) {
+                try {
+                    $ter = $this->cs->get($doc->wargame->terrainName);
+                } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+                    var_dump($e->getMessage());
+                }
+                $doc->wargame->terrain = $ter->terrain;
+            }
+//        $this->load->library("battle");
+            $game = !empty($doc->gameName) ? $doc->gameName : '';
+            $emsg = false;
+            $click = $doc->_rev;
+            $matches = array();
+
+            preg_match("/^([0-9]+)-/", $click, $matches);
+            $click = $matches[1];
             try {
-                $doc = $this->cs->get(urldecode($wargame));
-            } catch (Exception $e) {
-                if ($retry > 3) {
-                    $success = fail;
-                    $emsg = $e->getMessage();
+                $battle = Battle::battleFromDoc($doc);
+
+                $isGameOver = $battle->victory->gameOver;
+                $startingAttackerId = $battle->gameRules->attackingForceId;
+                if ($event === SAVE_GAME_EVENT) {
+                    $msg = Input::get('msg', 'defar');
+
+                    event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'bug-report', 'type' => 'click-history', 'attackingForceId' => $startingAttackerId, 'history' => $battle->clickHistory, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time(), 'msg' => $msg]));
+                    $success = true;
+                    $emsg = "";
                     return compact('success', "emsg");
                 }
-            }
-        }while(!$doc);
-        $ter = false;
-        if (!empty($doc->wargame->terrainName)) {
-            try {
-                $ter = $this->cs->get($doc->wargame->terrainName);
-            }catch(\GuzzleHttp\Exception\BadResponseException $e){var_dump($e->getMessage());}
-            $doc->wargame->terrain = $ter->terrain;
-        }
-//        $this->load->library("battle");
-        $game = !empty($doc->gameName) ? $doc->gameName : '';
-        $emsg = false;
-        $click = $doc->_rev;
-        $matches = array();
-
-        preg_match("/^([0-9]+)-/", $click, $matches);
-        $click = $matches[1];
-        try {
-            $battle = Battle::battleFromDoc($doc);
-
-            $isGameOver = $battle->victory->gameOver;
-            $startingAttackerId = $battle->gameRules->attackingForceId;
-            if($event === SAVE_GAME_EVENT){
-                $msg = Input::get('msg', 'defar');
-
-                event(new \App\Events\Params\ParamEvent(['opts'=>$doc->opts, 'docType'=>'bug-report', 'type'=>'click-history', 'attackingForceId'=>$startingAttackerId, 'history'=>$battle->clickHistory, 'className'=> $doc->className,'arg'=>$battle->arg,'time'=>time(), 'msg'=>$msg]));
-                $success = true;
-                $emsg = "";
-                return compact('success', "emsg");
-            }
 //            $battle = Battle::getBattle($game, $doc->wargame, $doc->wargame->arg, false, $doc->className);
-            if($dieRoll !== false){
-                $battle->combatRules->dieRoll = $dieRoll;
-            }
-            $doSave = $battle->poke($event, $id, $x, $y, $user, $click);
-            $gameOver = $battle->victory->gameOver;
-            $saveDeploy = $battle->victory->saveDeploy;
-            if(!$isGameOver && $gameOver){
-                event(new \App\Events\Analytics\RecordGameEvent(['docId'=>$doc->_id, 'winner'=>$battle->victory->winner, 'type'=>'game-victory', 'className'=> $doc->className, 'scenario'=>$battle->scenario, 'arg'=>$battle->arg, 'time'=>time()]));
-                event(new \App\Events\Params\ParamEvent(['opts'=>$doc->opts, 'docType'=>'bug-report', 'type'=>'click-history', 'attackingForceId'=>$startingAttackerId, 'history'=>$battle->clickHistory, 'className'=> $doc->className,'arg'=>$battle->arg,'time'=>time(), 'msg'=>"Game Over Event"]));
+                if ($dieRoll !== false) {
+                    $battle->combatRules->dieRoll = $dieRoll;
+                }
+                $doSave = $battle->poke($event, $id, $x, $y, $user, $click);
+                $gameOver = $battle->victory->gameOver;
+                $saveDeploy = $battle->victory->saveDeploy;
+                if (!$isGameOver && $gameOver) {
+                    event(new \App\Events\Analytics\RecordGameEvent(['docId' => $doc->_id, 'winner' => $battle->victory->winner, 'type' => 'game-victory', 'className' => $doc->className, 'scenario' => $battle->scenario, 'arg' => $battle->arg, 'time' => time()]));
+                    event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'bug-report', 'type' => 'click-history', 'attackingForceId' => $startingAttackerId, 'history' => $battle->clickHistory, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time(), 'msg' => "Game Over Event"]));
 
-            }
-            if($saveDeploy){
-                /* lose nextPhase click */
-                $saveHistory = $battle->clickHistory;
-                array_pop($saveHistory);
-                event(new \App\Events\Params\ParamEvent(['opts'=>$doc->opts, 'docType'=>'deploy', 'attackingForceId'=>$startingAttackerId, 'history'=>$saveHistory, 'className'=> $doc->className,'arg'=>$battle->arg,'time'=>time()]));
-            }
-            $success = false;
-            if ($doSave) {
-                $doc->wargame = $battle->save();
+                }
+                if ($saveDeploy) {
+                    /* lose nextPhase click */
+                    $saveHistory = $battle->clickHistory;
+                    array_pop($saveHistory);
+                    event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'deploy', 'attackingForceId' => $startingAttackerId, 'history' => $saveHistory, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time()]));
+                }
+                $success = false;
+                if ($doSave) {
+                    $doc->wargame = $battle->save();
 
-                $this->cs->put($doc->_id, $doc);
-                $success = true;
+                    try {
+                        $this->cs->put($doc->_id, $doc);
+                        $success = true;
+                    } catch (RequestException $e) {
+                        $conflict = true;
+                        $conflictRetry++;
+                    }
 
+                }
+                if ($doSave === 0) {
+                    $success = true;
+                }
+            } catch (Exception $e) {
+                $emsg = $e->getMessage() . " \nFile: " . $e->getFile() . " \nLine: " . $e->getLine() . " \nCode: " . $e->getCode();
+                $success = false;
             }
-            if ($doSave === 0) {
-                $success = true;
-            }
-        } catch (Exception $e) {
-            $emsg = $e->getMessage() . " \nFile: " . $e->getFile() . " \nLine: " . $e->getLine() . " \nCode: " . $e->getCode();
-            $success = false;
-        }
 
+        }while($conflict && $conflictRetry < 3);
         return compact('success', "emsg");
     }
 

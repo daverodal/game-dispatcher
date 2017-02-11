@@ -96,7 +96,7 @@
                             </a>
 
                     <span class="colSix"><a ng-click='lc.publicGame(myMultiGame)' href='' ng-heref="@{{myMultiGame.pubLink}}">make @{{myMultiGame.pubLinkLabel}}</a>
-                        <a ng-href='{{url("wargame/play-as")}}/@{{myMultiGame.className}}/@{{myMultiGame.id}}'>edit</a> <a href='' ng-click="deleteGame(myMultiGame.id)">delete</a>
+                        <a ng-href='{{url("wargame/play-as")}}/@{{myMultiGame.className}}/@{{myMultiGame.id}}'>edit</a> <a href='' ng-click="lc.deleteGame(myMultiGame.id)">delete</a>
 </span>
                             <div class='clear'></div>
                         </li>
@@ -147,7 +147,7 @@
                         <span class="colFour">@{{myHotGame.date}}</span>
                         <span class='colFive'></span>
                     </a>
-                    <a ng-click='lc.publicGame(myHotGame)' href='' ng-heref="@{{myHotGame.pubLink}}">make @{{myHotGame.pubLinkLabel}}</a> <a ng-href='{{url("wargame/play-as")}}/@{{myHotGame.className}}/@{{myHotGame.id}}'>edit</a> <a href='' ng-click="deleteGame(myHotGame.id)">delete</a>
+                    <a ng-click='lc.publicGame(myHotGame)' href='' ng-heref="@{{myHotGame.pubLink}}">make @{{myHotGame.pubLinkLabel}}</a> <a ng-href='{{url("wargame/play-as")}}/@{{myHotGame.className}}/@{{myHotGame.id}}'>edit</a> <a href='' ng-click="lc.deleteGame(myHotGame.id)">delete</a>
 
                     <div class='clear'></div>
                 </li>

@@ -14,20 +14,23 @@ export default class LobbyController extends SyncController{
         $scope.publicSortDir = true;
         super($scope, $http,sync);
 
+        this.$http = $http;
         this.$scope = $scope;
 
 
 
 
-        $scope.deleteGame = (id) => {
-            $http.get('delete-game/' + id);
-        };
+
 
         $scope.publized = false;
 
         DR.scope = $scope;
 
         sync.fetch(0);
+    }
+
+    deleteGame(id) {
+        this.$http.get('delete-game/' + id);
     }
 
     colSort(column) {
