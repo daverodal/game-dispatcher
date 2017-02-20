@@ -1,5 +1,4 @@
-import Sync from "./sync.js";
 import $ from "jquery";
-window.Sync = Sync;
 window.$ = $;
 window.jQuery = window.$;
+import "../../../vendor/daverodal/wargaming/Wargame/global-header.js";
