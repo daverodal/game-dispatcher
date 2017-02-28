@@ -21,6 +21,17 @@ elixir(function(mix) {
 
     mix.copy('bower_components/jquery-ui/jquery-ui.js', 'public/js');
 
+    mix.copy(['vendor/daverodal/wargaming/Wargame/common-sync.js',
+        'vendor/daverodal/wargaming/Wargame/global-header.js',
+        'vendor/daverodal/wargaming/Wargame/fix-header.js',
+        'vendor/daverodal/wargaming/Wargame/global-funcs.js',
+        'vendor/daverodal/wargaming/Wargame/initialize.js',
+        'vendor/daverodal/wargaming/Wargame/Sync.js',
+    ], 'resources/assets/js/imported');
+
+    mix.copy(['vendor/daverodal/Medieval/Medieval/game-controller.js',
+        'vendor/daverodal/Medieval/Medieval/ng-global-header.js',
+    ], 'resources/assets/js/imported');
 
     mix.copy('bower_components/font-awesome/scss/', 'resources/assets/sass/font-awesome');
     mix.copy('bower_components/font-awesome/fonts/', 'public/fonts/font-awesome');
@@ -28,6 +39,7 @@ elixir(function(mix) {
     mix.copy('bower_components/bourbon/app/assets/stylesheets/', 'resources/assets/sass/bourbon');
     mix.copy('bower_components/neat/app/assets/stylesheets/', 'resources/assets/sass/neat');
 
+    mix.copy('bower_components/angular-right-click/src/ng-right-click.js', 'public/js');
     mix.copy('bower_components/angular-right-click/src/ng-right-click.js', 'public/js');
 
     mix.copy('resources/assets/images', 'public/images');
