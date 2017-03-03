@@ -45,7 +45,7 @@ elixir(function(mix) {
     mix.copy('resources/assets/images', 'public/images');
     if(!elixir.config.production){
         mix.sass('app.scss');
-        mix.sass('vendor/wargame/rebellion/rebellion/rebellionAll.scss');
+        mix.sass('../../../vendor/daverodal/rebellion/Sass/rebellionAll.scss');
     }else{
         console.log("SKIPPING SASS!");
     }
