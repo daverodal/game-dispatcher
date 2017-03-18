@@ -29,6 +29,9 @@ elixir(function(mix) {
         'vendor/daverodal/wargaming/Wargame/Sync.js',
     ], 'resources/assets/js/imported');
 
+    mix.copy(['vendor/daverodal/rebellion/Sass/'],
+    'resources/assets/sass/vendor/wargame/rebellion/');
+
     mix.copy(['vendor/daverodal/Medieval/Medieval/game-controller.js',
         'vendor/daverodal/Medieval/Medieval/ng-global-header.js',
     ], 'resources/assets/js/imported');
@@ -45,7 +48,7 @@ elixir(function(mix) {
     mix.copy('resources/assets/images', 'public/images');
     if(!elixir.config.production){
         mix.sass('app.scss');
-        mix.sass('../../../vendor/daverodal/rebellion/Sass/rebellionAll.scss');
+        mix.sass('vendor/wargame/rebellion/rebellionAll.scss');
     }else{
         console.log("SKIPPING SASS!");
     }
