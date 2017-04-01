@@ -5,4 +5,5 @@ import "angular-right-click"
 import $ from "jquery";
 window.$ = $;
 window.jQuery = window.$;
+import "jquery.panzoom"
 import "./imported/ng-global-header.js";
