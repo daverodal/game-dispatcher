@@ -255,6 +255,14 @@ class  AdminService
         return $doc;
     }
 
+    public function putScenarioById( $id, $val){
+
+        $this->cs->setDb('users');
+        $doc = $this->cs->get($id);
+        $this->cs->put($id, $doc);
+        return $doc;
+    }
+
     public function deleteScenarioByName($dir, $genre, $game, $scenarioName){
         $scenario = $this->getScenarioByName($dir, $genre, $game, $scenarioName);
         if($scenario === false){

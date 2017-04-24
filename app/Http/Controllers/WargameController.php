@@ -796,4 +796,17 @@ class WargameController extends Controller
         $scenario = array_keys($gS)[0];
         echo json_encode($cloneScenario->games->$game->scenarios->$scenario);
     }
+
+    public function putCustomScenario(AdminService $ad, $id, $val)
+    {
+        $user = Auth::user()['name'];
+
+        if (!$user) {
+            echo json_encode(['forward'=> site_url('/users/login')]);
+            return;
+        }
+
+        $ad->putScenarioById($id, $val);
+
+    }
 }
