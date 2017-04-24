@@ -26,6 +26,10 @@
                              class="clearWrapper">
                             <span class="scenarioWrapper @{{scenario.selected}}">@{{scenario.description}}</span>
                             <div class="clear"></div>
+                            {{ $plainGenre }} {{ $dir }} {{ $game }}
+                            <a class='scenarioWrapper play'
+                               href='<?= url("wargame/clone-scenario/$dir/".rawurlencode($plainGenre)."/$game") ?>/@{{scenario.sName}}'>Clone</a>
+
                             <a class='scenarioWrapper play'
                                ng-click="showCustom('<?= url("wargame/create-wargame/hotseat/") ?>/'+game+'/'+scenario.sName+'?'+setOptions)">Play Solo&raquo;</a>
                             <a class='scenarioWrapper play'

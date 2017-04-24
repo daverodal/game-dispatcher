@@ -154,6 +154,12 @@ class  AdminService
         return false;
     }
 
+    public function getNormalScenarios($dir, $genre, $game){
+
+     $game = $this->getAvailGames($dir, $genre, $game);
+        return $game;
+    }
+
     public function getCustomScenarios($dir = false, $genre = false, $game = false){
 
         $reduceArgs = "group=true&group_level=2";
@@ -171,6 +177,7 @@ class  AdminService
         }
         $this->cs->setDb('users');
 
+//        var_dump("/_design/newFilter/_view/getCustomScenarios?$reduceArgs");
         $seq = $this->cs->get("/_design/newFilter/_view/getCustomScenarios?$reduceArgs");
         $this->cs->setDb('games');
         $rows = $seq->rows;
@@ -208,13 +215,28 @@ class  AdminService
         $ret = $this->cs->put($doc->_id, $doc);
         $this->cs->setDb($prevDb);
     }
-
     public function getScenarioByName($dir, $genre, $game, $scenarioName){
+        $normalScenarios = $this->getNormalScenarios($dir, $genre, $game);
+
+        $norScen = $normalScenarios[0]->value->scenarios;
         $scenarios = $this->getCustomScenarios($dir, $genre, $game);
+
+
+        foreach($norScen as $sId => $scen){
+            $theScenario = $sId;
+
+            $thisScenario = $scen;
+            $thisScenario->id = $sId;
+            $thisScenario->sName = $theScenario;
+            if($scenarioName === $theScenario){
+                return $thisScenario;
+            }
+        }
+
 
         foreach($scenarios as $scenario){
             $theScenario = $scenario->scenario;
- 
+
             $thisScenario = $scenario->value;
             $thisScenario->id = $scenario->id;
             $thisScenario->sName = $theScenario;
@@ -222,8 +244,15 @@ class  AdminService
                 return $thisScenario;
             }
         }
-        return false;        
-        
+        return false;
+
+    }
+
+    public function getScenarioById( $id){
+
+        $this->cs->setDb('users');
+        $doc = $this->cs->get($id);
+        return $doc;
     }
 
     public function deleteScenarioByName($dir, $genre, $game, $scenarioName){

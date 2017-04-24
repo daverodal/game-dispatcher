@@ -76,11 +76,16 @@ class WargameController extends Controller
     }
 
     function getCloneScenario(AdminService $ad,$dir = false, $genre = false, $game = false, $theScenario = false){
+
+//        $scenario = new \stdClass();
+//        $scenario->description = 'jj ';
+//        dd($ad->cloneScenario($dir,$genre,$game,uniqid(), $scenario));
+
         $cloneScenario = $ad->getScenarioByName($dir, $genre, $game, $theScenario);
         if($cloneScenario !== false){
-            dd($ad->cloneScenario('Mollwitz','Americas','FreemansFarm1777',uniqid(), $cloneScenario));
+            $ad->cloneScenario($dir, $genre, $game,uniqid(), $cloneScenario);
         }
-
+        return redirect("/wargame/unattached-game/$dir/$genre/$game");
     }
 
     function getDeleteScenario(AdminService $ad){
@@ -90,7 +95,6 @@ class WargameController extends Controller
     function getUnattachedGame(AdminService $ad, CouchService $cs, Request $req, $dir = false, $genre = false, $game = false, $theScenario = false)
     {
 
-        $gamesAvail = $ad->getAvailGames($dir, $genre, $game);
         $plainGenre = rawurldecode($genre);
         $cs->setDb("games");
         $seq = $cs->get("_design/newFilter/_view/getLobbies");
@@ -99,6 +103,7 @@ class WargameController extends Controller
         $editor = Auth::user()->is_editor;
         $siteUrl = url("wargame/unattached-game/");
 
+        $gamesAvail = $ad->getAvailGames($dir, $genre, $game);
 
         $backgroundImage = "Egyptian_Pharaoh_in_a_War-Chariot,_Warrior,_and_Horses._(1884)_-_TIMEA.jpg";
         $backgroundAttr = 'By Unknown author [<a href="http://creativecommons.org/licenses/by-sa/2.5">CC BY-SA 2.5</a>], <a href="http://commons.wikimedia.org/wiki/File%3AEgyptian_Pharaoh_in_a_War-Chariot%2C_Warrior%2C_and_Horses._(1884)_-_TIMEA.jpg">via Wikimedia Commons</a>';
@@ -264,7 +269,7 @@ class WargameController extends Controller
             unset($theGame->value);
             $theGame = (array)$theGame;
             $theGameMeta['description'] = '';
-            return view("wargame/wargame-unattached-game", compact("theScenarios", "editor", "backgroundImage", "backgroundAttr","bigMapUrl", "mapUrl", "theScenario", "plainGenre", "theGame", "games", "nest","siteUrl","theGameMeta"));
+            return view("wargame/wargame-unattached-game", compact("game","dir","theScenarios", "editor", "backgroundImage", "backgroundAttr","bigMapUrl", "mapUrl", "theScenario", "plainGenre", "theGame", "games", "nest","siteUrl","theGameMeta"));
         } else {
             foreach ($gamesAvail as $gameAvail) {
                 if($gameAvail->game) {
@@ -771,5 +776,24 @@ class WargameController extends Controller
     public function getMakePrivate(WargameService $ws, $docId){
         $ret = $ws->makePrivate($docId);
         echo json_encode(["success"=>$ret, "emsg"=>false]);
+    }
+
+    public function getCustomScenario(AdminService $ad, $id)
+    {
+        $user = Auth::user()['name'];
+
+        if (!$user) {
+            echo json_encode(['forward'=> site_url('/users/login')]);
+            return;
+        }
+
+        $cloneScenario = $ad->getScenarioById($id);
+
+        $gA = get_object_vars($cloneScenario->games);
+        $game = array_keys($gA)[0];
+
+        $gS = get_object_vars($cloneScenario->games->$game->scenarios);
+        $scenario = array_keys($gS)[0];
+        echo json_encode($cloneScenario->games->$game->scenarios->$scenario);
     }
 }
