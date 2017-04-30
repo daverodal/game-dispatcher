@@ -219,7 +219,7 @@ class  AdminService
         $normalScenarios = $this->getNormalScenarios($dir, $genre, $game);
 
         $norScen = $normalScenarios[0]->value->scenarios;
-        $norParams = $normalScenarios[0]->value->params;
+        $norParams = $normalScenarios[0]->value->params ?? new \stdClass();
         $scenarios = $this->getCustomScenarios($dir, $genre, $game);
 
 
