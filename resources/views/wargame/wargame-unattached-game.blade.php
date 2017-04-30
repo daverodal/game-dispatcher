@@ -26,8 +26,10 @@
                              class="clearWrapper">
                             <span class="scenarioWrapper @{{scenario.selected}}">@{{scenario.description}}</span>
                             <div class="clear"></div>
-                            {{ $plainGenre }} {{ $dir }} {{ $game }}
-                            <a class='scenarioWrapper play'
+
+                            <a ng-if="editor && scenario.id" class="scenarioWrapper play" href='{{url("wargame/scenario-edit/")}}/@{{scenario.id}}'>Edit</a>
+                            <a ng-if="editor && scenario.id" class="scenarioWrapper play" href='{{url("wargame/scenario-delete/")}}/@{{scenario.id}}'>Delete</a>
+                            <a ng-if="editor" class='scenarioWrapper play'
                                href='<?= url("wargame/clone-scenario/$dir/".rawurlencode($plainGenre)."/$game") ?>/@{{scenario.sName}}'>Clone</a>
 
                             <a class='scenarioWrapper play'

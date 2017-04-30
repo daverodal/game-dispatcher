@@ -219,6 +219,7 @@ class  AdminService
         $normalScenarios = $this->getNormalScenarios($dir, $genre, $game);
 
         $norScen = $normalScenarios[0]->value->scenarios;
+        $norParams = $normalScenarios[0]->value->params;
         $scenarios = $this->getCustomScenarios($dir, $genre, $game);
 
 
@@ -229,6 +230,9 @@ class  AdminService
             $thisScenario->id = $sId;
             $thisScenario->sName = $theScenario;
             if($scenarioName === $theScenario){
+                foreach($norParams as $pId => $pVal){
+                    $thisScenario->$pId = $pVal;
+                }
                 return $thisScenario;
             }
         }
@@ -255,11 +259,27 @@ class  AdminService
         return $doc;
     }
 
-    public function putScenarioById( $id, $val){
+    public function putScenarioById( $id, $scenarioId, $val){
 
         $this->cs->setDb('users');
         $doc = $this->cs->get($id);
+
+        $gA = get_object_vars($doc->games);
+        $game = array_keys($gA)[0];
+
+        $doc->games->$game->scenarios->$scenarioId = $val;
+
         $this->cs->put($id, $doc);
+        return $doc;
+    }
+
+
+    public function DeleteScenarioById( $id ){
+
+        $this->cs->setDb('users');
+        $doc = $this->cs->get($id);
+
+        $this->cs->delete($id, $doc->_rev);
         return $doc;
     }
 

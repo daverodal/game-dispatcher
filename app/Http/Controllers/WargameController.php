@@ -88,8 +88,11 @@ class WargameController extends Controller
         return redirect("/wargame/unattached-game/$dir/$genre/$game");
     }
 
-    function getDeleteScenario(AdminService $ad){
-        $cloneScenario = $ad->deleteScenarioByName('Mollwitz','Americas','FreemansFarm1777','576ffdd3408fc');
+    function getScenarioDelete(Request $req, AdminService $ad, $id){
+        $cloneScenario = $ad->DeleteScenarioById($id);
+        $req->headers->get('referer');
+        return redirect($req->headers->get('referer'));
+
     }
 
     function getUnattachedGame(AdminService $ad, CouchService $cs, Request $req, $dir = false, $genre = false, $game = false, $theScenario = false)
@@ -209,6 +212,7 @@ class WargameController extends Controller
                 }
                 $thisScenario = $customScenario->value;
                 $thisScenario->sName = $theScenario;
+                $thisScenario->id = $customScenario->id;
                 $thisScenario->mapUrl = $terrain->terrain->mapUrl;
 //                $theGame->value->scenarios->$theScenario->mapUrl = $terrain->terrain->mapUrl;
                 $thisScenario->bigMapUrl = $terrain->terrain->mapUrl;
@@ -323,6 +327,12 @@ class WargameController extends Controller
 
     }
 
+    public function getScenarioEdit($id){
+        $backgroundImage = '18th_century_gun.jpg';
+        $backgroundAttr = 'By MKFI (Own work) [Public domain], <a href="http://commons.wikimedia.org/wiki/File%3ASwedish_18th_century_6_pound_cannon_front.JPG">via Wikimedia Commons</a>';
+
+        return view('scenario/edit',compact("backgroundImage", "backgroundAttr"));
+    }
     public function getApplyDeploys(Request $req, CouchService $cs, WargameService $ws, $wargame, $deploy)
     {
 
@@ -797,8 +807,10 @@ class WargameController extends Controller
         echo json_encode($cloneScenario->games->$game->scenarios->$scenario);
     }
 
-    public function putCustomScenario(AdminService $ad, $id, $val)
+    public function putCustomScenario(AdminService $ad,  Request $request, $id, $scenario )
     {
+
+        $postData = $request->all();
         $user = Auth::user()['name'];
 
         if (!$user) {
@@ -806,7 +818,7 @@ class WargameController extends Controller
             return;
         }
 
-        $ad->putScenarioById($id, $val);
+        $ad->putScenarioById($id, $scenario, $postData);
 
     }
 }
