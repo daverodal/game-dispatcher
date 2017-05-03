@@ -119,11 +119,36 @@ a:hover{
   display:block;
   margin:0;
 }
+$satlightskyblue : saturate(lightskyblue, 40%);
+$satindianred: saturate(indianred, 40%);;
+a.custom-scenario{
+  font-size:50%;
+  border-color: lightskyblue;
+  background-color: powderblue;
+  transition: font-size .5s, color .1s;
+  &:hover{
+    font-size:30px;
+    color:white;
+    border-color: $satlightskyblue;
+  }
+
+  &.delete{
+    background: lightcoral;
+    border-color: indianred;
+    &:hover{
+      border-color: $satindianred;
+      color:white;
+    }
+  }
+}
 .scenarioWrapper{
   float:left;
   cursor:pointer;
   &.selected {
     background-color: yellow;
+  }
+  &a{
+    font-size:30%;
   }
 }
 .scenarioWrapper.selected.long-description{
@@ -209,13 +234,15 @@ li.game {
   border: 10px solid #9f9;
   background: #cfc;
 }
+$playcolor: #9e9;
+$satplaycolor: saturate($playcolor, 40%);
 .play{
   background: #cfc;
-  border-color: #9f9;
+  border-color: $playcolor;
   margin-left:20px;
   margin-top:10px;
   &:hover{
-    border-color: #9f9;
+    border-color: $satplaycolor;
   }
 }
 

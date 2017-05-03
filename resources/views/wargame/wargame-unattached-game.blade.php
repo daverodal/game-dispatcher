@@ -25,12 +25,13 @@
                         <div class="kewl-box" ng-repeat="(sName, scenario) in scenarios" ng-click="clickityclick(scenario)"
                              class="clearWrapper">
                             <span class="scenarioWrapper @{{scenario.selected}}">@{{scenario.description}}</span>
-                            <div class="clear"></div>
 
-                            <a ng-if="editor && scenario.id" class="scenarioWrapper play" href='{{url("wargame/scenario-edit/")}}/@{{scenario.id}}'>Edit</a>
-                            <a ng-if="editor && scenario.id" class="scenarioWrapper play" href='{{url("wargame/scenario-delete/")}}/@{{scenario.id}}'>Delete</a>
-                            <a ng-if="editor" class='scenarioWrapper play'
-                               href='<?= url("wargame/clone-scenario/$dir/".rawurlencode($plainGenre)."/$game") ?>/@{{scenario.sName}}'>Clone</a>
+                            <a ng-if="editor" class='scenarioWrapper custom-scenario play copy'
+                               href='<?= url("wargame/clone-scenario/$dir/".rawurlencode($plainGenre)."/$game") ?>/@{{scenario.sName}}'><i class="fa fa-files-o"></i></a>
+                            <a ng-if="editor && scenario.id" class="scenarioWrapper custom-scenario play edit" href='{{url("wargame/scenario-edit/")}}/@{{scenario.id}}'><i class="fa fa-pencil-square-o"></i></a>
+                            <a ng-if="editor && scenario.id" class="scenarioWrapper custom-scenario play delete" href='{{url("wargame/scenario-delete/")}}/@{{scenario.id}}'><i class="fa fa-times"></i></a>
+
+                            <div class="clear"></div>
 
                             <a class='scenarioWrapper play'
                                ng-click="showCustom('<?= url("wargame/create-wargame/hotseat/") ?>/'+game+'/'+scenario.sName+'?'+setOptions)">Play Solo&raquo;</a>

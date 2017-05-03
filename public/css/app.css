@@ -8581,11 +8581,29 @@ html {
   display: block;
   margin: 0; }
 
+a.custom-scenario {
+  font-size: 50%;
+  border-color: lightskyblue;
+  background-color: powderblue;
+  transition: font-size .5s, color .1s; }
+  a.custom-scenario:hover {
+    font-size: 30px;
+    color: white;
+    border-color: #82cfff; }
+  a.custom-scenario.delete {
+    background: lightcoral;
+    border-color: indianred; }
+    a.custom-scenario.delete:hover {
+      border-color: #f83131;
+      color: white; }
+
 .scenarioWrapper {
   float: left;
   cursor: pointer; }
   .scenarioWrapper.selected {
     background-color: yellow; }
+  .scenarioWrappera {
+    font-size: 30%; }
 
 .scenarioWrapper.selected.long-description {
   background: #feffcd; }
@@ -8658,11 +8676,11 @@ li.game {
 
 .play {
   background: #cfc;
-  border-color: #9f9;
+  border-color: #9e9;
   margin-left: 20px;
   margin-top: 10px; }
   .play:hover {
-    border-color: #9f9; }
+    border-color: #88ff88; }
 
 .go-button {
   font-size: 30px;
