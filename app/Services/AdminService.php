@@ -231,7 +231,9 @@ class  AdminService
             $thisScenario->sName = $theScenario;
             if($scenarioName === $theScenario){
                 foreach($norParams as $pId => $pVal){
-                    $thisScenario->$pId = $pVal;
+                    if(empty($thisScenario->$pId)){
+                        $thisScenario->$pId = $pVal;
+                    }
                 }
                 return $thisScenario;
             }
