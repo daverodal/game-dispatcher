@@ -26,7 +26,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/favicon.ico" type="image/icon">
 
-    <meta property="og:image" content="{{asset('images/Brandy.png')}}" />
+    <meta property="og:image" content="{{asset('js/BritArtBadge.png')}}" />
     <meta property="og:title" content="Wargames for fun" />
     <meta property="og:url" content="http://davidrodal.com" />
     <meta property="og:description" content="Many many fun games" />
