@@ -75,7 +75,7 @@ class WargameController extends Controller
 
     }
 
-    function getCloneScenario(AdminService $ad,$dir = false, $genre = false, $game = false, $theScenario = false){
+    function getCloneScenario(AdminService $ad, WargameService $ws, $dir = false, $genre = false, $game = false, $theScenario = false){
 
 //        $scenario = new \stdClass();
 //        $scenario->description = 'jj ';
@@ -83,6 +83,9 @@ class WargameController extends Controller
 
         $cloneScenario = $ad->getScenarioByName($dir, $genre, $game, $theScenario);
         if($cloneScenario !== false){
+            if(!isset($cloneScenario->origTerrainName)){
+                $cloneScenario->origTerrainName = $ws->getTerrainName($game, $theScenario);
+            }
             $ad->cloneScenario($dir, $genre, $game,uniqid(), $cloneScenario);
         }
         return redirect("/wargame/unattached-game/$dir/$genre/$game");
@@ -199,11 +202,12 @@ class WargameController extends Controller
             }
             $customScenarios = $ad->getCustomScenarios($dir, $genre, $game);
             foreach($customScenarios as $customScenario){
-                $terrainName = "terrain-".$game;
+//                $terrainName = "terrain-".$game;
+                $terrainName = $customScenario->value->origTerrainName;
                 $theScenario = $customScenario->scenario;
-                if($theScenario){
-                    $terrainName .= ".$theScenario";
-                }
+//                if($theScenario){
+//                    $terrainName .= ".$theScenario";
+//                }
                 try {
                     $terrain = $cs->get($terrainName);
                 }catch(\GuzzleHttp\Exception\BadResponseException $e){}

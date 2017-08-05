@@ -68,6 +68,12 @@ class GamesDocumentSeeder extends Seeder
                 }
                 emit([doc.createUser, doc.playerStatus, gameName,doc.name,doc.wargame.gameRules.attackingForceId, doc._id, doc.visibility],[doc.gameName,doc.createDate,doc.wargame.players,doc.wargame.mapData.mapUrl,doc.wargame.victory.gameOver,doc.wargame.gameRules.turn, doc.wargame.gameRules.maxTurn]);
             }}";
+        $views->getTerrain = new StdClass;
+        $views->getTerrain->map = "function(doc){
+            if(doc.docType == 'terrain'){
+               
+                emit([doc._id],true);
+            }}";
 //        $views->getAvailGames = new StdClass;
 //        $views->getAvailGames->map = "function(doc){if(doc.docType == 'gamesAvail'){if(doc.games){for(var i in doc.games){emit(doc.games[i],doc.games[i]);}}}}";
         $filters = new StdClass();

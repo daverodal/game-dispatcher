@@ -317,23 +317,37 @@ class  WargameService{
         return $ret;
     }
 
+    public function getTerrainName($game, $arg, &$retTerrainDoc = false){
+        $cs = $this->cs;
+        try{
+            $terrainName = "terrain-$game.$arg";
+            $terrainDoc = $cs->get($terrainName);
+        }catch(\GuzzleHttp\Exception\BadResponseException $e){}
+        if(empty($terrainDoc)){
+            try{
+                $terrainName = "terrain-$game";
+                $terrainDoc = $cs->get($terrainName);
+            }catch(\GuzzleHttp\Exception\BadResponseException $e){var_dump($e->getMessage() );}
+        }
+        if($retTerrainDoc !== false){
+            $retTerrainDoc = $terrainDoc;
+        }
+        return $terrainName;
+    }
+
     public function gameUnitInit($doc, $game, $arg,  $opts){
         $doc->opts = $opts;
         $battle = Battle::battleFromName( $game, $arg, $opts);
 
-
         $cs = $this->cs;
         $cs->setDb('games');
         if (method_exists($battle, 'terrainInit')) {
-            try{
-                $terrainName = "terrain-$game.$arg";
+            if(isset($battle->scenario->origTerrainName)){
+                $terrainName = $battle->scenario->origTerrainName;
                 $terrainDoc = $cs->get($terrainName);
-            }catch(\GuzzleHttp\Exception\BadResponseException $e){}
-            if(empty($terrainDoc)){
-                try{
-                    $terrainName = "terrain-$game";
-                    $terrainDoc = $cs->get($terrainName);
-                }catch(\GuzzleHttp\Exception\BadResponseException $e){var_dump($e->getMessage());}
+            }else {
+                $terrainDoc = null;
+                $terrainName = $this->getTerrainName($game, $arg, $terrainDoc);
             }
             $battle->terrainName = $terrainName;
             $battle->terrainInit($terrainDoc);
