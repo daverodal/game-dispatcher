@@ -203,7 +203,11 @@ class WargameController extends Controller
             $customScenarios = $ad->getCustomScenarios($dir, $genre, $game);
             foreach($customScenarios as $customScenario){
 //                $terrainName = "terrain-".$game;
-                $terrainName = $customScenario->value->origTerrainName;
+                if(!isset($customScenario->value->origTerrainName)){
+                    $terrainName = "terrain-".$game;
+                }else{
+                    $terrainName = $customScenario->value->origTerrainName;
+                }
                 $theScenario = $customScenario->scenario;
 //                if($theScenario){
 //                    $terrainName .= ".$theScenario";
