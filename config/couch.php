@@ -28,4 +28,5 @@ return [
     'users'=> env('COUCH_USERS','users'),
     'analytics' => env('COUCH_ANALYTICS','analytics'),
     'params' => env('COUCH_PARAMS','params'),
+    'terrain' => env('COUCH_TERRAIN','terrain')
 ];

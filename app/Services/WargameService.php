@@ -317,6 +317,14 @@ class  WargameService{
         return $ret;
     }
 
+    public function getTerrain($terrainName){
+        $cs = $this->cs;
+        $prevDb = $cs->setDb('terrain');
+        $ret = $cs->get($terrainName);
+        $cs->setDb($prevDb);
+        return $ret;
+    }
+
     public function getTerrainName($game, $arg, &$retTerrainDoc = false){
         $cs = $this->cs;
         try{
@@ -791,7 +799,7 @@ class  WargameService{
 
     public function saveTerrainDoc($terrainDocName, $wargameDoc){
         $ter = false;
-        $prevDb = $this->cs->setDb('games');
+        $prevDb = $this->cs->setDb('terrain');
         try {
             $ter = $this->cs->get($terrainDocName);
         } catch (\GuzzleHttp\Exception\BadResponseException  $e) {

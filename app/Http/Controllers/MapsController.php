@@ -146,25 +146,22 @@ class MapsController extends Controller
             $mapId = $ret->id;
             $mapRev = $ret->rev;
             if ($ret->ok === true) {
-                echo "good ";
                 if ($hexStr) {
-                    echo "better '";
                     $hexDoc = $client->get($hexStr);
                     unset($hexDoc->_id);
                     unset($hexDoc->_rev);
                     $hexDoc->hexStr->map = $mapId;
                     $hexRet = $client->post($hexDoc);
                     if ($hexRet->ok) {
-                        echo "Best";
                         $doc->_id = $mapId;
                         $doc->_rev = $mapRev;
                         $doc->map->hexStr = $hexRet->id;
                         $client->put($doc->_id, $doc);
-                        echo "BFF forever ";
                     }
                 }
             }
         }
+        return json_encode(new \stdClass());
     }
 
 }

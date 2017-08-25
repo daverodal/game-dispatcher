@@ -98,7 +98,7 @@ class WargameController extends Controller
 
     }
 
-    function getUnattachedGame(AdminService $ad, CouchService $cs, Request $req, $dir = false, $genre = false, $game = false, $theScenario = false)
+    function getUnattachedGame(WargameService $ws, AdminService $ad, CouchService $cs, Request $req, $dir = false, $genre = false, $game = false, $theScenario = false)
     {
 
         $plainGenre = rawurldecode($genre);
@@ -164,7 +164,7 @@ class WargameController extends Controller
                 $terrainName .= ".$theScenario";
             }
             try {
-                $terrain = $cs->get($terrainName);
+                $terrain = $ws->getTerrain($terrainName);
             }catch(\GuzzleHttp\Exception\BadResponseException $e){echo $terrainName." ".$e->getMessage();               }
             if(!$terrain){
                 $terrain = $cs->get("terrain-".$game);
@@ -183,10 +183,10 @@ class WargameController extends Controller
                     $terrainName .= ".$theScenario";
                 }
                 try {
-                    $terrain = $cs->get($terrainName);
+                    $terrain = $ws->getTerrain($terrainName);
                 }catch(\GuzzleHttp\Exception\BadResponseException $e){}
                 if(!$terrain){
-                    $terrain = $cs->get("terrain-".$game);
+                    $terrain = $ws->getTerrain("terrain-".$game);
                 }
 
                 $thisScenario = $theGame->value->scenarios->$theScenario;
@@ -288,7 +288,7 @@ class WargameController extends Controller
                     $terrainName = "terrain-" . $gameAvail->game;
                     $terrain = "";
                     try {
-                        $terrain = $cs->get($terrainName);
+                        $terrain = $ws->getTerrain($terrainName);
                     } catch (\GuzzleHttp\Exception\BadResponseException $e) {
                         continue;
                         echo "EXCEPTION $terrainName ";
