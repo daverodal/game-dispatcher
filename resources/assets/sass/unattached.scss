@@ -127,7 +127,7 @@ a.custom-scenario{
   background-color: powderblue;
   transition: font-size .5s, color .1s;
   &:hover{
-    font-size:30px;
+    //font-size:30px;
     color:white;
     border-color: $satlightskyblue;
   }

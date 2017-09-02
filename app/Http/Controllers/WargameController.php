@@ -6,7 +6,7 @@
  * Time: 2:49 PM
  */
 
-namespace app\Http\Controllers;
+namespace App\Http\Controllers;
 use App\Services\AdminService;
 use Illuminate\Http\Request;
 use App\Services\CouchService;
