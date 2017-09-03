@@ -327,6 +327,8 @@ class  WargameService{
 
     public function getTerrainName($game, $arg, &$retTerrainDoc = false){
         $cs = $this->cs;
+        $prevDb = $this->cs->setDb('terrain');
+
         try{
             $terrainName = "terrain-$game.$arg";
             $terrainDoc = $cs->get($terrainName);
@@ -340,6 +342,7 @@ class  WargameService{
         if($retTerrainDoc !== false){
             $retTerrainDoc = $terrainDoc;
         }
+        $prevDb = $this->cs->setDb($prevDb);
         return $terrainName;
     }
 
