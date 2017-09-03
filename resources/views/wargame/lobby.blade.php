@@ -60,7 +60,7 @@
 <my-tabs>
 
     <my-pane title="Home"  is-selected="true" >
-        <div class="game-view" id="content" ng-controller="LobbyController as lc">
+        <div class="container game-view" id="content" ng-controller="LobbyController as lc">
             <a class="logout logoutUpper" href="{{url('/logout')}}">Logout</a>
 
             @can('admin')
@@ -77,7 +77,7 @@
                 <li>
                     <h3>Multi games you created:</h3>
                     <ul id="myMultiGames">
-                        <li class="bold lobbyHeader">
+                        <li class="bold row lobbyHeader">
                             <span class="sort-col colOne" ng-click="lc.multiColSort('name')">Name</span>
                             <span class="sort-col colTwo" ng-click="lc.multiColSort('gameName')">Game</span>
                             <span class="sort-col colThree"  ng-click="lc.multiColSort('turn')">Turn</span>

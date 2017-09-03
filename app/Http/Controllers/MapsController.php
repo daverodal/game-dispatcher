@@ -133,10 +133,11 @@ class MapsController extends Controller
         return json_encode(new \stdClass());
     }
 
-    function cloneFile(CouchService $client, $stuff)
+    function cloneFile(CouchService $client, $mapId)
     {
         $client->setDb('rest');
-        $doc = $client->get($stuff);
+        $cloneRet = [];
+        $doc = $client->get($mapId);
         if ($doc->docType == "hexMapData") {
             unset($doc->_id);
             unset($doc->_rev);
@@ -160,8 +161,10 @@ class MapsController extends Controller
                     }
                 }
             }
+            $cloneRet['mapId'] = $mapId;
+            $cloneRet['hexid'] = $hexRet->id;
         }
-        return json_encode(new \stdClass());
+        return json_encode($cloneRet);
     }
 
 }

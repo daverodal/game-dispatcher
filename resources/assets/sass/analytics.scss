@@ -1,7 +1,10 @@
 $max-width: 100em;
+
+
+
 #analytics-grid {
-  @include outer-container;
   .grid-row {
+    @extend .row;
     clear:both;
     &:nth-child(even) {
       background: lightgray;
@@ -11,21 +14,20 @@ $max-width: 100em;
       background:powderblue;
     }
     .colOne {
-      @include span-columns(1.5);
+      @include make-xs-column(1.5);
     }
     .colTwo {
-      @include span-columns(1.5);
+      @include make-xs-column(1.5);
       word-break: break-all;
     }
     .colThree {
-      @include span-columns(1.5);
+      @include make-xs-column(1.5);
     }
     .colFour {
-      @include span-columns(1.5);
+      @include make-xs-column(1.5);
     }
     .colFive {
-      @include span-columns(1);
-      @include omega;
+      @include make-xs-column(1);
     }
   }
 }

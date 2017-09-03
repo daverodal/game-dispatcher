@@ -1,23 +1,22 @@
 $max-width: 100em;
 #myOtherGames, #publicGames {
-  @include outer-container;
+  //@include outer-container;
   .lobbyRow, .lobbyHeader {
     .colOne {
-      @include span-columns(3);
+      @include make-xs-column(3);
     }
     .colTwo {
-      @include span-columns(3);
+      @include make-xs-column(3);
       word-break: break-all;
     }
     .colThree {
-      @include span-columns(2);
+      @include make-xs-column(2);
     }
     .colFour {
-      @include span-columns(2);
+      @include make-xs-column(2);
     }
     .colFive {
-      @include span-columns(2);
-      @include omega;
+      @include make-xs-column(2);
     }
   }
 }
@@ -26,71 +25,77 @@ $max-width: 100em;
   cursor:pointer;
 }
 .form-group {
-  @include outer-container;
+  //@include outer-container;
   .col-sm-3 {
       text-align:right;
 
-    @include span-columns(1);
+    @include make-xs-column(1);
   }
   .col-sm-6 {
 
     input, textarea {
       float:none;
-      @include span-columns(8);
+      @include make-xs-column(8);
     }
   }
 }
 
 $grid-columns: 12;
 #myGames {
-  @include outer-container;
+  //@include outer-container;
   .lobbyRow, .lobbyHeader {
     span {
     }
     .colOne {
-      @include span-columns(2);
+      @include make-xs-column(2);
     }
     .colTwo {
-      @include span-columns(3);
+      @include make-xs-column(3);
       word-break: break-all;
     }
     .colThree {
-      @include span-columns(2);
+      @include make-xs-column(2);
     }
     .colFour {
-      @include span-columns(2);
+      @include make-xs-column(2);
     }
     .colFive {
-      @include span-columns(3);
-      @include omega;
+      @include make-xs-column(3);
     }
   }
 }
 
 #myMultiGames {
-  @include outer-container;
   .lobbyRow, .lobbyHeader {
     span {
     }
     .colOne {
-      @include span-columns(1.5);
+      //@include make-xs-column(1.5);
+      @include make-xs-column(1.5);
     }
     .colTwo {
-      @include span-columns(2.5);
+      //@include make-xs-column(2.5);
+      @include make-xs-column(2.5);
       word-break: break-all;
     }
     .colThree {
-      @include span-columns(2);
+      //@include make-xs-column(2);
+      @include make-xs-column(2);
+
     }
     .colFour {
-      @include span-columns(2);
+      //@include make-xs-column(2);
+      @include make-xs-column(2);
+
     }
     .colFive {
-      @include span-columns(2);
+      //@include make-xs-column(2);
+      @include make-xs-column(2);
     }
     .colSix {
-      @include span-columns(2);
-      @include omega;
+      //@include make-xs-column(2);
+      @include make-xs-column(2);
+      //@include omega;
     }
   }
 }
@@ -331,9 +336,9 @@ a {
 }
 
 .users-row {
-  @include outer-container;
+  //@include outer-container;
   .users-layout {
-    @include span-columns(3);
+    @include make-xs-column(3);
   }
 }
 

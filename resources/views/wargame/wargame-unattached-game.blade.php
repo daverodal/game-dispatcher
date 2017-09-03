@@ -4,7 +4,7 @@
     <div id="container" class="{{$theGame ? 'wideGame coolBox' : 'coolBox'}}">
 
         @if ($theGame)
-            <ul id='theGameGrid'>
+            <ul id='theGameGrid' class="row">
                 <li class='leftGrid'>
                     <a class='breadcrumb' href='{{url("wargame/unattached-game/")}}'>top</a>
                     <?php $up = $theGame['dir'] . "/" . rawurlencode($theGame['genre']);?>

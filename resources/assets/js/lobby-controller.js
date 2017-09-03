@@ -75,15 +75,16 @@ export default class LobbyController extends SyncController{
         }
         $scope.publized = true;
         if (game.public === "public") {
-            $http.get('make-private/' + game.id).success(function () {
-                console.log("MakePrivate ");
+            this.$http.get('make-private/' + game.id).then((arg) => {
+                console.log("prive it");
                 $scope.publized = false;
+
             });
         } else {
-            $http.get('make-public/' + game.id).success(function () {
-                console.log("MakePrivate ");
+            this.$http.get('make-public/' + game.id).then((arg) => {
+                console.log("publ it");
                 $scope.publized = false;
-            });
+            })
         }
     }
 

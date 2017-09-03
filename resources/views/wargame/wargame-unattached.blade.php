@@ -4,7 +4,7 @@
     <div id="container" <?= $theGame ? "class='wideGame coolBox'" : 'class="coolBox"'; ?>>
         <ul id="theGrid">
             @foreach($games as $game)
-                <li class="gridRow">
+                <li class="gridRow row">
                     <a class="leftGrid" href="{{$siteUrl}}/{{$game->dir}}/{{$game->urlGenre}}">{{$game->genre}}</a>
                     <a class="rightGrid" href="{{$siteUrl}}/{{$game->dir}}/{{$game->urlGenre}}">{{$game->value}}
                         Available</a>

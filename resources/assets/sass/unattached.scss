@@ -1,5 +1,3 @@
-@import "bourbon/bourbon";
-@import "neat/neat";
 $grid-columns: 6;
 #container{
   width: 60%;
@@ -57,17 +55,17 @@ $grid-columns: 6;
 
 
 #theGrid{
-  @include outer-container;
+  //@include outer-container;
 
   .leftGrid, .rightGrid{
     padding-top:20px;
-    @include span-columns(3);
+    @include make-xs-column(3);
   }
 }
 $grid-columns: 12;
 
 #theGamesGrid{
-  @include outer-container;
+  //@include outer-container;
 
   .gridRow{
     margin-bottom:50px;
@@ -75,20 +73,21 @@ $grid-columns: 12;
     border-top:3px solid #999;
   }
   .leftGrid, .rightGrid{
-    @include span-columns(5);
+    @include make-xs-column(5);
     word-wrap: break-word;
   }
    img{
-    @include span-columns(6);
+    @include make-xs-column(6);
   }
 }
 $grid-columns: 6;
 
 #theGameGrid{
-  @include outer-container;
+  //@include outer-container;
 
   .leftGrid, .rightGrid{
-    @include span-columns(3);
+
+    @include make-xs-column(3);
   }
 }
 
