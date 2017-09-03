@@ -423,6 +423,8 @@ class  WargameService{
                 }
             } while (!$doc);
             $ter = false;
+            $prevDb = $this->cs->setDb('terrain');
+
             if (!empty($doc->wargame->terrainName)) {
                 try {
                     $ter = $this->cs->get($doc->wargame->terrainName);
@@ -431,6 +433,8 @@ class  WargameService{
                 }
                 $doc->wargame->terrain = $ter->terrain;
             }
+            $this->cs->setDb($prevDb);
+
 //        $this->load->library("battle");
             $game = !empty($doc->gameName) ? $doc->gameName : '';
             $emsg = false;
