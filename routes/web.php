@@ -23,11 +23,11 @@ Route::get('/', 'FrontController@anyIndex');
 | kernel and includes session state, CSRF protection, and more.
 |
 */
-Route::group(['middleware' => ['web']], function () {
-    Route::auth();
-});
 
-Route::group(['middleware' => ['web','auth']], function () {
+Auth::routes();
+Route::get('/logout', 'Auth\LoginController@logout');
+
+Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'rest'], function () {
         Route::get('hexStrs/{id}', 'MapsController@getHexstrs');
         Route::put('hexStrs/{id}', 'MapsController@putHexstrs');
@@ -53,19 +53,8 @@ Route::group(['middleware' => ['web','auth']], function () {
         Route::get('delete-game-type', 'AdminController@getDeleteGameType');
     });
 
-    Route::get('/home',function(){
-        return redirect('wargame/play');
-    });
-
-//    Route::controller('rest','MapsController');
-//    Route::get('/wargame/terrainInit/{id}/{jd}/{kd}', 'WargameController@terrainInit');
-//    Route::controller('wargame','WargameController');
-//    Route::controller('admin','AdminController');
-
     Route::group(['prefix'=> 'wargame'], function(){
-        Route::get('/',function(){
-            return redirect('wargame/play');
-        });
+
 
         Route::get('terrainInit/{id}/{jd}/{kd}', 'WargameController@terrainInit');
 
@@ -99,38 +88,38 @@ Route::group(['middleware' => ['web','auth']], function () {
 
 
     });
-/*
-    getIndex
-//getPlay
-//anyFetchLobby
-//getSetplay
-//getTestAnalytics
-//getCloneScenario
-//getScenarioDelete
-//getUnattachedGame
-//getScenarioEdit
-//getApplyDeploys
-//getListDeploys
-//getMakeNewGame
-//postCreateWargame
-//getLeaveGame
-//getDeleteGame
-//getUnitInit
-//getPlayAs
-//getEnterHotseat
-//getEnterMulti
-//getAddFriend
-//getRemoveFriend
-//enterHotseat
-//getChangeWargame
-//getFetch
-//postPoke
-//terrainInit
-//getMakePublic
-//getMakePrivate
-//getCustomScenario
-//putCustomScenario
-*/
+    /*
+        getIndex
+    //getPlay
+    //anyFetchLobby
+    //getSetplay
+    //getTestAnalytics
+    //getCloneScenario
+    //getScenarioDelete
+    //getUnattachedGame
+    //getScenarioEdit
+    //getApplyDeploys
+    //getListDeploys
+    //getMakeNewGame
+    //postCreateWargame
+    //getLeaveGame
+    //getDeleteGame
+    //getUnitInit
+    //getPlayAs
+    //getEnterHotseat
+    //getEnterMulti
+    //getAddFriend
+    //getRemoveFriend
+    //enterHotseat
+    //getChangeWargame
+    //getFetch
+    //postPoke
+    //terrainInit
+    //getMakePublic
+    //getMakePrivate
+    //getCustomScenario
+    //putCustomScenario
+    */
     Route::group(['prefix' => 'messages'], function () {
         Route::get('/', ['as' => 'messages', 'uses' => 'MessagesController@index']);
         Route::get('create', ['as' => 'messages.create', 'uses' => 'MessagesController@create']);

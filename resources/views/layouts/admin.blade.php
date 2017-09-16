@@ -16,6 +16,10 @@
             font-family:times;
             font-size:16px;
         }
+        .col-md-2{
+            -ms-word-wrap:break-word;
+            word-wrap:break-word;
+        }
         div.row{
             margin-left:0px;
             margin-right:0px;

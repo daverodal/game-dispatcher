@@ -108,5 +108,5 @@ return [
 
     'sendmail' => '/usr/sbin/sendmail -bs',
 
-'from' => array('address' => 'david@davidrodal.com', 'name' => 'Restful Rest Dude'),
+'from' => array('address' => 'david@davidrodal.com', 'name' => 'Password Reset Daemon'),
 ];

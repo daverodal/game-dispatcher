@@ -40,5 +40,7 @@ class RunMakeGame extends Job implements ShouldQueue
                 'clicksId' => $this->clicksId, 'wargame' => $this->gameId
             ]);
 
+            var_dump($exitCode);
+
     }
 }

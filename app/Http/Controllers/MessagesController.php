@@ -63,7 +63,7 @@ class MessagesController extends Controller
         }
 
         $userId = Auth::user()->id;
-        $users = $thread->participantsUserIds()->all();
+        $users = $thread->participantsUserIds();
         if(!in_array($userId, $users)){
             return redirect ('messages');
 

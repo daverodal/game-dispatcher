@@ -58,9 +58,10 @@ class  AdminService
             $keys = $row->key;
             $clicks = $row->value[0];
             $msg = $row->value[1];
+            $time = $row->value[2];
             $odd ^= 1;
 
-            $lobbies[] =  array("msg"=>$msg, "odd"=>$odd ? "odd":"","id"=>$id, "clicks" => $clicks, "keys"=>$keys);
+            $lobbies[] =  array("time"=> $time, "msg"=>$msg, "odd"=>$odd ? "odd":"","id"=>$id, "clicks" => $clicks, "keys"=>$keys);
         }
         $this->cs->setDb($prevDb);
 

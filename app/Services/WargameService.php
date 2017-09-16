@@ -289,8 +289,10 @@ class  WargameService{
 
 
         foreach($clicks as $click){
-          $this->doPoke($wargame, $click->event, $click->id, 0, 0, $user, $click->dieRoll);
-
+          $ret = $this->doPoke($wargame, $click->event, $click->id, 0, 0, $user, $click->dieRoll);
+          if($ret["success"] !== true){
+              echo $ret["emsg"];
+          }
       }
     }
 

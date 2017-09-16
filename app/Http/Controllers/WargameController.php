@@ -420,8 +420,11 @@ class WargameController extends Controller
             if ($cs->get($wargame)) {
 //                $req->session()->put("wargame", $wargame);
                 $cs->setDb('games');
-                $job = (new RunMakeGame( $historyFile, $wargame));
-                $this->dispatch($job);
+//                $job = (new RunMakeGame( $historyFile, $wargame));
+//                $this->dispatch($job);
+                Artisan::queue('clicks:play', [
+                    'clicksId' => $historyFile, 'wargame' => $wargame
+                ]);
                 return redirect("/wargame/play/$wargame");
             }
             return redirect("/wargame/play");

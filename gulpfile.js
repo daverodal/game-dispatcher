@@ -13,7 +13,7 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
 
-    mix.copy('bower_components/jquery-ui/jquery-ui.js', 'public/js');
+    // mix.copy('bower_components/jquery-ui/jquery-ui.js', 'public/js');
 
     mix.copy(['vendor/daverodal/wargaming/Wargame/common-sync.js',
         'vendor/daverodal/wargaming/Wargame/global-header.js',

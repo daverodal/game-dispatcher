@@ -70,10 +70,12 @@ class ClicksPlay extends Command
         $clicksId = $this->argument('clicksId');
 
 
+        $this->info('starting');
         if($gameClicks){
             $this->cs->setDb('games');
             $paramObj = $this->cs->get($clicksId);
             $this->ws->playClicks($wargame, $paramObj->wargame->clickHistory);
+            $this->info('Completed');
         }else{
             $paramObj = $this->cs->get($clicksId);
             $history = $paramObj->history;
@@ -89,6 +91,8 @@ class ClicksPlay extends Command
             }
             $this->ws->playClicks($wargame, $history);
         }
+
+        return "xyzzy";
 
     }
 }
