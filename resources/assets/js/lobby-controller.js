@@ -29,8 +29,15 @@ export default class LobbyController extends SyncController{
         sync.fetch(0);
     }
 
-    deleteGame(id) {
-        this.$http.get('delete-game/' + id);
+    deleteGame(game) {
+        let gameOver = game.myTurn;
+        if(game.gameType === 'multi' && gameOver !== 'gameOver'){
+            let answer = confirm('Game not over, still want to delete? ');
+            if(answer === false){
+                return;
+            }
+        }
+        this.$http.get('delete-game/' + game.id);
     }
 
     colSort(column) {
