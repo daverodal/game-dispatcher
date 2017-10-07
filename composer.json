@@ -11,10 +11,6 @@
         },
         {
             "type": "path",
-            "url": "../rebellion"
-        },
-        {
-            "type": "path",
             "url": "../Medieval"
         }
     ],
@@ -25,7 +21,6 @@
         "guzzlehttp/guzzle":"~6.0",
         "daverodal/wargaming": "dev-master",
         "daverodal/Medieval": "dev-master",
-        "daverodal/rebellion": "dev-master",
         "cmgmyr/messenger": "~2.0"
     },
     "require-dev": {
