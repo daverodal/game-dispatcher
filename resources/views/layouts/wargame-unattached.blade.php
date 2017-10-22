@@ -28,8 +28,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <script src="{{ elixir('javascripts/main.js')}}"></script>
-    <link href="{{ elixir('css/app.css')}}" rel="stylesheet" type="text/css">
+    <script src="{{ mix('javascripts/main.js')}}"></script>
+    <link href="{{ mix('css/app.css')}}" rel="stylesheet" type="text/css">
 
     <meta charset="UTF-8">
 
@@ -160,8 +160,8 @@
 
     scenarioApp.controller('ScenarioController', ['$scope', 'ModalService', function ($scope, ModalService) {
         $scope.predicate = '';
-        $scope.scenarios = $.parseJSON(jString);
-        $scope.defaultUnits = $.parseJSON(paramUnits);
+        $scope.scenarios = angular.fromJson(jString);
+        $scope.defaultUnits = angular.fromJson(paramUnits);
         for (var i in $scope.scenarios) {
             $scope.scenario = $scope.scenarios[i];
             break;
@@ -185,7 +185,7 @@
         $scope.setOptions = "";
 
         var oString = '<?php echo addslashes(json_encode($theGameMeta['options']));?>';
-        $scope.options = $.parseJSON(oString);
+        $scope.options = angular.fromJson(oString);
 
         $scope.clickityclick = function (a) {
             if($scope.scenario.mapUrl !== a.mapUrl){

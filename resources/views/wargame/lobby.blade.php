@@ -27,8 +27,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link href="{{ elixir('css/app.css')}}" rel="stylesheet" type="text/css">
-    <script src="{{ elixir('javascripts/main.js')}}"></script>
+    <link href="{{ mix('css/app.css')}}" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+        var DR = {};
+        //        $.ajaxSetup({
+        //            headers: {
+        //                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //            }
+        //        });
+
+        var fetchUrl = '{{ url("wargame/fetch-lobby/") }}';
+    </script>
+    <script src="{{ mix('javascripts/main.js')}}"></script>
 
     <style type="text/css">
 
@@ -44,16 +54,7 @@
 
 
     </style>
-    <script type="text/javascript">
-        var DR = {};
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
 
-        var fetchUrl = '{{ url("wargame/fetch-lobby/") }}';
-    </script>
 
 </head>
 <body >

@@ -50,7 +50,7 @@ elixir(function(mix) {
 
     mix.copy('resources/assets/js/sync.js', 'public/js');
     mix.version(['css/app.css', 'javascripts/main.js', 'javascripts/gameMain.js','javascripts/ngGameMain.js','vendor/wargame/mollwitz/css',
-        'vendor/wargame/medieval/css','vendor/wargame/tmcw/css','vendor/wargame/spi/css', 'vendor/wargame/nta/css']);
+        'vendor/wargame/medieval/css','vendor/wargame/tmcw/css','vendor/wargame/spi/css', 'vendor/wargame/nta/css', 'vendor/wargame/tactical/css']);
 
 
 });

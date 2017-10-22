@@ -29,7 +29,7 @@
 <head>
     <meta charset="UTF-8">
     <link href="{{ elixir('css/app.css')}}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="{{asset('vendor/wargame/mollwitz/css/all-nations-colors.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{mix('vendor/css/wargame/all-nations-colors.css')}}">
 
     <meta charset="UTF-8">
 
