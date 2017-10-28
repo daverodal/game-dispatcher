@@ -16,7 +16,7 @@
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     <style type="text/css">
         body{
-            background: url("/js/Gen._Ulysses_S._Grant_and_portion_of_staff,_Gen._John_A._Rawlins._-_NARA_-_524492.jpg");
+            background: url("{{ asset('images/Gen._Ulysses_S._Grant_and_portion_of_staff,_Gen._John_A._Rawlins._-_NARA_-_524492.jpg') }}");
             background-repeat: no-repeat;
             background-size:    100%;
 
