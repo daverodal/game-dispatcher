@@ -20,7 +20,13 @@ mix.webpackConfig({
             'window.$': 'jquery',
             Popper: ['popper.js', 'default']
         })
-    ]});
+    ],
+    module: {
+        loaders: [
+            { test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3|m4a)$/, loader: "file" }
+        ]
+    }});
+mix.copy('resources/assets/images','public/images');
 mix.js('resources/assets/js/main.js', 'public/javascripts/main.js')
     .js('resources/assets/js/gameMain.js', 'public/javascripts/gameMain.js')
     .js('resources/assets/js/ngGameMain.js', 'public/javascripts/ngGameMain.js')

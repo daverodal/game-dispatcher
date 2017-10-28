@@ -216,7 +216,19 @@
 
             $scope.$root.theUrl = arg;
             ModalService.showModal({
-                templateUrl: "<?= url("custom.html");?>",
+                template: `<div class="back-screen" ></div>
+                            <div class="modal-box" >
+
+                                Name your game, then hit return.
+
+                                <form method="post" action='@{{theUrl}}'>
+                                    <input ng-model='aGameName' id="wargame" name="wargame" pay-attention-to-me>
+                                    <input ng-show="aGameName.length > 0" class="go-button" type="submit" value="start">
+                                    </form>
+                                or
+                                <a class="close" href ng-click="close()">Cancel</a>
+                            </div>
+                `,
                 controller: "CustomController"
             }).then(function(modal) {
                 modal.close.then(function(result) {
