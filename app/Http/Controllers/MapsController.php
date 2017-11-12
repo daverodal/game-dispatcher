@@ -24,7 +24,7 @@ class MapsController extends Controller
     }
 
     public function getMaps(CouchService $client ){
-        echo $this->fetchMaps($client);
+        return $this->fetchMaps($client);
     }
 
 
@@ -38,7 +38,7 @@ class MapsController extends Controller
             $map->id = $val->key;
             $maps[] = $map;
         }
-        return json_encode(['maps' => $maps]);
+        return response()->json(['maps' => $maps]);
 
     }
 
@@ -48,8 +48,7 @@ class MapsController extends Controller
         if ($stuf) {
             $doc = $client->get("$stuf");
             $doc->hexStr->id = $stuf;
-            echo json_encode(['hexStr' => $doc->hexStr]);
-            return;
+            return response()->json(['hexStr' => $doc->hexStr]);
         }
         $seq = $this->rest_model->getHexStrs();
         $rows = $seq->rows;
@@ -59,7 +58,7 @@ class MapsController extends Controller
             $hexStr->id = $val->key;
             $hexStrs[] = $hexStr;
         }
-        echo json_encode(['hexStrs' => $hexStrs]);
+        return response()->json(['hexStrs' => $hexStrs]);
     }
 
     public function putMaps(CouchService $client , Request $request, $id)
@@ -71,7 +70,7 @@ class MapsController extends Controller
         $doc->map = $postData['map'];
         $client->put($id,$doc);
         $postData['map']['id'] = $id;
-        echo json_encode($postData);
+        return response()->json($postData);
     }
 
 
@@ -85,7 +84,7 @@ class MapsController extends Controller
         $data->map = $postData['map'];
         $resp = $client->post($data);
         $postData['map']['id'] = $resp->id;
-        return json_encode($postData);
+        return response()->json($postData);
     }
 
 
@@ -98,7 +97,7 @@ class MapsController extends Controller
         $doc->hexStr = $postData['hexStr'];
         $postData['hexStr']['id'] = $id;
         $client->put("$id",$doc);
-        echo json_encode($postData);
+        return response()->json($postData);
     }
 
 
@@ -110,27 +109,27 @@ class MapsController extends Controller
         $data->hexStr = $postData['hexStr'];
         $resp = $client->post($data);
         $postData['hexStr']['id'] = $resp->id;
-        return json_encode($postData);
+        return response()->json($postData);
     }
 
     public function deleteHexstrs(CouchService $client, $id){
         try{
             $doc = $client->get($id);
         }catch(\GuzzleHttp\Exception\BadResponseException $e){
-            return json_encode(new \stdClass());
+            return response()->json(new \stdClass());
         }
         $client->delete($doc->_id, $doc->_rev);
-        return json_encode(new \stdClass());
+        return response()->json(new \stdClass());
     }
 
     public function deleteMaps(CouchService $client, $id){
         try{
             $doc = $client->get($id);
         }catch(\GuzzleHttp\Exception\BadResponseException $e){
-            return json_encode(new \stdClass());
+            return response()->json(new \stdClass());
         }
         $client->delete($doc->_id, $doc->_rev);
-        return json_encode(new \stdClass());
+        return response()->json(new \stdClass());
     }
 
     function cloneFile(CouchService $client, $mapId)
@@ -164,7 +163,7 @@ class MapsController extends Controller
             $cloneRet['mapId'] = $mapId;
             $cloneRet['hexid'] = $hexRet->id;
         }
-        return json_encode($cloneRet);
+        return response()->json($cloneRet);
     }
 
 }

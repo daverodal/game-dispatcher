@@ -544,8 +544,9 @@ class WargameController extends Controller
         $arg = $doc->wargame->arg;
         echo "<!doctype html><html>";
         $className = isset($doc->className)? $doc->className : '';
+        $scenario = $doc->wargame->scenario;
         $viewPath = WargameService::viewBase($className).".playAs";
-        return "<!doctype html><html>".view("wargame::".$viewPath, compact("game", "user", "wargame", $doc->wargame, "arg"))."</html>";
+        return "<!doctype html><html>".view("wargame::".$viewPath, compact("scenario", "game", "user", "wargame", $doc->wargame, "arg"))."</html>";
 //        \Wargame\Battle::playAs($game,$wargame, $arg);
         echo "</html>";
         return;
@@ -639,7 +640,7 @@ class WargameController extends Controller
             $playDat = $className::getPlayerData($scenario);
             $forceName = $playDat['forceName'];
             $deployName = $playDat['deployName'];
-            return view('layouts/playMulti', compact("friends","deployName", "forceName", "viewPath", "maxPlayers","players","visibility", "game", "users", "wargame", "me", "path", "others", "arg"));
+            return view('layouts/playMulti', compact("friends","deployName", "forceName", "viewPath", "maxPlayers","players","visibility", "game", "users", "wargame", "me", "path", "others", "arg", "scenario"));
         }
 
         if ($playerTwo == "") {

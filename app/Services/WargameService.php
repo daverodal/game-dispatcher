@@ -353,7 +353,7 @@ class  WargameService{
         $battle = Battle::battleFromName( $game, $arg, $opts);
 
         $cs = $this->cs;
-        $cs->setDb('games');
+        $prevDb = $cs->setDb('terrain');
         if (method_exists($battle, 'terrainInit')) {
             if(isset($battle->scenario->origTerrainName)){
                 $terrainName = $battle->scenario->origTerrainName;
@@ -365,6 +365,7 @@ class  WargameService{
             $battle->terrainName = $terrainName;
             $battle->terrainInit($terrainDoc);
         }
+        $cs->setDb($prevDb);
         if (method_exists($battle, 'init')) {
             $battle->init();
         }
@@ -815,7 +816,7 @@ class  WargameService{
         };
         if (!$ter) {
             $data = array("_id" => $terrainDocName, "docType" => "terrain", "terrain" => $wargameDoc->terrain);
-            $this->cs->post($data);
+                $this->cs->post($data);
         } else {
 
             $data = array("_id" => $terrainDocName, "docType" => "terrain", "terrain" => $wargameDoc->terrain);
