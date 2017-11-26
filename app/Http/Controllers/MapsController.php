@@ -24,7 +24,7 @@ class MapsController extends Controller
     }
 
     public function getMaps(CouchService $client ){
-        return $this->fetchMaps($client);
+        return response()->json($this->fetchMaps($client));
     }
 
 
@@ -38,7 +38,7 @@ class MapsController extends Controller
             $map->id = $val->key;
             $maps[] = $map;
         }
-        return response()->json(['maps' => $maps]);
+        return ['maps' => $maps];
 
     }
 

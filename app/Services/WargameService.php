@@ -9,6 +9,7 @@ namespace App\Services;
 use Auth;
 use \DateTime;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ClientException;
 use Input;
 use App\User;
 use League\Flysystem\Exception;
@@ -808,39 +809,40 @@ class  WargameService{
     }
 
     public function saveTerrainDoc($terrainDocName, $wargameDoc){
-        $ter = false;
         $prevDb = $this->cs->setDb('terrain');
-        try {
-            $ter = $this->cs->get($terrainDocName);
-        } catch (\GuzzleHttp\Exception\BadResponseException  $e) {
-        };
-        if (!$ter) {
-            $data = array("_id" => $terrainDocName, "docType" => "terrain", "terrain" => $wargameDoc->terrain);
+        $done = false;
+        while(!$done) {
+            $ter = false;
+            try {
+                $ter = $this->cs->get($terrainDocName);
+            } catch (\GuzzleHttp\Exception\BadResponseException  $e) {
+            };
+            if (!$ter) {
+                $data = array("_id" => $terrainDocName, "docType" => "terrain", "terrain" => $wargameDoc->terrain);
                 $this->cs->post($data);
-        } else {
+            } else {
 
-            $data = array("_id" => $terrainDocName, "docType" => "terrain", "terrain" => $wargameDoc->terrain);
-            /* totally throw the old one away */
+                $data = array("_id" => $terrainDocName, "docType" => "terrain", "terrain" => $wargameDoc->terrain);
+                /* totally throw the old one away */
 
             $this->cs->delete($terrainDocName, $ter->_rev);
-            $retry = 0;
-            $done = false;
-            do {
+                $retry = 0;
                 try {
                     $this->cs->post($data);
                     $done = true;
-                } catch (\Exception $e) {
+                } catch (\GuzzleHttp\Exception\ClientException $e) {
                     $retry++;
-                    if($e->getCode() !== 409){
+                    echo "retry $retry $terrainDocName " . $ter->_rev . "\n";
+                    if ($e->getCode() !== 409) {
                         throw($e);
                     }
-                    if($retry >= 3){
+                    if ($retry >= 3) {
                         throw($e);
                     }
                 }
-            }while(!$done);
+            }
         }
-        $prevDb = $this->cs->setDb($prevDb);
+        $this->cs->setDb($prevDb);
     }
 
 

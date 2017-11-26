@@ -341,6 +341,14 @@ class WargameController extends Controller
 
         return view('scenario/edit',compact("backgroundImage", "backgroundAttr"));
     }
+
+    public function getScenarioVueEdit($id){
+        $backgroundImage = "BWP-1_Baltops_2016_0283.jpg";
+        $backgroundAttr = '<a rel="nofollow" target="_blank" class="external text" href="http://konflikty.pl">Konflikty.pl</a> [Attribution or Attribution], <a target="_blank" href="https://commons.wikimedia.org/wiki/File%3ABWP-1_Baltops_2016_0283.jpg">via Wikimedia Commons</a>';
+
+        return view('scenario/vue-edit',compact("backgroundImage", "backgroundAttr"));
+    }
+
     public function getApplyDeploys(Request $req, CouchService $cs, WargameService $ws, $wargame, $deploy)
     {
 

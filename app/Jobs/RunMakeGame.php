@@ -34,8 +34,6 @@ class RunMakeGame extends Job implements ShouldQueue
      */
     public function handle()
     {
-//        file_put_contents("/tmp/account","dude\n", FILE_APPEND );
-
             $exitCode = Artisan::call('clicks:play', [
                 'clicksId' => $this->clicksId, 'wargame' => $this->gameId
             ]);

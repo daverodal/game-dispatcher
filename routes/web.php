@@ -66,6 +66,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('scenario-delete/{id}', 'WargameController@getScenarioDelete');
         Route::get('unattached-game/{dir?}/{genre?}/{game?}/{scenario?}', 'WargameController@getUnattachedGame');
         Route::get('scenario-edit/{id}', 'WargameController@getScenarioEdit');
+        Route::get('scenario-vue-edit/{id}', 'WargameController@getScenarioVueEdit');
         Route::get('apply-deploys/{wargame}/{deploy}', 'WargameController@getApplyDeploys');
         Route::get('list-deploys/{wargame}', 'WargameController@getListDeploys');
         Route::get('make-new-game/{historyFile}', 'WargameController@getMakeNewGame');

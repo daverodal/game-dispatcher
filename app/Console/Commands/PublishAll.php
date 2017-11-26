@@ -52,14 +52,14 @@ class PublishAll extends Command
         $continueFrom = $this->argument('continueFrom');
         $continueFromScenario = $this->argument(('continueFromScenario'));
 
-        $mapsJson = $this->mc->fetchMaps($this->cs);
-        $maps = json_decode($mapsJson);
+        $maps = $this->mc->fetchMaps($this->cs);
         chdir('public');
         $pickup = false;
         if(!$continueFrom){
             $pickup = true;
         }
-        foreach($maps->maps as $map){
+
+        foreach($maps['maps'] as $map){
             if($map->gameName !== $continueFrom &&  !$pickup){
                 continue;
                 if($continueFromScenario && $map->scenarioName !== $continueFromScenario){
@@ -73,6 +73,5 @@ class PublishAll extends Command
             }
             $this->wc->terrainInit($this->cs, $this->ws, $map->gameName, $map->scenarioName, $map->hexStr);
         }
-//        var_dump(method_exists($wc, 'terrainInit'));
     }
 }
