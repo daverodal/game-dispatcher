@@ -112,7 +112,7 @@
 
             this.scenarioName = location.pathname.replace(/^.*\//,'')
 
-            this.$http.get('http://localhost:8080/wargame/custom-scenario/'+this.scenarioName).then(
+            this.$http.get('/wargame/custom-scenario/'+this.scenarioName).then(
                 response => {
                     return response.json();
                 }
