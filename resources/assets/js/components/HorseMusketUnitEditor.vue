@@ -1,32 +1,32 @@
 <template>
-    <div  style="display:inline-block; width:50%;">
+    <div  style="display:inline-block;">
     <button class="btn btn-xs" @click="show = !show">edit</button>
     <div class="panel"  v-if="show">
-
         <div class="close-row">
             <i @click="show = !show" class="close-symbol fa fa-times"></i>
         </div>
         <div class="row">
-            <div class="left-col col-xs-5">
-                <button  class="type-button" v-for="type in types" @click="unit.image=type"> <img :src="'http://localhost:8080/assets/unit-images/' + type"></button>
-                <input class="unit-class" v-model="unit.image"> type<br>
+            <div class="left-col text-right col-xs-5">
+                <label>
+                    <span :class="[type,unit.nationality]" v-for="type in types" @click="unit.class=type">
+                        <span class="counterWrapper">
+                            <button  class="counter type-button"></button>
+                        </span>
+                    </span>
+                    <input type="text" v-model="unit.class">
+                    type
+                </label>
+                <label >
                 <input v-model="unit.combat"> combat
-
+                </label>
 
             </div>
             <div class="middle-col col-xs-2">
-                <modern-unit :unit="unit"></modern-unit>
+                <horse-musket-unit :unit="unit"></horse-musket-unit>
             </div>
             <div class="right-col col-xs-5">
-                movement <input v-model="unit.movement">
-                unitSize <input v-model="unit.unitSize">
-                nationality <input v-model="unit.nationality">
-
-                <select v-model="unit.class">
-                    <option disabled value="">Please select one</option>
-                    <option>inf</option>
-                    <option>mech</option>
-                </select>
+                <label>movement <input v-model="unit.movement"></label>
+                <label>nationality <input v-model="unit.nationality"></label>
             </div>
         </div>
         <div v-for="key in nonStandardKeys" class="row">
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+    import HorseMusketUnit from "./HorseMusketUnit.vue";
     export default {
         props: ["unit"],
         data()
@@ -51,45 +52,37 @@
                 show: false,
                 nonStandardKeys: {},
                 types: [
-                    'multiInf.png',
-                    'multiArmor.png',
-                    'multiMech.png',
-                    'multiArt.png',
-                    'multiCav.png',
-                    'multiGlider.png',
-                    'multiGor.png',
-                    'multiHeavy.png',
-                    'multiMotArt.png',
-                    'multiMotInf.png',
-                    'multiMotMt.png',
-                    'multiMountain.png',
-                    'multiPara.png',
-                    'multiRecon.png',
-                    'multiRecon1.png',
-                    'multiShock.png'
+                    'infantry',
+                    'cavalry',
+                    'artillery',
+                    'horseartillery',
                 ]
             }
+        },
+        components:{
+            horseMusketUnit: HorseMusketUnit
         }
     }
 </script>
 
 <style lang="scss" scoped>
 
+    .close-row{
+        text-align:right;
+        float:none;
+    }
     .close-symbol{
-        float:right;
     }
     .panel{
         position:relative;
-        padding:20px;
+        padding:10px;
     }
 
 
     .type-button{
-        img{
-            width:32px;
-        }
-        padding:0;
-        height:20px;
-        overflow:hidden;
+        margin: 0 5px 0 0;
+        width:16px;
+        height:16px;
+        background-repeat:no-repeat;
     }
 </style>

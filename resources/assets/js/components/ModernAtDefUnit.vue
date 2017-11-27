@@ -44,7 +44,7 @@
                 position: relative;
                 background-color: white;
                 color: black;
-                &.prc{
+                &.NapAllied{
                     background: pink;
                 }
             }
@@ -72,6 +72,7 @@
         }
         .counterWrapper{
             height: 10px;
+            background-color:transparent !important;
             .counter{
                 background-repeat: no-repeat;
             }

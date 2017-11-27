@@ -1,10 +1,11 @@
 <template>
-    <div class="unit-wrapper unit"  :class="[unit.nationality]" :id="unit.id" alt="0">
-        <div class="unitSize">{{unit.unitSize}}</div>
+    <div :class="[unit.class,unit.nationality]" class="unit unit-wrapper" :id="unit.id" alt="0">
         <div class="counterWrapper">
-            <img  :src="'http://localhost:8080/assets/unit-images/'+unit.image" class="counter"><span class="unit-desig">{{unit.desig}}</span>
+            <div class="counter"></div>
         </div>
+        <div v-if="unit.range > 1" class="range">{{unit.range}}</div>
         <div class="unit-numbers">{{unit.combat}} - {{unit.movement}}</div>
+
     </div>
 </template>
 
@@ -18,7 +19,6 @@
 </script>
 
 <style lang="scss" scoped>
-
 
         .unit-wrapper{
             background-size:16px 16px;
@@ -36,23 +36,26 @@
         color:black !important;
         font-size:14px;
             &.unit-wrapper{
-                &.NapAllied{
+                &.prc{
                     background: lemonchiffon;
                 }
             }
+        .range{
+            top: 0px;
+            right:3px;
+            position: absolute;
+            font-size:13px;
+        }
         .unit-numbers {
-            font-size: 12px;
-            font-weight: bold;
+            font-size: 13px;
+            font-weight: 400;
             height: 12px;
-            font-size: 11px;
             text-align: center;
-            color: black;
+            font-family: Helvetica, Arial, SansSerif;
         }
 
          .counter {
-            margin-top: -5px;
             width: 32px;
-            margin-top: -4px;
         }
 
          .unitSize {
@@ -61,11 +64,15 @@
             text-align: center;
             color: black;
         }
+
         .counterWrapper{
-            height: 10px;
-            background-color:transparent !important;
+            height:14px;
+            border:1px solid black;
             .counter{
                 background-repeat: no-repeat;
+                height: 14px;
+                width: 14px;
+                border-right: 1px solid black;
             }
         }
     }

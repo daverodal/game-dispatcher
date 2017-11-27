@@ -8,6 +8,7 @@
         <button class="btn btn-info" @click="unitType='modern-unit'">modern</button>
         <button class="btn btn-success" @click="unitType='modern-at-def-unit'">at def</button>
         <button class="btn btn-warning" @click="unitType='modern-tactical-unit'">tactical</button>
+        <button class="btn btn-danger" @click="unitType='horse-musket-unit'">horse&musket</button>
         <div class="list-container">
             <div  v-for="(unit, key) in units" class="modern-unit-list">
 
@@ -29,6 +30,8 @@
     import ModernUnit from './ModernUnit.vue';
     import ModernTacticalUnit from './ModernTacticalUnit.vue';
     import ModernTacticalUnitEditor from './ModernTacticalUnitEditor.vue';
+    import HorseMusketUnit from './HorseMusketUnit.vue';
+    import HorseMusketUnitEditor from './HorseMusketUnitEditor.vue';
 
     export default {
         data(){
@@ -40,7 +43,9 @@
             modernAtDefUnit: ModernAltDefUnit,
             modernUnit: ModernUnit,
             modernTacticalUnit: ModernTacticalUnit,
-            modernTacticalUnitEditor: ModernTacticalUnitEditor
+            modernTacticalUnitEditor: ModernTacticalUnitEditor,
+            horseMusketUnit: HorseMusketUnit,
+            horseMusketUnitEditor: HorseMusketUnitEditor
         },
         props:['unit', 'units'],
         methods:{
