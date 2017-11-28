@@ -6,3 +6,6 @@ Homestead.json
 .env
 .composer.lock
 .idea/directories
+/bower_components
+/private
+/public
