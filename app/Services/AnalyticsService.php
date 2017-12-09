@@ -30,6 +30,9 @@ class AnalyticsService
         foreach($rows as $row){
             $name = $row->key[1];
             $className = $name;
+            if(!class_exists($className)){
+                continue;
+            }
             $name = preg_replace("/.*\\\\/", "", $name);
             $scenario = $row->key[2];
 
@@ -40,9 +43,7 @@ class AnalyticsService
                 $display[$compName] = [0,0,0];
             }
 
-            if(!class_exists($className)){
-                continue;
-            }
+
             $pData = $className::getPlayerData($scenario)['forceName'];
             $display[$compName][$playerId] = $row->value;
             $display[$compName]['playerOne'] = $pData[1];
