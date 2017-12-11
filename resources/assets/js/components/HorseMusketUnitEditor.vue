@@ -25,6 +25,7 @@
                 <horse-musket-unit :unit="unit"></horse-musket-unit>
             </div>
             <div class="right-col col-xs-5">
+                <label>range <input v-model="unit.range"></label>
                 <label>movement <input v-model="unit.movement"></label>
                 <label>nationality <input v-model="unit.nationality"></label>
             </div>
