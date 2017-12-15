@@ -1,5 +1,8 @@
 @extends('layouts.analytics', ['indexTab'=>'active'])
 @section('content')
+    <script>
+        var displayData = '<?= json_encode($displayData);?>';
+    </script>
     <div id="container" <?= true ? "class='wideGame coolBox'" : 'class="coolBox"'; ?>>
         <ul id="analytics-grid">
             @foreach($displayData as $gameName => $gameData)

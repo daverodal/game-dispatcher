@@ -23,6 +23,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <script src="{{ elixir('javascripts/main.js')}}"></script>
   <link href="{{ elixir('css/app.css')}}" rel="stylesheet" type="text/css">
   <style type="text/css">
@@ -72,9 +75,80 @@
     @yield('content')
 
   </div>
+  <div id="graph" class="coolBox">
+
+  </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
+  <script>
+    debugger;
+    var displayObj = JSON.parse(displayData);
+    var xaxis = Object.keys(displayObj);
+    var ties = _.map(displayObj, (obj)=>{
+        return obj[0];
+    })
+    var p1Win = _.map(displayObj, (obj)=>{
+        return obj[1];
+    })
+    var p2Win = _.map(displayObj, (obj)=>{
+        return obj[2];
+    })
+    debugger;
+
+      Highcharts.chart('graph', {
+
+          title: {
+              text: 'Wins vs Losses vs Ties'
+          },
+
+          subtitle: {
+              text: ''
+          },
+
+          yAxis: {
+              title: {
+                  text: 'Games played'
+              }
+          },
+          xAxis:{
+            categories:xaxis
+          },
+          legend: {
+              layout: 'vertical',
+              align: 'right',
+              verticalAlign: 'middle'
+          },
+
+          series: [{
+              name: 'Ties',
+              data: ties
+          }, {
+              name: 'P1 Win',
+              data: p1Win
+          }, {
+              name: 'P2 Winn',
+              data: p2Win
+          }],
+
+          responsive: {
+              rules: [{
+                  condition: {
+                      maxWidth: 500
+                  },
+                  chartOptions: {
+                      legend: {
+                          layout: 'horizontal',
+                          align: 'center',
+                          verticalAlign: 'bottom'
+                      }
+                  }
+              }]
+          }
+
+      });
+  </script>
   </body>
 </html>
