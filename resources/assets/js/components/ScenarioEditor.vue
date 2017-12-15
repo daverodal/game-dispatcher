@@ -132,6 +132,7 @@
                     }else {
                         o.deployed = false;
                     }
+                    o.shadow = false;
                     return o;
                 });
                 this.units = this.scenario.units;

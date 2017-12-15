@@ -8,7 +8,7 @@
         </div>
         <div class="row">
             <div class="left-col col-xs-5">
-                <button  class="type-button" v-for="type in types" @click="unit.image=type"> <img :src="'http://localhost:8080/assets/unit-images/' + type"></button>
+                <button  class="type-button" v-for="type in types" @click="unit.image=type"> <img :src="'/assets/unit-images/' + type"></button>
                 <input class="unit-class" v-model="unit.image"> type<br>
                 <input v-model="unit.combat"> combat
 

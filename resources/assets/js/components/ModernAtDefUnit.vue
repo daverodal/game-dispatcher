@@ -2,7 +2,7 @@
     <div class="unit-wrapper unit"  :class="[unit.nationality]" :id="unit.id" alt="0">
         <div class="unitSize">{{unit.unitSize}}</div>
         <div class="counterWrapper">
-            <img  :src="'http://localhost:8080/assets/unit-images/'+unit.image" class="counter"><span class="unit-desig">{{unit.desig}}</span>
+            <img  :src="'/assets/unit-images/'+unit.image" class="counter"><span class="unit-desig">{{unit.desig}}</span>
         </div>
         <div class="unit-numbers">{{unit.attack}} - {{unit.defense}} - {{unit.movement}}</div>
     </div>

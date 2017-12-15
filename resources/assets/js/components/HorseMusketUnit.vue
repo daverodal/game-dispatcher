@@ -1,11 +1,11 @@
 <template>
     <div :class="[unit.class,unit.nationality]" class="unit unit-wrapper" :id="unit.id" alt="0">
+        <div class="shadow-mask" :class="{shadowy: unit.shadow}"></div>
         <div class="counterWrapper">
             <div class="counter"></div>
         </div>
         <div v-if="unit.range > 1" class="range">{{unit.range}}</div>
         <div class="unit-numbers">{{unit.combat}} - {{unit.movement}}</div>
-
     </div>
 </template>
 
@@ -73,6 +73,21 @@
                 height: 14px;
                 width: 14px;
                 border-right: 1px solid black;
+            }
+        }
+        .shadow-mask {
+            top: 0px;
+            left: 0px;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            background: transparent;
+            z-index: 1;
+            &.red-shadowy {
+                height: 50%;
+            }
+            &.shadowy {
+                background: rgba(0,0,0,.3);
             }
         }
     }

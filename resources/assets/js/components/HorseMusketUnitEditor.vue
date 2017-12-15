@@ -28,6 +28,7 @@
                 <label>range <input v-model="unit.range"></label>
                 <label>movement <input v-model="unit.movement"></label>
                 <label>nationality <input v-model="unit.nationality"></label>
+                <button class="btn btn-xs btn-info" @click="unit.shadow = !unit.shadow "> shadow </button>
             </div>
         </div>
         <div v-for="key in nonStandardKeys" class="row">
