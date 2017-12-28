@@ -5,10 +5,6 @@
         <div class="panel">
             <slot name="content"></slot>
         </div>
-        <button class="btn btn-info" @click="unitType='modern-unit'">modern</button>
-        <button class="btn btn-success" @click="unitType='modern-at-def-unit'">at def</button>
-        <button class="btn btn-warning" @click="unitType='modern-tactical-unit'">tactical</button>
-        <button class="btn btn-danger" @click="unitType='horse-musket-unit'">horse&musket</button>
         <div class="list-container">
             <div  v-for="(unit, key) in units" class="modern-unit-list">
 
@@ -17,7 +13,7 @@
                 <button class="btn btn-xs" @click="add(unit)">+</button>
                 <button class="btn btn-xs" @click="remove(unit)">-</button>
                 <button class="btn btn-xs" @click="clone(unit)">Clone</button>
-                <component :is="unitType + '-editor'" :unit="unit"></component>
+                <component :is="unitType + '-editor'" :scenario="scenario" :unit="unit"></component>
             </div>
         </div>
     </div>
@@ -32,11 +28,16 @@
     import ModernTacticalUnitEditor from './ModernTacticalUnitEditor.vue';
     import HorseMusketUnit from './HorseMusketUnit.vue';
     import HorseMusketUnitEditor from './HorseMusketUnitEditor.vue';
+    import MedievalUnit from './MedievalUnit.vue';
+    import MedievalUnitEditor from './MedievalUnitEditor.vue';
+    ;
+
+
 
     export default {
         data(){
             return {
-              unitType: 'modern-unit'
+//              unitType: 'horse-musket-unit'
             }
         },
         components:{
@@ -45,9 +46,11 @@
             modernTacticalUnit: ModernTacticalUnit,
             modernTacticalUnitEditor: ModernTacticalUnitEditor,
             horseMusketUnit: HorseMusketUnit,
-            horseMusketUnitEditor: HorseMusketUnitEditor
+            horseMusketUnitEditor: HorseMusketUnitEditor,
+            medievalUnit: MedievalUnit,
+            medievalUnitEditor: MedievalUnitEditor
         },
-        props:['unit', 'units'],
+        props:['unit', 'units', 'unit-type', 'scenario'],
         methods:{
             add(unit){
                 unit.num++;

@@ -1,0 +1,35 @@
+@mixin unitColor($nationality, $color, $desigColor: white){
+  .#{$nationality} {
+    background-color: $color;
+    .unit-desig{
+      color: $desigColor;
+    }
+  }
+}
+@mixin player($nationality, $player, $color, $faceColor: $color, $desigColor: white){
+  .player#{$nationality}{
+    background:$color;
+    border-color:$color !important;
+  }
+
+  .player#{$player}{
+    background:$color;
+    border-color:$color !important;
+  }
+
+  .#{$nationality}Face, .player#{$nationality}Face{
+    color:$faceColor;
+  }
+
+  .#{$player}.combatants{
+    color:$faceColor;
+  }
+
+  .#{$nationality} {
+    background-color: $color;
+    .unit-desig{
+      color: $desigColor;
+    }
+  }
+
+}

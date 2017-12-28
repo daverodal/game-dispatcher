@@ -12,7 +12,22 @@
 <script>
 
     export default {
-        props: ["unit"]
+        props: ["unit"],
+        mounted(){
+            if(!this.unit.num){
+                Vue.set(this.unit, "forceId",  1)
+                Vue.set(this.unit, "class",  'cavalry')
+                Vue.set(this.unit, "combat",  5)
+                Vue.set(this.unit, "movement",  5)
+                Vue.set(this.unit, "num",  1)
+                Vue.set(this.unit, "range",  1)
+                Vue.set(this.unit, "reinforce",  'A')
+                Vue.set(this.unit, "image",  '')
+                Vue.set(this.unit, "reduced",  false)
+                Vue.set(this.unit, "unitSize",  'xx')
+                Vue.set(this.unit, "image",  'multiInf.png')
+            }
+        },
 
     }
 
@@ -73,6 +88,18 @@
                 height: 14px;
                 width: 14px;
                 border-right: 1px solid black;
+            }
+       }
+        &.pontoon{
+            .counterWrapper{
+                height:32px;
+                border:none;
+                .counter{
+                    background-repeat: no-repeat;
+                    height: 32px;
+                    width: 32px;
+                    border-right: none;
+                }
             }
         }
         .shadow-mask {

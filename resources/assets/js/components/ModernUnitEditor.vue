@@ -10,7 +10,9 @@
             <div class="left-col col-xs-5">
                 <button  class="type-button" v-for="type in types" @click="unit.image=type"> <img :src="'/assets/unit-images/' + type"></button>
                 <input class="unit-class" v-model="unit.image"> type<br>
-                <input v-model="unit.combat"> combat
+                <input v-model="unit.maxCombat"> max combat
+
+                <input v-model="unit.minCombat"> min combat
 
 
             </div>
@@ -18,14 +20,27 @@
                 <modern-unit :unit="unit"></modern-unit>
             </div>
             <div class="right-col col-xs-5">
+                deployed <input v-model="unit.deployed" type="checkbox">
                 movement <input v-model="unit.movement">
                 unitSize <input v-model="unit.unitSize">
                 nationality <input v-model="unit.nationality">
+                <select v-model="unit.nationality">
+                    <option v-for="nat in scenario.nationalities ">{{nat}}</option>
+                </select>
+                force id <input v-model="unit.forceId">
+                reinforce <input v-model="unit.reinforce">
+                reduced <input v-model="unit.reduced" type="checkbox">
 
                 <select v-model="unit.class">
                     <option disabled value="">Please select one</option>
                     <option>inf</option>
+                    <option>para</option>
+                    <option>shock</option>
+                    <option>mountain</option>
+                    <option>heavy</option>
                     <option>mech</option>
+                    <option>supply</option>
+                    <option>truck</option>
                 </select>
             </div>
         </div>
@@ -44,7 +59,7 @@
 
 <script>
     export default {
-        props: ["unit"],
+        props: ["unit", "scenario"],
         data()
         {
             return {

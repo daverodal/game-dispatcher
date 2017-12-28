@@ -14,24 +14,40 @@
                 <label for="longname">Long Description</label>
                 <textarea type="text" v-model="scenario.longDescription" class="form-control" id="longname"></textarea>
             </div>
+            <div class="form-group">
+                <label for="longname">Unit Component</label>
+                <select class="btn-xs" v-model="scenario.unitComponent">
+                    <option>medieval-unit</option>
+                    <option>horse-musket-unit</option>
+                    <option>modern-at-def-unit</option>
+                    <option>modern-unit</option>
+                    <option>
+                        modern-tactical-unit
+                    </option>
+                </select>
+            </div>
+            <button @click="addProperty"><i class="fa fa-plus"></i></button>
+            <input v-if="addKey" v-model="newKey">
+            <input v-if="addKey" v-model="newValue">
+            <button v-if="addKey" @click="saveProperty()">Save</button>
             <div v-for="key in nonStandardKeys" class="form-group">
                 <label for="keyName">
                     {{ key }}   <button @click="deleteProperty(key)"><i class="fa fa-times red"></i></button>
                     <input type="text" v-model="scenario[key]" class="form-control" id="keyName">
                 </label>
             </div>
+
             <div>
-                <p style="font-size:14px;">
-                    {{ units }}
-                </p>
-                <units-list :units="units">
-
-                    <h1>this is the units list From the parent!</h1>
-                    <p slot="content" class="small">can you dig that</p>
-
+                <button class="btn btn-primary" @click="publish">Publish</button>
+                <button class="btn btn-danger" @click="cancel">Cancel</button>
+                <button @click="newUnit" class="btn btn-success">New Unit</button>
+            </div>
+            <div>
+                <units-list :scenario="scenario" :unit-type="scenario.unitComponent" :units="units">
                 </units-list>
             </div>
         </div>
+         <span v-for="value in scenario.multiValue">{{ value }}</span> {{scenario.multiValue }}
         <button class="btn btn-primary" @click="publish">Publish</button>
         <button class="btn btn-danger" @click="publish">Cancel</button>
     </div>
@@ -49,11 +65,41 @@
                 scenario: {},
                 units: [],
                 unit: {},
-                scenarioName: ""
+                scenarioName: "",
+                component:"",
+                addKey: false,
+                newKey: null,
+                newValue: null
             }
         },
         methods:{
+            addProperty(){
+              this.addKey = true;
+            },
 
+            saveProperty() {
+                this.addKey = false;
+                this.scenario[this.newKey] = this.newValue;
+
+                const nonstandard = _.pickBy(this.scenario, (prop, key) => {
+                    return !['description', 'longDescription', 'id', 'sName', 'units', 'unitComponent'].includes(key);
+                });
+                this.nonStandard = nonstandard;
+                this.nonStandardKeys = Object.keys(nonstandard);
+
+            },
+            newUnit(){
+              let unit = {
+
+              }
+              if(this.scenario.nationalities && this.scenario.nationalities.length > 0){
+                  nationality  = this.scenario.nationalities[0]
+                  Vue.set(unit, 'nationality', nationality )
+              }
+
+                Vue.set(unit, 'id', this.units.length);
+              this.units.push(unit);
+            },
             cancel(){
                 window.location.href = document.referrer;
             },
@@ -67,14 +113,14 @@
                 delete this.scenario[key];
 
                 const nonstandard = _.pickBy(this.scenario, (prop, key) => {
-                    return !['description', 'longDescription', 'id', 'sName', 'units'].includes(key);
+                    return !['description', 'longDescription', 'id', 'sName', 'units', 'reinforceTurn', 'reinforce', 'nationality'].includes(key);
                 });
                 this.nonStandard = nonstandard;
                 this.nonStandardKeys = Object.keys(nonstandard);
             },
 
             publish() {
-                this.scenario.units = _.map(this.scenario.units, (o) => {
+                this.scenario.units = _.map(this.units, (o) => {
                     if (o.deployed === true) {
                         o.reinforceTurn = undefined;
                     }
@@ -95,6 +141,7 @@
                     unit.num = unit.num - 0;
                     return unit;
                 });
+                data.units = _.orderBy(data.units, ['forceId','hq', 'class', 'bow'], ['asc','desc','asc', 'asc']);
                 const jsonData = JSON.stringify(data);
                 return this.$http.put('/wargame/custom-scenario/' + this.scenarioName + '/' + this.scenario.sName, jsonData, {headers: headers})
                     .then(response => response.json)
@@ -121,12 +168,18 @@
                 this.scenario = data;
 
                 const nonstandard = _.pickBy(data, (prop, key) => {
-                    return !['description', 'longDescription', 'id', 'sName', 'units'].includes(key);
+                    return !['description', 'longDescription', 'id', 'sName', 'units', 'unitComponent'].includes(key);
                 });
 
 
+                let nationalities = {}
                 console.log(this.scenario.units);
-                this.scenario.units = _.map(this.scenario.units, (o) => {
+                this.units = _.map(this.scenario.units, (o, k, i) => {
+                    debugger;
+                    console.log(o.nationality);
+                    console.log(o.class);
+                    o.id = k;
+                    nationalities[o.nationality] = o.nationality;
                     if (o.reinforceTurn === undefined) {
                         o.deployed = true;
                     }else {
@@ -135,7 +188,8 @@
                     o.shadow = false;
                     return o;
                 });
-                this.units = this.scenario.units;
+                this.scenario.nationalities = _.keys(nationalities);
+                console.log(this.scenario.nationalities);
 
                 this.nonStandard = nonstandard;
                 this.nonStandardKeys = Object.keys(nonstandard);

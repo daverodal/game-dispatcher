@@ -84,7 +84,6 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
   <script>
-    debugger;
     var displayObj = JSON.parse(displayData);
     var xaxis = Object.keys(displayObj);
     var ties = _.map(displayObj, (obj)=>{
@@ -96,7 +95,9 @@
     var p2Win = _.map(displayObj, (obj)=>{
         return obj[2];
     })
-    debugger;
+    var total = _.map(displayObj, (obj)=>{
+        return obj[0] + obj[1] + obj[2];
+    })
 
       Highcharts.chart('graph', {
 
@@ -131,6 +132,9 @@
           }, {
               name: 'P2 Winn',
               data: p2Win
+          },{
+              name: 'Total',
+              data: total
           }],
 
           responsive: {

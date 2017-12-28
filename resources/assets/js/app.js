@@ -26,3 +26,4 @@ Vue.component('modern-at-def-unit-editor', require('./components/ModernAtDefUnit
 const app = new Vue({
     el: '#container'
 });
+window.app = app;

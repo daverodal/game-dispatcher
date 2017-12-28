@@ -9,3 +9,6 @@ Homestead.json
 /bower_components
 /private
 /public
+!/public/.htaccess
+!/public/index.php
+composer.lock
