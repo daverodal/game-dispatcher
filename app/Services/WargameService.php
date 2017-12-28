@@ -352,9 +352,6 @@ class  WargameService{
     public function gameUnitInit($doc, $game, $arg,  $opts){
         $doc->opts = $opts;
         $battle = Battle::battleFromName( $game, $arg, $opts);
-        var_dump($game);
-        var_dump($doc);
-        dd($battle);
 
         $cs = $this->cs;
         $prevDb = $cs->setDb('terrain');
