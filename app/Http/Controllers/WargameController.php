@@ -409,8 +409,7 @@ class WargameController extends Controller
         $opts = "";
         $cs->setDb('params');
         $paramObj = $cs->get($historyFile);
-        var_dump($paramObj);
-        $game = preg_replace("/.*\\\\/", "" , $paramObj->className);
+        $game = $paramObj->gameName;
         $wargame = "unholySpawn";
 
         $ret = $ws->createWargame($wargame);
