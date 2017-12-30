@@ -72,14 +72,14 @@
   }
 
   .#{$nationality}.wagon .counterWrapper .counter {
-    background-image: url('../../../../../wargaming/Wargame/Mollwitz/badges/Wagon.png');
+    background-image: url('../../../../../wargaming/Wargame/Mollwitz/badges/CrusaderWagon.png');
     background-size: $badge-size;
   }
 
 }
 @mixin wagon($nationality){
 .#{$nationality}.wagon .counterWrapper .counter {
-  background-image: url('badges/Wagon.png');
+  background-image: url('badges/CrusaderWagon.png');
   background-size: $badge-size;
 }
 }
