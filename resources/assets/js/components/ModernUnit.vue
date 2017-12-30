@@ -35,7 +35,6 @@
         },
         methods:{
             canIDoThis(){
-                debugger;
             }
         }
 

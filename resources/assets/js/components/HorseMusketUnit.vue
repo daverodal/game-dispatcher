@@ -26,6 +26,9 @@
                 Vue.set(this.unit, "reduced",  false)
                 Vue.set(this.unit, "unitSize",  'xx')
                 Vue.set(this.unit, "image",  'multiInf.png')
+                if(!this.unit.nationality){
+                    Vue.set(this.unit, "nationality", 'Prussian')
+                }
             }
         },
 

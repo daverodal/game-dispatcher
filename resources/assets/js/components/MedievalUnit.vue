@@ -46,6 +46,32 @@
             unitNumbers(){
                 return this.unit.combat + " B " + this.unit.movement;
             }
+        },
+        mounted(){
+            if(!this.unit.num){
+                Vue.set(this.unit, "forceId",  1)
+                Vue.set(this.unit, "class",  'cavalry')
+                Vue.set(this.unit, "combat",  5)
+                Vue.set(this.unit, "movement",  5)
+                Vue.set(this.unit, "num",  1)
+                Vue.set(this.unit, "range",  1)
+                Vue.set(this.unit, "reinforce",  'A')
+                Vue.set(this.unit, "reinforceTurn",  '1')
+                Vue.set(this.unit, "reduced",  false)
+                Vue.set(this.unit, "armorClass",  'K')
+                Vue.set(this.unit, "deployed",  true)
+                Vue.set(this.unit, "command",  false)
+                Vue.set(this.unit, "hq",  false)
+                Vue.set(this.unit, "bow",  false)
+                Vue.set(this.unit, "facing",  1)
+                Vue.set(this.unit, "steps",  1)
+                Vue.set(this.unit, "commandRadius",  1)
+
+                Vue.set(this.unit, "image",  'multiInf.png')
+                if(!this.unit.nationality){
+                    Vue.set(this.unit, "nationality", 'rebel')
+                }
+            }
         }
 
     }
@@ -87,7 +113,6 @@
 
         height: 32px;
         width:32px;
-        color:black !important;
         font-size:14px;
 
         &.big{
@@ -172,7 +197,6 @@
             height: 10px;
             font-size: 9px;
             text-align: center;
-            color: black;
         }
 
         .counterWrapper{
@@ -227,7 +251,6 @@
             background: transparent;
             bottom: 0px;
             font-size: 6px;
-            color: black;
         }
     }
 
@@ -240,7 +263,6 @@
             height: 32px;
             position: relative;
             background-color: white;
-            color: black;
         }
         .unit-num{
             display: inline-block;
@@ -252,18 +274,18 @@
         clear:both;
     }
 
+
     $badge-size: 14px;
     $vintage-badge-size:19px;
     $unit-numbers-size:16px;
     $vintage-unit-numbers-size:10px;
 
-    $lombardColor: #60b2ff;
-    $normanColor: #FFA99B;
 
     @import "MedievalMixins";
-    @include unitColor(norman,#FFA99B,  Brit, red );
-
-    @include unitColor(lombard, $lombardColor, Bavarian, #60b2ff, black, black);
-    @include unitColor(swabian, $lombardColor,  Bavarian, #fb001d, black, black );
+    $crusaderColor: #CE0323;
+    $turkishGreen: #11943A;
+    $turkishOrange: #FFC835;
+    @include unitColor(turkish, $turkishGreen,  Turk, $turkishOrange, black, white );
+    @include unitColor(crusader, $crusaderColor,  Crusader, white, black, white );
 
 </style>

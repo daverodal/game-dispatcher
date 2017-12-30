@@ -34,7 +34,11 @@
                     <label class="col-xs-2">movement</label> <input class="col-xs-8" v-model="unit.movement">
                 </div>
                 <div class="row">
-                    <label class="col-xs-2">nationality</label> <input class="col-xs-8" v-model="unit.nationality">
+                        <label class="col-xs-2">nationality</label>
+                        <select class="col-xs-2" v-model="unit.nationality">
+                            <option v-for="nat in scenario.nationalities">{{nat}}</option>
+                        </select>
+                        <input class="col-xs-6" v-model="unit.nationality">
                 </div>
                 <div class="row">
                     <label class="col-xs-2">armor class</label> <input class="col-xs-8" v-model="unit.armorClass">
@@ -118,7 +122,7 @@
 <script>
     import MedievalUnit from "./MedievalUnit.vue";
     export default {
-        props: ["unit"],
+        props: ["unit", "scenario"],
         data()
         {
             return {

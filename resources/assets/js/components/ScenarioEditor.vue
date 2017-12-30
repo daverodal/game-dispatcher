@@ -93,7 +93,7 @@
 
               }
               if(this.scenario.nationalities && this.scenario.nationalities.length > 0){
-                  nationality  = this.scenario.nationalities[0]
+                  let nationality  = this.scenario.nationalities[0]
                   Vue.set(unit, 'nationality', nationality )
               }
 
@@ -173,9 +173,15 @@
 
 
                 let nationalities = {}
+                debugger;
                 console.log(this.scenario.units);
+                if(this.scenario.nationalities) {
+                    _.forEach(this.scenario.nationalities, (value) => {
+                        nationalities[value] = value;
+                    });
+                }
+
                 this.units = _.map(this.scenario.units, (o, k, i) => {
-                    debugger;
                     console.log(o.nationality);
                     console.log(o.class);
                     o.id = k;

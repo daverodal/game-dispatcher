@@ -54,7 +54,6 @@
         methods:{
             add(unit){
                 unit.num++;
-                debugger;
             },
             remove(unit) {
                 if (unit.num > 0) {
