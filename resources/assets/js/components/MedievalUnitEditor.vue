@@ -18,6 +18,7 @@
                         <option>inf</option>
                         <option>cavalry</option>
                         <option>artillery</option>
+                        <option>wagon</option>
                     </select>
                 </div>
                 <div class="row">

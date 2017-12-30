@@ -285,6 +285,13 @@
     $crusaderColor: #CE0323;
     $turkishGreen: #11943A;
     $turkishOrange: #FFC835;
+
+    $lombardColor: #60b2ff;
+    $normanColor: #FFA99B;
+    @include unitColor(norman,#FFA99B,  Brit, red );
+    @include unitColor(lombard, $lombardColor, Bavarian, #60b2ff, black, black);
+    @include unitColor(swabian, $lombardColor,  Bavarian, #fb001d, black, black );
+
     @include unitColor(turkish, $turkishGreen,  Turk, $turkishOrange, black, white );
     @include unitColor(crusader, $crusaderColor,  Crusader, white, black, white );
 

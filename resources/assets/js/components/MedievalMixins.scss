@@ -77,3 +77,9 @@
   }
 
 }
+@mixin wagon($nationality){
+.#{$nationality}.wagon .counterWrapper .counter {
+  background-image: url('badges/Wagon.png');
+  background-size: $badge-size;
+}
+}
