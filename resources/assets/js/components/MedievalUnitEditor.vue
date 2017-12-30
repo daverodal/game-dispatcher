@@ -67,6 +67,7 @@
                     <label class="col-xs-2">Armor Class</label>
                     <select v-model="unit.armorClass">
                         <option>S</option>
+                        <option>L</option>
                         <option>M</option>
                         <option>H</option>
                         <option>K</option>
