@@ -139,6 +139,9 @@
                     unit.range = unit.range - 0;
                     unit.forceId = unit.forceId - 0;
                     unit.num = unit.num - 0;
+                    if(typeof unit.facing !== "undefined"){
+                        unit.facing = unit.facing - 0;
+                    }
                     return unit;
                 });
                 data.units = _.orderBy(data.units, ['forceId','hq', 'class', 'bow'], ['asc','desc','asc', 'asc']);
@@ -173,7 +176,6 @@
 
 
                 let nationalities = {}
-                debugger;
                 console.log(this.scenario.units);
                 if(this.scenario.nationalities) {
                     _.forEach(this.scenario.nationalities, (value) => {

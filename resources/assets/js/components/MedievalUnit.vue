@@ -47,6 +47,33 @@
                 return this.unit.combat + " B " + this.unit.movement;
             }
         },
+        watch: {
+          'unit.armorClass'(){
+              if(this.unit.armorClass === 'S'){
+                  this.saveFacing = this.unit.facing;
+                  Vue.set(this.unit, "facing", false);
+              }else{
+                  if(this.saveFacing){
+                      Vue.set(this.unit, "facing", this.saveFacing);
+                      delete this.saveFacing;
+                  }else{
+                      Vue.set(this.unit, "facing", 0);
+                  }
+              }
+          },'unit.hq'(){
+                if(this.unit.hq){
+                    this.saveFacing = this.unit.facing;
+                    Vue.set(this.unit, "facing", false);
+                }else{
+                    if(this.saveFacing){
+                        Vue.set(this.unit, "facing", this.saveFacing);
+                        delete this.saveFacing;
+                    }else{
+                        Vue.set(this.unit, "facing", 0);
+                    }
+                }
+            }
+        },
         mounted(){
             if(!this.unit.num){
                 Vue.set(this.unit, "forceId",  1)
