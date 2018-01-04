@@ -29,8 +29,6 @@ mix.webpackConfig({
 mix.copy('resources/assets/images','public/images');
 mix.js('resources/assets/js/app.js', 'public/js').version();
 mix.js('resources/assets/js/main.js', 'public/javascripts/main.js')
-    .js('resources/assets/js/gameMain.js', 'public/javascripts/gameMain.js')
-    .js('resources/assets/js/ngGameMain.js', 'public/javascripts/ngGameMain.js')
    .sass('resources/assets/sass/app.scss', 'public/css').version();
 mix.version(['public/vendor/css/', 'public/vendor/javascripts']);
 
