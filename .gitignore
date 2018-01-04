@@ -12,3 +12,8 @@ Homestead.json
 !/public/.htaccess
 !/public/index.php
 composer.lock
+/resources/views/vendor
+/config/messenger.php
+/resources/assets/sass/vendor
+/database/migrations/*table.php
+*.log
