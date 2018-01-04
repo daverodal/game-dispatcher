@@ -309,7 +309,7 @@
 
 
     @import "MedievalMixins";
-    $crusaderColor: #CE0323;
+    $crusaderColor: #CD1027;
     $turkishGreen: #11943A;
     $turkishOrange: #FFC835;
 
