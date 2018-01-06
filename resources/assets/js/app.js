@@ -17,13 +17,14 @@ Vue.use(VueResource);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ScenarioEditor.vue'));
+Vue.component('scenario-editor', require('./components/ScenarioEditor.vue'));
 Vue.component('modern-unit', require('./components/ModernUnit.vue'));
 Vue.component('units-list', require('./components/UnitsList.vue'));
 Vue.component('modern-unit-editor', require('./components/ModernUnitEditor.vue'));
 Vue.component('modern-at-def-unit-editor', require('./components/ModernAtDefUnitEditor.vue'));
-
+import { store } from './store/store';
 const app = new Vue({
-    el: '#container'
+    el: '#container',
+    store: store
 });
 window.app = app;
