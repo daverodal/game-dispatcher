@@ -312,6 +312,8 @@
     $crusaderColor: #CD1027;
     $turkishGreen: #11943A;
     $turkishOrange: #FFC835;
+    $loyalistColor: #FFA99B;
+    $rebelColor: #26d5ff;
 
     $lombardColor: #60b2ff;
     $normanColor: #FFA99B;
@@ -319,6 +321,8 @@
     @include unitColor(lombard, $lombardColor, Bavarian, #60b2ff, black, black);
     @include unitColor(swabian, $lombardColor,  Bavarian, #fb001d, black, black );
 
+    @include unitColor(loyalist,$loyalistColor,  Brit, red );
+    @include unitColor(rebel,$rebelColor,Bavarian, #26d5ff, black, black )
     @include unitColor(turkish, $turkishGreen,  Turk, $turkishOrange, black, white );
     @include unitColor(crusader, $crusaderColor,  Crusader, white, black, white );
 
