@@ -118,7 +118,10 @@ class WargameController extends Controller
                 $backgroundImage = "18th_century_gun.jpg";
                 $backgroundAttr = 'By MKFI (Own work) [Public domain], <a href="http://commons.wikimedia.org/wiki/File%3ASwedish_18th_century_6_pound_cannon_front.JPG">via Wikimedia Commons</a>';
             }
-
+            if(preg_match("/Medieval/", urlencode($genre))){
+                $backgroundImage = "Helmeted_Medieval_Knight_or_Soldier.jpg";
+                $backgroundAttr = '            By Paul Mercuri [Public domain], <a target="_blank" href="https://commons.wikimedia.org/wiki/File%3AHelmeted_Medieval_Knight_or_Soldier_(1).JPG">via Wikimedia Commons</a>';
+            }
             if(preg_match("/Americas/", $genre)){
                 $backgroundImage = "Yorktown80.jpg";
                 $backgroundAttr = 'John Trumbull [Public domain], <a target="_blank" href="https://commons.wikimedia.org/wiki/File%3AYorktown80.JPG">via Wikimedia Commons</a>';
