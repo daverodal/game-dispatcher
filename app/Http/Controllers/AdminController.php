@@ -99,15 +99,19 @@ class AdminController extends Controller
         $dir = \Input::get('dir',false);
         if($dir){
             foreach($providersPaths as $path){
-                $infoPath = "$path/$dir/info.json";
+                $infoPath = "$dir/info.json";
                 if(file_exists($infoPath)){
                     $info = json_decode(file_get_contents($infoPath));
+                    if(!$info){
+                        echo "Error bade info.json";
+                        dd();
+                    }
                     $this->addGame($cs, $info);
                 }
             }
             return redirect('admin/games');
         }
-        return view('admin.addGame');
+        return view('admin.addGame',[ 'providers' => $providersPaths]);
     }
 
 

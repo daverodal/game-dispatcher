@@ -26,6 +26,16 @@
     <title>All Users</title>
 </head>
 <body>
+<h1>click on available info.json dir </h1>
+<ul>
+    @foreach($providers as $provider)
+        <li>
+            <a href="/admin/add-game?dir={{$provider}}">{{$provider}}</a>
+        </li>
+    @endforeach
+</ul>
+
+<h2> or go it alone. good luck!</h2>
 <form>
     <input type="text" name="dir">
     <input type="submit">
