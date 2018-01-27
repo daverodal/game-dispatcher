@@ -27,7 +27,7 @@
             bottom: 0px;
         }
     </style>
-    <link href="<?= url("js/enterMulti.css"); ?>" rel="stylesheet" type="text/css">
+    <link href="<?= url("vendor/css/wargame/common-play.css"); ?>" rel="stylesheet" type="text/css">
 
 </head>
 <body ng-controller="SimpleRadio">
@@ -64,14 +64,14 @@ if (!empty($players[3])) {
                                       ng-true-value="'public'" ng-false-value="'private'"> <br/>
     </form>
     <div ng-if="numPlayers == 2">
-        <div class="left"><span ng-class="player.color" class="big">You are @{{player.myName}}</span><br>
+        <div class="left"><span ng-class="player.color" class="multi-player big">You are @{{player.myName}}</span><br>
 
             <form>
                 <input type="radio" ng-model="player" ng-value="playerOne">  <?= $playerOne; ?>
                 <input type="radio" ng-model="player" ng-value="playerTwo"> <?= $playerTwo; ?> <br/>
             </form>
         </div>
-        <div ng-class="player.otherColor" class="right big">@{{player.theirName}}</div>
+        <div ng-class="player.otherColor" class="right multi-player big">@{{player.theirName}}</div>
         <div class="center">&laquo;&laquo;vs&raquo;&raquo;</div>
         <div class="clear"></div>
         <div class="right">
