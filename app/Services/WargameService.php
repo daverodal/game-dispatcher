@@ -462,7 +462,7 @@ class  WargameService{
                 }
 //            $battle = Battle::getBattle($game, $doc->wargame, $doc->wargame->arg, false, $doc->className);
                 if ($dieRoll !== false) {
-                    $battle->combatRules->dieRoll = $dieRoll;
+                    $battle->dieRolls->setEvents( $dieRoll);
                 }
                 $doSave = $battle->poke($event, $id, $x, $y, $user, $click);
                 $gameOver = $battle->victory->gameOver;
