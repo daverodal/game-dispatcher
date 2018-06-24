@@ -35,9 +35,9 @@
                             <div class="clear"></div>
 
                             <a class='scenarioWrapper play'
-                               ng-click="showCustom('<?= url("wargame/create-wargame/hotseat/") ?>/'+game+'/'+scenario.sName+'?'+setOptions)">Play Solo&raquo;</a>
+                               ng-click="showCustom('<?= url("wargame/create-wargame/hotseat/") ?>/'+game+'/'+scenario.sName+'?')">Play Solo&raquo;</a>
                             <a class='scenarioWrapper play'
-                               ng-click="showCustom('<?= url("wargame/create-wargame/multi/") ?>/'+game+'/'+scenario.sName+'?'+setOptions)">Play Multi&raquo;</a>
+                               ng-click="showCustom('<?= url("wargame/create-wargame/multi/") ?>/'+game+'/'+scenario.sName+'?')">Play Multi&raquo;</a>
                             <div class="clear"></div>
                         </div>
                         <p ng-bind-html="scenario.longDescription"

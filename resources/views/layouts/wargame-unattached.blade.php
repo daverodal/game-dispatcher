@@ -216,6 +216,7 @@
 
             $scope.$root.theUrl = arg;
             $scope.updateOptions();
+            $scope.$root.theUrl += $scope.setOptions;
 
             ModalService.showModal({
                 template: `<div class="back-screen" ></div>
