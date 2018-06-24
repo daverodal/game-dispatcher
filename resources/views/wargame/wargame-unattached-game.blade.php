@@ -16,7 +16,7 @@
                     <div ng-if="options.length > 0" class="coolBox">
                         <h4>Game Options</h4>
                         <div ng-repeat="option in options">
-                            <input type="checkbox" ng-click="updateOptions()" ng-model="option.value">
+                            <input type="checkbox" ng-model="option.value">
                             @{{option.name}}
                         </div>
                     </div>
