@@ -270,6 +270,8 @@ class  WargameService{
         }
         $units = $newUnits;
         $mapUrl = $doc->wargame->mapData->mapUrl;
+        /* this was useful when debugging at home with non localhost machine */
+//        $mapUrl = preg_replace("/http:\/\/[^\/]*/","",$mapUrl);
         $arg = $doc->wargame->arg;
         $scenario = $doc->wargame->scenario;
         $scenarioArray = [];
