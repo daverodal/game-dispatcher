@@ -37,7 +37,7 @@ return [
 
         'database' => [
             'driver' => 'database',
-            'table'  => 'jobs',
+            'table'  => env('QUEUE_TABLE', 'jobs'),
             'queue'  => 'default',
             'expire' => 300,
         ],
