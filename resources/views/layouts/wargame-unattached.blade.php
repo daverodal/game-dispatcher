@@ -201,7 +201,7 @@
             }
             $scope.lastScenario = a;
         }
-        $scope.updateOptions = function(){
+        $scope.updateOptions = function(a,b){
             $scope.setOptions = "";
             for(var i in $scope.options){
                 if($scope.options[i].value){
@@ -215,6 +215,9 @@
         $scope.showCustom = function(arg) {
 
             $scope.$root.theUrl = arg;
+            $scope.updateOptions();
+            $scope.$root.theUrl += $scope.setOptions;
+
             ModalService.showModal({
                 template: `<div class="back-screen" ></div>
                             <div class="modal-box" >

@@ -557,15 +557,10 @@ class WargameController extends Controller
         }
         $game = $doc->gameName;
         $arg = $doc->wargame->arg;
-        echo "<!doctype html><html>";
         $className = isset($doc->className)? $doc->className : '';
         $scenario = $doc->wargame->scenario;
         $viewPath = WargameService::viewBase($className).".playAs";
-        return "<!doctype html><html>".view("wargame::".$viewPath, compact("scenario", "game", "user", "wargame", $doc->wargame, "arg"))."</html>";
-//        \Wargame\Battle::playAs($game,$wargame, $arg);
-        echo "</html>";
-        return;
-        $this->load->view("wargame/wargamePlayAs", compact("game", "user", "wargame", $doc->wargame, "arg"));
+        return view("wargame::".$viewPath, compact("scenario", "game", "user", "wargame", $doc->wargame, "arg"))."</html>";
     }
 
 
