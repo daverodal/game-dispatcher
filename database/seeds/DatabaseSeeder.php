@@ -11,6 +11,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UserTableSeeder::class);
+         $this->call(UserTableSeeder::class);
     }
+}
+
+class UserTableSeeder extends Seeder {
+
+    public function run()
+    {
+//        DB::table('users')->delete();
+
+        \App\User::create(['email' => 'you.name@example.com', 'name' => 'PlayerOne', 'password' => bcrypt('password'), 'is_admin' => 1, 'is_editor' => 1]);
+    }
+
 }
