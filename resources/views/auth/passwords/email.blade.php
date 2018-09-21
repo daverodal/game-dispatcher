@@ -13,6 +13,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    <h2 class="text-center"> IMPORTANT Check your spam filters!</h2>
+                        <h3 class="text-center">It gets sent there often.</h3>
+                        <div class="text-center">sorry about that</div>
 
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
                         {!! csrf_field() !!}
