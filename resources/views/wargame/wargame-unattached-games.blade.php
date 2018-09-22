@@ -15,7 +15,7 @@
                     <div class="rightGrid"><p><a href="{{$siteUrl}}/{{$game->dir}}/{{$game->urlGenre}}/{{$game->game}}">{{$game->name}}</a></p><p>{{$game->description}}</p></div>
                         <a href="{{$siteUrl}}/{{$game->dir}}/{{$game->urlGenre}}/{{$game->game}}">
                             <span class="softVoice">{{$game->maxCol}} x {{$game->maxRow}} Hexes</span>
-                            <img src="{{$game->mapUrl}}">
+                            <img src="{{ preg_replace("/https?:/", "", $game->mapUrl) }}">
                         </a>
                     <div class="clear"></div>
                     {{$game->value}} Scenarios Available.

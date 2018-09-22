@@ -162,6 +162,11 @@
         $scope.predicate = '';
         $scope.scenarios = angular.fromJson(jString);
         $scope.defaultUnits = angular.fromJson(paramUnits);
+        $scope.scenarios = $scope.scenarios.map((scenario) => {
+            scenario.mapUrl = scenario.mapUrl.replace(/https?:/, '');
+            scenario.bigMapUrl = scenario.bigMapUrl.replace(/https?:/, '');
+            return scenario;
+        });
         for (var i in $scope.scenarios) {
             $scope.scenario = $scope.scenarios[i];
             break;
