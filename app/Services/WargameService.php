@@ -466,9 +466,9 @@ class  WargameService{
                     return compact('success', "emsg");
                 }
                 if ($dieRoll !== false) {
-//                    if(!is_array($dieRoll)){
-//                        $dieRoll = [$dieRoll];
-//                    }
+                    if(!is_array($dieRoll)){
+                        $dieRoll = [$dieRoll];
+                    }
                     $battle->dieRolls->setEvents( $dieRoll);
                 }
                 $doSave = $battle->poke($event, $id, $x, $y, $user, $click);
