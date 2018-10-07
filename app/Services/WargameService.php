@@ -68,13 +68,6 @@ class  WargameService{
     public function lobbyView(){
 
         $user = Auth::user()['name'];
-
-        //            $users = $this->couchsag->get('/_design/newFilter/_view/userByEmail');
-//            $userids = $this->couchsag->get('/_design/newFilter/_view/userById');
-
-//            var_dump($poll);
-//            echo $this->wargame_model->getLobbyChanges(false,$poll);
-        //$seq = $this->couchsag->get("/_design/newFilter/_view/getLobbies?startkey=[\"$user\"]&endkey=[\"$user\",\"zzzzzzzzzzzzzzzzzzzzzzzz\"]");
         $this->cs->setDb('games');
         $seq = $this->cs->get("_design/newFilter/_view/getLobbies?startkey=[\"$user\"]&endkey=[\"$user\",\"zzzzzzzzzzzzzzzzzzzzzzzz\"]");
         $lobbies = [];
@@ -291,12 +284,22 @@ class  WargameService{
         ini_set( 'memory_limit', 1024 . 'M' );
 
 
-        foreach($clicks as $click){
-          $ret = $this->doPoke($wargame, $click->event, $click->id, 0, 0, $user, $click->dieRoll);
-          if($ret["success"] !== true){
-              echo $ret["emsg"];
-          }
-      }
+        try {
+            foreach ($clicks as $click) {
+                $ret = $this->doPoke($wargame, $click->event, $click->id, 0, 0, $user, $click->dieRoll);
+                if ($ret["success"] !== true) {
+                    echo "ERROR ERROR ERROR ERROR ";
+                    echo $ret["emsg"];
+                    return;
+                }
+            }
+        }catch(\Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage()," ", $e->getFile()," ", $e->getLine(),"\n";
+            return;
+        }
+        catch(\Error $e){
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
     }
 
     public function createWargame( $name)
@@ -462,8 +465,10 @@ class  WargameService{
                     $emsg = "";
                     return compact('success', "emsg");
                 }
-//            $battle = Battle::getBattle($game, $doc->wargame, $doc->wargame->arg, false, $doc->className);
                 if ($dieRoll !== false) {
+//                    if(!is_array($dieRoll)){
+//                        $dieRoll = [$dieRoll];
+//                    }
                     $battle->dieRolls->setEvents( $dieRoll);
                 }
                 $doSave = $battle->poke($event, $id, $x, $y, $user, $click);
@@ -834,7 +839,6 @@ class  WargameService{
                     $done = true;
                 } catch (\GuzzleHttp\Exception\ClientException $e) {
                     $retry++;
-                    echo "retry $retry $terrainDocName " . $ter->_rev . "\n";
                     if ($e->getCode() !== 409) {
                         throw($e);
                     }
