@@ -316,6 +316,8 @@ class  WargameService{
             $data->createDate = date("r");
             $data->createUser = Auth::user()['name'];
             $data->playerStatus = "created";
+            $data->clickHistory = new \stdClass();
+            $data->clickHistory->clicks = [];
             $cs->setDb("games");
             $ret = $cs->post($data);
         } catch (Exception $e) {
@@ -459,8 +461,9 @@ class  WargameService{
                 $startingAttackerId = $battle->gameRules->attackingForceId;
                 if ($event === SAVE_GAME_EVENT) {
                     $msg = Input::get('msg', 'defar');
+                    $clickHistory = $doc->clickHistory->clicks ?? $battle->clickHistory;
 
-                    event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'bug-report', 'type' => 'click-history', 'attackingForceId' => $startingAttackerId, 'history' => $battle->clickHistory, 'gameName' => $doc->gameName, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time(), 'msg' => $msg]));
+                    event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'bug-report', 'type' => 'click-history', 'attackingForceId' => $startingAttackerId, 'history' => $clickHistory, 'gameName' => $doc->gameName, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time(), 'msg' => $msg]));
                     $success = true;
                     $emsg = "";
                     return compact('success', "emsg");
@@ -475,18 +478,26 @@ class  WargameService{
                 $gameOver = $battle->victory->gameOver;
                 $saveDeploy = $battle->victory->saveDeploy;
                 if (!$isGameOver && $gameOver) {
+                    $clickHistory = $doc->clickHistory->clicks ?? $battle->clickHistory;
                     event(new \App\Events\Analytics\RecordGameEvent(['docId' => $doc->_id, 'winner' => $battle->victory->winner, 'type' => 'game-victory', 'className' => $doc->className, 'scenario' => $battle->scenario, 'arg' => $battle->arg, 'time' => time()]));
-                    event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'bug-report', 'type' => 'click-history', 'attackingForceId' => $startingAttackerId, 'history' => $battle->clickHistory,'gameName' => $doc->gameName, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time(), 'msg' => "Game Over Event"]));
+                    event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'bug-report', 'type' => 'click-history', 'attackingForceId' => $startingAttackerId, 'history' => $clickHistory,'gameName' => $doc->gameName, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time(), 'msg' => "Game Over Event"]));
 
                 }
                 if ($saveDeploy) {
                     /* lose nextPhase click */
-                    $saveHistory = $battle->clickHistory;
+                    $saveHistory = $doc->clickHistory->clicks ?? $battle->clickHistory;
                     array_pop($saveHistory);
                     event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'deploy', 'attackingForceId' => $startingAttackerId, 'history' => $saveHistory, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time()]));
                 }
                 $success = false;
                 if ($doSave) {
+                    if($dieRoll !== false){
+                        if($battle->dieRolls->getEventsTaken() !== count($dieRoll)){
+                            throw new \Exception('Not all events consumed in playback');
+                        }
+                    }
+                    $savedClick = new \Wargame\Click(false, $event, $id, $x, $y, $user, $battle->gameRules->attackingForceId, $click, $battle->dieRolls->getEvents());
+                    $doc->clickHistory->clicks[] = $savedClick;
                     $doc->wargame = $battle->save();
 
                     try {
