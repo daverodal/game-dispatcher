@@ -477,7 +477,7 @@ class  WargameService{
                 $doSave = $battle->poke($event, $id, $x, $y, $user, $click);
                 $gameOver = $battle->victory->gameOver;
                 $saveDeploy = $battle->victory->saveDeploy;
-                if (!$isGameOver && $gameOver) {
+                if (!$isGameOver && $gameOver && $dieRoll === false) {
                     $clickHistory = $doc->clickHistory->clicks ?? $battle->clickHistory;
                     event(new \App\Events\Analytics\RecordGameEvent(['docId' => $doc->_id, 'winner' => $battle->victory->winner, 'type' => 'game-victory', 'className' => $doc->className, 'scenario' => $battle->scenario, 'arg' => $battle->arg, 'time' => time()]));
                     event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'bug-report', 'type' => 'click-history', 'attackingForceId' => $startingAttackerId, 'history' => $clickHistory,'gameName' => $doc->gameName, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time(), 'msg' => "Game Over Event"]));
