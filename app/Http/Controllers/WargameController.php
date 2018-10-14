@@ -75,6 +75,12 @@ class WargameController extends Controller
 
     }
 
+    public function getTestScenarioAnalytics(AnalyticsService $as, $game = false){
+        $displayData = $as->getScenarioVictories($game);
+
+        return view("wargame/wargame-scenario-analytics", compact("displayData"));
+    }
+
     function getCloneScenario(AdminService $ad, WargameService $ws, $dir = false, $genre = false, $game = false, $theScenario = false){
 
 //        $scenario = new \stdClass();

@@ -475,20 +475,7 @@ class  WargameService{
                     $battle->dieRolls->setEvents( $dieRoll);
                 }
                 $doSave = $battle->poke($event, $id, $x, $y, $user, $click);
-                $gameOver = $battle->victory->gameOver;
-                $saveDeploy = $battle->victory->saveDeploy;
-                if (!$isGameOver && $gameOver && $dieRoll === false) {
-                    $clickHistory = $doc->clickHistory->clicks ?? $battle->clickHistory;
-                    event(new \App\Events\Analytics\RecordGameEvent(['docId' => $doc->_id, 'winner' => $battle->victory->winner, 'type' => 'game-victory', 'className' => $doc->className, 'scenario' => $battle->scenario, 'arg' => $battle->arg, 'time' => time()]));
-                    event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'bug-report', 'type' => 'click-history', 'attackingForceId' => $startingAttackerId, 'history' => $clickHistory,'gameName' => $doc->gameName, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time(), 'msg' => "Game Over Event"]));
 
-                }
-                if ($saveDeploy) {
-                    /* lose nextPhase click */
-                    $saveHistory = $doc->clickHistory->clicks ?? $battle->clickHistory;
-                    array_pop($saveHistory);
-                    event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'deploy', 'attackingForceId' => $startingAttackerId, 'history' => $saveHistory, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time()]));
-                }
                 $success = false;
                 if ($doSave) {
                     if($dieRoll !== false){
@@ -508,6 +495,20 @@ class  WargameService{
                         $conflictRetry++;
                     }
 
+                }
+                $gameOver = $battle->victory->gameOver;
+                $saveDeploy = $battle->victory->saveDeploy;
+                if (!$isGameOver && $gameOver && $dieRoll === false) {
+                    $clickHistory = $doc->clickHistory->clicks ?? $battle->clickHistory;
+                    event(new \App\Events\Analytics\RecordGameEvent(['docId' => $doc->_id, 'winner' => $battle->victory->winner, 'type' => 'game-victory', 'className' => $doc->className, 'scenario' => $battle->scenario, 'arg' => $battle->arg, 'time' => time()]));
+                    event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'bug-report', 'type' => 'click-history', 'attackingForceId' => $startingAttackerId, 'history' => $clickHistory,'gameName' => $doc->gameName, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time(), 'msg' => "Game Over Event"]));
+
+                }
+                if ($saveDeploy) {
+                    /* lose nextPhase click */
+                    $saveHistory = $doc->clickHistory->clicks ?? $battle->clickHistory;
+                    array_pop($saveHistory);
+                    event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'deploy', 'attackingForceId' => $startingAttackerId, 'history' => $saveHistory, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time()]));
                 }
                 if ($doSave === 0) {
                     $success = true;
