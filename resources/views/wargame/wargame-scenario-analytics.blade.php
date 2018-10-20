@@ -8,8 +8,9 @@
             @foreach($displayData as $gameName => $gameData)
                 <li class="row">
                     <div class="col-xs-5">{{$gameData->key[1]}}</div>
-                    <div class="col-xs-2">{{$gameData->key[2]}}</div>
+                    <div class="col-xs-1">{{$gameData->key[2]}}</div>
                     <div class="col-xs-3">{{date("r",$gameData->key[6])}}</div>
+                    <div class="col-xs-1">{{$gameData->value->winningSide}}</div>
                     <div>
                         <collapsable-box>
                             @foreach($gameData->value->scenario as $key => $val)

@@ -77,7 +77,16 @@ class GamesDocumentSeeder extends Seeder
 //        $views->getAvailGames = new StdClass;
 //        $views->getAvailGames->map = "function(doc){if(doc.docType == 'gamesAvail'){if(doc.games){for(var i in doc.games){emit(doc.games[i],doc.games[i]);}}}}";
         $filters = new StdClass();
-        $filters->namefind = "function(doc,req){if(!req.query.name){return false;} var names = req.query.name;names = names.split(',');for(var i = 0;i < names.length;i++){if(doc._id == names[i]){return true;}}return false;}";
+        $filters->namefind = <<<NameFind
+            function(doc,req){
+                if(!req.query.name){return false;}
+                 var names = req.query.name;
+                 if(doc._id == names){
+                    return true;
+                 }
+                 return false;
+            }
+NameFind;
         $filters->lobbyChanges = <<<LobbyChanges
         function(doc,req){
             if(doc._deleted === true){

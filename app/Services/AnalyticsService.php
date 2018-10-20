@@ -28,6 +28,26 @@ class AnalyticsService
         $query = "/_design/gameEvents/_view/byEventType?group=false&startkey=[\"game-victory\",\"$game\"]&endkey=[\"game-victory\",\"$game%20\"]&reduce=false";
 
         $seq = $this->cs->get($query);
+        $rows = $seq->rows;
+        foreach($rows as $row){
+            $name = $row->key[1];
+            $urlClassName = $className = $name;
+            if(!class_exists($className)){
+                continue;
+            }
+            $name = preg_replace("/.*\\\\/", "", $name);
+            $scenario = $row->key[2];
+
+            $playerId = $row->key[3];
+            $compName = "$name - $scenario";
+
+            if(empty($display[$compName])){
+                $display[$compName] = [0,0,0];
+            }
+
+            $pData = $className::getPlayerData($scenario)['forceName'];
+            $row->value->winningSide = $pData[$row->value->winner];
+        }
         return $seq->rows;
     }
 
