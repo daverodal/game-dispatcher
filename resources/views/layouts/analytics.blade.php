@@ -19,15 +19,14 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="analyticsApp">
 <head>
   <meta charset="UTF-8">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://code.highcharts.com/modules/series-label.js"></script>
   <script src="https://code.highcharts.com/modules/exporting.js"></script>
-  <script src="{{ elixir('javascripts/main.js')}}"></script>
-  <link href="{{ elixir('css/app.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{ mix('css/app.css')}}" rel="stylesheet" type="text/css">
   <style type="text/css">
 
     body{
@@ -48,17 +47,6 @@
 
 
   </style>
-  <script type="text/javascript">
-    var DR = {};
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-    });
-
-    var fetchUrl = '{{ url("wargame/fetch-lobby/") }}';
-  </script>
-
 </head>
   <body>
 
@@ -84,75 +72,79 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.4/lodash.min.js"></script>
   <script>
-    var displayObj = JSON.parse(displayData);
-    var xaxis = Object.keys(displayObj);
-    var ties = _.map(displayObj, (obj)=>{
-        return obj[0];
-    })
-    var p1Win = _.map(displayObj, (obj)=>{
-        return obj[1];
-    })
-    var p2Win = _.map(displayObj, (obj)=>{
-        return obj[2];
-    })
-    var total = _.map(displayObj, (obj)=>{
-        return obj[0] + obj[1] + obj[2];
-    })
+    if(displayData) {
+        var displayObj = JSON.parse(displayData);
+        var xaxis = Object.keys(displayObj);
+        var ties = _.map(displayObj, (obj) => {
+            return obj[0];
+        })
+        var p1Win = _.map(displayObj, (obj) => {
+            return obj[1];
+        })
+        var p2Win = _.map(displayObj, (obj) => {
+            return obj[2];
+        })
+        var total = _.map(displayObj, (obj) => {
+            return obj[0] + obj[1] + obj[2];
+        })
 
-      Highcharts.chart('graph', {
+        Highcharts.chart('graph', {
 
-          title: {
-              text: 'Wins vs Losses vs Ties'
-          },
+            title: {
+                text: 'Wins vs Losses vs Ties'
+            },
 
-          subtitle: {
-              text: ''
-          },
+            subtitle: {
+                text: ''
+            },
 
-          yAxis: {
-              title: {
-                  text: 'Games played'
-              }
-          },
-          xAxis:{
-            categories:xaxis
-          },
-          legend: {
-              layout: 'vertical',
-              align: 'right',
-              verticalAlign: 'middle'
-          },
+            yAxis: {
+                title: {
+                    text: 'Games played'
+                }
+            },
+            xAxis: {
+                categories: xaxis
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+            },
 
-          series: [{
-              name: 'Ties',
-              data: ties
-          }, {
-              name: 'P1 Win',
-              data: p1Win
-          }, {
-              name: 'P2 Winn',
-              data: p2Win
-          },{
-              name: 'Total',
-              data: total
-          }],
+            series: [{
+                name: 'Ties',
+                data: ties
+            }, {
+                name: 'P1 Win',
+                data: p1Win
+            }, {
+                name: 'P2 Winn',
+                data: p2Win
+            }, {
+                name: 'Total',
+                data: total
+            }],
 
-          responsive: {
-              rules: [{
-                  condition: {
-                      maxWidth: 500
-                  },
-                  chartOptions: {
-                      legend: {
-                          layout: 'horizontal',
-                          align: 'center',
-                          verticalAlign: 'bottom'
-                      }
-                  }
-              }]
-          }
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
 
-      });
+        });
+    }
   </script>
+  <script src="{{ mix('javascripts/analytics.js')}}"></script>
+
   </body>
 </html>

@@ -3,13 +3,11 @@ $max-width: 100em;
 
 
 #analytics-grid {
-  .grid-row {
-    @extend .row;
+  .row {
     clear:both;
     &:nth-child(even) {
-      background: lightgray;
+      background: lightgray !important;
     }
-    height:1em;
     &:hover{
       background:powderblue;
     }

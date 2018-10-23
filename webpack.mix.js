@@ -28,6 +28,7 @@ mix.webpackConfig({
     }});
 mix.copy('resources/assets/images','public/images');
 mix.js('resources/assets/js/app.js', 'public/js').version();
+mix.js('resources/assets/js/analytics.js', 'public/javascripts/analytics.js')
 mix.js('resources/assets/js/main.js', 'public/javascripts/main.js')
    .sass('resources/assets/sass/app.scss', 'public/css').version();
 mix.version(['public/vendor/css/', 'public/vendor/javascripts']);

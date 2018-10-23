@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::any('fetch-lobby/{lastSeq?}', 'WargameController@anyFetchLobby');
         Route::get('setplay/{id}', 'WargameController@getSetplay');
         Route::get('test-analytics', 'WargameController@getTestAnalytics');
+        Route::get('test-scenario-analytics/{game?}', 'WargameController@getTestScenarioAnalytics');
         Route::get('clone-scenario/{dir?}/{genre?}/{game?}/{scenario?}', 'WargameController@getCloneScenario');
         Route::get('scenario-delete/{id}', 'WargameController@getScenarioDelete');
         Route::get('unattached-game/{dir?}/{genre?}/{game?}/{scenario?}', 'WargameController@getUnattachedGame');

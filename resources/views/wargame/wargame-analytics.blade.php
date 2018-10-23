@@ -6,11 +6,12 @@
     <div id="container" <?= true ? "class='wideGame coolBox'" : 'class="coolBox"'; ?>>
         <ul id="analytics-grid">
             @foreach($displayData as $gameName => $gameData)
-                <li class="grid-row">
-                    <span class="colOne">{{$gameName}}</span>
-                    <span class="colTwo">Tie: {{$gameData[0]}}</span>
-                    <span class="colThree"> {{$gameData['playerOne']}}: {{$gameData[1]}}</span>
-                    <span class="colFour">{{$gameData['playerTwo']}}: {{$gameData[2]}}</span>
+                <li class="row">
+                    <span class="col-xs-4">{{$gameName}}</span>
+                    <span class="col-xs-2">Tie: {{$gameData[0]}}</span>
+                    <span class="col-xs-2"> {{$gameData['playerOne']}}: {{$gameData[1]}}</span>
+                    <span class="col-xs-2">{{$gameData['playerTwo']}}: {{$gameData[2]}}</span>
+                    <span class="col-xs-2"><a target="_blank" href="/wargame/test-scenario-analytics/{{$gameData['className']}}">Drill down</a></span>
                 </li>
             @endforeach
 
