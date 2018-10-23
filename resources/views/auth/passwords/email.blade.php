@@ -42,6 +42,9 @@
                             </div>
                         </div>
                     </form>
+                    <p>
+                        Email addresses are used soley for login and password resets.
+                    </p>
                 </div>
             </div>
         </div>
