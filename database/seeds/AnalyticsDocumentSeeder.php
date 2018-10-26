@@ -38,7 +38,7 @@ class AnalyticsDocumentSeeder extends Seeder
         $views = new stdClass();
         $views->byEventType = new StdClass;
         $views->byEventType->map = "function(doc) {
-             emit([doc.type, doc.className,doc.arg, doc.winner, doc.docId,doc.type,   doc.time ], doc);
+             emit([doc.type, doc.className, doc.scenario.corePath, doc.arg, doc.winner, doc.docId,doc.type,   doc.time ], doc);
         }";
         $views->byEventType->reduce = "function(keys, values, rereduce) {
                 if (rereduce) {
