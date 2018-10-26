@@ -36,9 +36,9 @@ class AnalyticsService
                 continue;
             }
             $name = preg_replace("/.*\\\\/", "", $name);
-            $scenario = $row->key[2];
+            $scenario = $row->key[3];
 
-            $playerId = $row->key[3];
+            $playerId = $row->key[4];
             $compName = "$name - $scenario";
 
             if(empty($display[$compName])){
@@ -53,7 +53,7 @@ class AnalyticsService
 
     public function getVictories(){
 
-        $query = "/_design/gameEvents/_view/byEventType?group=true&group_level=4&startkey=[\"game-victory\"]&endkey=[\"game-victory%20\"]";
+        $query = "/_design/gameEvents/_view/byEventType?group=true&group_level=5&startkey=[\"game-victory\"]&endkey=[\"game-victory%20\"]";
         $prevDb = $this->cs->setDb('analytics');
 
         $seq = $this->cs->get($query);
@@ -68,9 +68,12 @@ class AnalyticsService
                 continue;
             }
             $name = preg_replace("/.*\\\\/", "", $name);
-            $scenario = $row->key[2];
-
-            $playerId = $row->key[3];
+            $corePath = $row->key[2];
+            if($corePath !== null){
+                $name = preg_replace("/^.*\./", "" ,$corePath);
+            }
+            $scenario = $row->key[3];
+            $playerId = $row->key[4];
             $compName = "$name - $scenario";
 
             if(empty($display[$compName])){
