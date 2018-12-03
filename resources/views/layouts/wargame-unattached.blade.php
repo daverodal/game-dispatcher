@@ -162,6 +162,7 @@
         $scope.predicate = '';
         $scope.scenarios = angular.fromJson(jString);
         $scope.defaultUnits = angular.fromJson(paramUnits);
+        $scope.viewRules = false;
         $scope.scenarios = $scope.scenarios.map((scenario) => {
             scenario.mapUrl = scenario.mapUrl.replace(/https?:/, '');
             scenario.bigMapUrl = scenario.bigMapUrl.replace(/https?:/, '');
@@ -245,6 +246,9 @@
             });
 
         };
+        $scope.toggleRules = () => {
+            $scope.viewRules = !$scope.viewRules;
+        }
 
     }]).
     directive('imageonload', function() {

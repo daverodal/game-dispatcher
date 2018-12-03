@@ -69,8 +69,69 @@
                     <div class='coolBox wordpress-wrapper'>
                         {!! $theGameMeta['designerNotes'] or '' !!}
                     </div>
+                    @if($theGameMeta['path'] === 'Mollwitz')
+
+                    <div class="coolBox">
+                        <p class='softVoice'>View the rules here.</p>
+                        <div class="kewl-box"                              class="clearWrapper">
+
+
+                            <a class='scenarioWrapper play'
+                               ng-click="toggleRules()">Show/Hide Rules&raquo;</a>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div ng-if="viewRules" class="rules-wrapper">
+                            <style type="text/css">
+                                .rules-wrapper #GR {
+                                    display: block !important;
+                                    background: white;
+                                    position: static;
+
+                                }
+                                .rules-wrapper #GR .unit{
+                                    box-sizing: content-box;
+                                }
+                                .rules-wrapper #GR .unit .counterWrapper {
+                                    box-sizing: content-box;
+                                }
+                                .rules-wrapper #GR .unit p{
+                                    margin-top:15px;
+                                    margin-bottom: 15px;
+                                }
+                            </style>
+                            @include('wargame::Mollwitz.commonRules', ["name" => $theGameMeta['name'], "forceName" => $theGameMeta['playerInfo']['forceName'], "deployName" =>  $theGameMeta['playerInfo']['deployName'], ])
+                            <h2>Exclusive Rules </h2>
+                            <ol>
+                                @include('wargame::Mollwitz.common-exclusive-rules')
+                                @include("wargame::".$theGameMeta['curPath'].".exclusiveRules", ["name" => $theGameMeta['name'], "forceName" => $theGameMeta['playerInfo']['forceName'], "deployName" =>  $theGameMeta['playerInfo']['deployName'], ])
+                            </ol>
+                            <h2>Victory Conditions </h2>
+                            <ol>
+                                @isset($theGameMeta['corePath'])
+                                        @if(view()->exists($theGameMeta['corePath'].".victoryConditions"))
+                                            @include($theGameMeta['corePath'].".victoryConditions")
+                                        @endif
+                                    @else
+                                        @include("wargame::".$theGameMeta['curPath'].".victoryConditions", ["name" => $theGameMeta['name'], "forceName" => $theGameMeta['playerInfo']['forceName'], "deployName" =>  $theGameMeta['playerInfo']['deployName'], ])
+                                @endisset
+                            </ol>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    @endif
                 </li>
             </ul>
             @endif
     </div>
     @endsection
+
+<style type="text/css">
+    .rules-wrapper #GRr {
+        display: block !important;
+        background: white;
+        left: 200px;
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="{{mix('vendor/css/wargame/horse-musket.css')}}">
+

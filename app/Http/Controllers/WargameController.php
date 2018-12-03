@@ -249,6 +249,12 @@ class WargameController extends Controller
             $feed = file_get_contents("http://davidrodal.com/pubs/category/$gameFeed/feed");
             $theGameMeta = (array)$theGame->value;
             $theGameMeta['options'] = isset($theGameMeta['options'])? $theGameMeta['options'] : [];
+            $theGameMeta['playerInfo'] = $theGame->value->fileName::getPlayerData($thisScenario);
+            WargameService::$viewBase = "Wargame";
+            $className = $theGame->value->fileName;
+            $className = preg_replace("/^\\\\/","", $className);
+            $theGameMeta['curPath'] = WargameService::viewBase($className);
+            $theGameMeta['corePath'] = $thisScenario->corePath ?? null;
             unset($theGameMeta->scenarios);
             if ($feed !== false) {
                 $xml = new \SimpleXmlElement($feed);
