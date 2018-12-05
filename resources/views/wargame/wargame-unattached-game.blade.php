@@ -103,8 +103,15 @@
                             @include('wargame::Mollwitz.commonRules', ["name" => $theGameMeta['name'], "forceName" => $theGameMeta['playerInfo']['forceName'], "deployName" =>  $theGameMeta['playerInfo']['deployName'], ])
                             <h2>Exclusive Rules </h2>
                             <ol>
+                                @isset($theGameMeta['corePath'])
+                                    @if(view()->exists($theGameMeta['corePath'].".exclusiveRules"))
+                                        @include($theGameMeta['corePath'].".exclusiveRules")
+                                    @endif
+                                @else
                                 @include('wargame::Mollwitz.common-exclusive-rules')
                                 @include("wargame::".$theGameMeta['curPath'].".exclusiveRules", ["name" => $theGameMeta['name'], "forceName" => $theGameMeta['playerInfo']['forceName'], "deployName" =>  $theGameMeta['playerInfo']['deployName'], ])
+                                @endisset
+
                             </ol>
                             <h2>Victory Conditions </h2>
                             <ol>
