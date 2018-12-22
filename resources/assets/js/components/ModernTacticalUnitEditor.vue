@@ -8,8 +8,9 @@
         </div>
         <div class="row">
             <div class="left-col col-xs-5">
-                <input v-model="unit.attack"> att
-                <input v-model="unit.defense"> def
+                att <input v-model="unit.attack">
+                def <input v-model="unit.defense">
+                reinforce zone
                 <select v-model="unit.reinforceZone">
                     <option disabled value="">Please select one</option>
                     <option>A</option>
@@ -28,8 +29,7 @@
                 movement <input v-model="unit.movement">
                 weapons <input v-model="unit.weapons">
                 target <input v-model="unit.target">
-                {{ unit.weapons }}
-                {{ unit.nationality }}
+                unit class
                 <select v-model="unit.class">
                     <option disabled value="">Please select one</option>
                     <option>inf</option>
@@ -48,6 +48,7 @@
                     <option>1</option>
                     <option>2</option>
                 </select>
+                Nationality
                 <select v-model="unit.nationality">
                     <option disabled value="">Please select one</option>
                     <option>German</option>
