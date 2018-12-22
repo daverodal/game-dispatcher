@@ -111,6 +111,7 @@
         #container{
             max-width:1650px;
             position: relative;
+            z-index: 3;
         }
 
         /*ol {*/
