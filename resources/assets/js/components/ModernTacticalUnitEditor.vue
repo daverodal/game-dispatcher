@@ -10,7 +10,13 @@
             <div class="left-col col-xs-5">
                 <input v-model="unit.attack"> att
                 <input v-model="unit.defense"> def
-
+                <select v-model="unit.reinforceZone">
+                    <option disabled value="">Please select one</option>
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                    <option>D</option>
+                </select>
 
 
             </div>
@@ -20,6 +26,10 @@
             <div class="right-col col-xs-5">
                 range <input v-model="unit.range"><br>
                 movement <input v-model="unit.movement">
+                weapons <input v-model="unit.weapons">
+                target <input v-model="unit.target">
+                {{ unit.weapons }}
+                {{ unit.nationality }}
                 <select v-model="unit.class">
                     <option disabled value="">Please select one</option>
                     <option>inf</option>
@@ -30,6 +40,18 @@
                     <option>anti-tank</option>
                     <option>truck</option>
 
+                </select>
+                ForceId
+                <select v-model="unit.forceId">
+                    <option disabled value="">Please select one</option>
+                    <option>1</option>
+                    <option>2</option>
+                </select>
+                <select v-model="unit.nationality">
+                    <option disabled value="">Please select one</option>
+                    <option>German</option>
+                    <option>Soviet</option>
+                    <option>American</option>
                 </select>
             </div>
         </div>

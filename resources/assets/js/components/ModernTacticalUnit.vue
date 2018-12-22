@@ -1,5 +1,5 @@
 <template>
-    <div :class="[unit.class, unit.type]" class="unit topDiv unit-wrapper smallUnit" :id="unit.id">
+    <div :class="[unit.class, unit.type, unit.nationality]" class="unit topDiv unit-wrapper smallUnit" :id="unit.id">
         <div class="shadow-mask"></div>
         <span class="unit-desig">{{unit.unitDesig}}</span>
 
@@ -11,7 +11,7 @@
                 {{unit.range}}
             </div>
             <div class="unitNumbers weapons">
-                A
+               {{unit.weapons}}
             </div>
             <div class="type-wrapper artillery-svg">
                 <svg width="15" height="21" viewBox="0 0 10 20">
@@ -99,8 +99,12 @@
             </div>
             <div class="type-wrapper truck"><i class="fa fa-truck"></i></div>
             <div class="unitNumbers defense">
-                [{{unit.defense}}]
-
+                <div v-if="unit.target === 0">
+                    [{{unit.defense}}]
+                </div>
+                <div v-else>
+                    {{unit.defense}}
+                </div>
             </div>
             <div class="unitNumbers movement">
                 {{ unit.movement }}
@@ -115,7 +119,6 @@
     export default {
         props: ["unit"],
         mounted(){
-            this.unit.weapons = this.unit.combat;
         }
 
     }
@@ -140,6 +143,7 @@
         bottom:3px;
         left:10px;
     }
+
     .unit {
         background-color: #62bdff;
         &.pushed .shadow-mask {
@@ -209,7 +213,6 @@
 
     }
 
-
     .unit{
         box-sizing: content-box;
     }
@@ -230,6 +233,7 @@
 
 
 
+
     $germanColor: #C7C5C6;
     $britishColor: #9ea837;
     $belgianColor: #ffffe3;
@@ -237,7 +241,24 @@
     $belgianNumberColor: #a9b14a;
     $russianColor: #B98700;
 
-
+    .unit.Soviet{
+        background-color:$russianColor;
+    }
+    .unit.German{
+        background-color: $germanColor;
+    }
+    .German .counterWrapper{
+        background-color: $germanColor;
+    }
+    .American.unit{
+        background-color: $belgianNumberColor;
+        .counterWrapper{
+            background-color: $belgianNumberColor;
+        }
+    }
+    .unit .range{
+        color:black;
+    }
     .unit-desig{
         top:1px;
         left:1px;

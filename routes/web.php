@@ -59,6 +59,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('terrainInit/{id}/{jd}/{kd}', 'WargameController@terrainInit');
 
         Route::get('play/{wargame?}', 'WargameController@getPlay');
+        Route::get('theclicks/{wargame?}', 'WargameController@getWargameClicks');
+        Route::get('removeclicks/{wargame?}', 'WargameController@getRemoveClicks');
         Route::any('fetch-lobby/{lastSeq?}', 'WargameController@anyFetchLobby');
         Route::get('setplay/{id}', 'WargameController@getSetplay');
         Route::get('test-analytics', 'WargameController@getTestAnalytics');

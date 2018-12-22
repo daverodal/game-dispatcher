@@ -14,6 +14,7 @@ use Input;
 use App\User;
 use League\Flysystem\Exception;
 use Wargame\Battle;
+use Wargame\Click;
 
 class  WargameService{
 
@@ -286,11 +287,24 @@ class  WargameService{
 
         try {
             foreach ($clicks as $click) {
-                $ret = $this->doPoke($wargame, $click->event, $click->id, 0, 0, $user, $click->dieRoll);
-                if ($ret["success"] !== true) {
-                    echo "ERROR ERROR ERROR ERROR ";
-                    echo $ret["emsg"];
-                    return;
+                if($click->event === 'timetravel'){
+
+                    $numRevs = $this->jumpToRev($wargame, $click->id);
+                    $prevDb = $this->cs->setDb('clicks');
+                    $savedClick = new Click(false, 'timetravel', $click->id, 0 , 0, 0, 0, "$numRevs");
+
+                    $savedClick->wargame = $wargame;
+                    $this->cs->post($savedClick);
+                    $this->cs->post($savedClick);
+                    $this->cs->setDb($prevDb);
+
+                }else {
+                    $ret = $this->doPoke($wargame, $click->event, $click->id, $click->x, $click->y, $user, $click->dieRoll);
+                    if ($ret["success"] !== true) {
+                        echo "ERROR ERROR ERROR ERROR ";
+                        echo $ret["emsg"];
+                        return;
+                    }
                 }
             }
         }catch(\Exception $e) {
@@ -316,8 +330,7 @@ class  WargameService{
             $data->createDate = date("r");
             $data->createUser = Auth::user()['name'];
             $data->playerStatus = "created";
-            $data->clickHistory = new \stdClass();
-            $data->clickHistory->clicks = [];
+
             $cs->setDb("games");
             $ret = $cs->post($data);
         } catch (Exception $e) {
@@ -461,7 +474,7 @@ class  WargameService{
                 $startingAttackerId = $battle->gameRules->attackingForceId;
                 if ($event === SAVE_GAME_EVENT) {
                     $msg = Input::get('msg', 'defar');
-                    $clickHistory = $doc->clickHistory->clicks ?? $battle->clickHistory;
+                    $clickHistory = $this->getClickHistory($wargame);
 
                     event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'bug-report', 'type' => 'click-history', 'attackingForceId' => $startingAttackerId, 'history' => $clickHistory, 'gameName' => $doc->gameName, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time(), 'msg' => $msg]));
                     $success = true;
@@ -483,8 +496,12 @@ class  WargameService{
                             throw new \Exception('Not all events consumed in playback');
                         }
                     }
-                    $savedClick = new \Wargame\Click(false, $event, $id, $x, $y, $user, $battle->gameRules->attackingForceId, $click, $battle->dieRolls->getEvents());
-                    $doc->clickHistory->clicks[] = $savedClick;
+                    $prevDb = $this->cs->setDb('clicks');
+
+                    $savedClick = new Click(false, $event, $id, $x, $y, $user, $battle->gameRules->attackingForceId, $click, $battle->dieRolls->getEvents());
+                    $savedClick->wargame = $wargame;
+                    $this->cs->post($savedClick);
+                    $this->cs->setDb($prevDb);
                     $doc->wargame = $battle->save();
 
                     try {
@@ -499,14 +516,16 @@ class  WargameService{
                 $gameOver = $battle->victory->gameOver;
                 $saveDeploy = $battle->victory->saveDeploy;
                 if (!$isGameOver && $gameOver && $dieRoll === false) {
-                    $clickHistory = $doc->clickHistory->clicks ?? $battle->clickHistory;
+                    $clickHistory = $this->getClickHistory($wargame);
+
                     event(new \App\Events\Analytics\RecordGameEvent(['docId' => $doc->_id, 'winner' => $battle->victory->winner, 'type' => 'game-victory', 'className' => $doc->className, 'scenario' => $battle->scenario, 'arg' => $battle->arg, 'time' => time()]));
                     event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'bug-report', 'type' => 'click-history', 'attackingForceId' => $startingAttackerId, 'history' => $clickHistory,'gameName' => $doc->gameName, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time(), 'msg' => "Game Over Event"]));
 
                 }
                 if ($saveDeploy) {
-                    /* lose nextPhase click */
-                    $saveHistory = $doc->clickHistory->clicks ?? $battle->clickHistory;
+//                    /* lose nextPhase click */
+                    $saveHistory = $this->getClickHistory($wargame);
+
                     array_pop($saveHistory);
                     event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'deploy', 'attackingForceId' => $startingAttackerId, 'history' => $saveHistory, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time()]));
                 }
@@ -711,6 +730,24 @@ class  WargameService{
         return $seq;
     }
 
+    public function  jumpToRev($wargame, $time){
+            $doc = $this->cs->get($wargame . "?revs_info=true");
+            $revs = $doc->_revs_info;
+            $numRevs = count($revs);
+
+        foreach ($revs as $k => $v) {
+                if (preg_match("/^$time-/", $v->rev)) {
+                    $revision = "?rev=" . $v->rev;
+                    $currentRev = $doc->_rev;
+                    break;
+                }
+            }
+            $doc = $this->cs->get($wargame . $revision);
+            $doc->_rev = $currentRev;
+            $doc->wargame->gameRules->flashMessages[] = "Time Travel to click $time";
+             $this->cs->put($doc->_id, $doc);
+             return $numRevs;
+    }
     public function grabChanges( $req,$wargame, $last_seq = 0,  $user = 'observer')
     {
         global $mode_name, $phase_name;
@@ -761,6 +798,7 @@ class  WargameService{
             }
             $doc = $this->cs->get($wargame . "?revs_info=true");
             $revs = $doc->_revs_info;
+            $numRevs = count($revs);
             foreach ($revs as $k => $v) {
                 if (preg_match("/^$time-/", $v->rev)) {
                     $revision = "?rev=" . $v->rev;
@@ -776,6 +814,11 @@ class  WargameService{
             $doc->_rev = $currentRev;
             $doc->wargame->gameRules->flashMessages[] = "Time Travel to click $time";
             $this->cs->put($doc->_id, $doc);
+            $prevDb = $this->cs->setDb('clicks');
+            $savedClick = new Click(false, 'timetravel', $time, 0 , 0, 0, 0, $numRevs);
+            $savedClick->wargame = $wargame;
+            $this->cs->post($savedClick);
+            $this->cs->setDb($prevDb);
             $last_seq = 0;
         }
 
@@ -933,5 +976,36 @@ class  WargameService{
         $url = config('publish.hostname'). "/$f";
         return $url;
 
+    }
+
+    public function removeClicksByWrgame($wargame){
+        $prevDb = $this->cs->setDb('clicks');
+        $seq = $this->cs->get("_design/clickEvents/_view/byWargame?reduce=false&startkey=[\"$wargame\", 0]&endkey=[\"$wargame\", 100000]");
+        $retRows = [];
+        if(isset($seq->rows)){
+            $rows = $seq->rows;
+            foreach($rows as $click){
+                $v = $click->value;
+                $this->cs->delete($v->_id, $v->_rev);
+            }
+        }
+        $this->cs->setDb($prevDb);
+        return $retRows;
+
+    }
+    public function getClickHistory($wargame){
+        $prevDb = $this->cs->setDb('clicks');
+        $seq = $this->cs->get("_design/clickEvents/_view/byWargame?reduce=false&startkey=[\"$wargame\", 0]&endkey=[\"$wargame\", 100000]");
+        $retRows = [];
+        if(isset($seq->rows)){
+            $rows = $seq->rows;
+            foreach($rows as $click){
+                $v = $click->value;
+                $clickObj = new Click(false, $v->event, $v->id, $v->x, $v->y, $v->user, $v->playerId, $v->click, $v->dieRoll);
+                $retRows[] = $clickObj;
+            }
+        }
+        $this->cs->setDb($prevDb);
+        return $retRows;
     }
 }

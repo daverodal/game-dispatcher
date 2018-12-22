@@ -354,9 +354,6 @@ class WargameController extends Controller
 
             return view("wargame/wargame-unattached", compact("theScenarios", "theGameMeta", "editor", "backgroundAttr", "backgroundImage","theScenario", "plainGenre", "theGame", "games", "nest","siteUrl"));
         }
-//        echo "<pre>"; var_dump(compact("mapUrl","theScenario", "plainGenre", "theGame", "games", "nest","siteUrl"));die('did');
-
-
     }
 
     public function getScenarioEdit($id){
@@ -520,7 +517,7 @@ class WargameController extends Controller
         return redirect("/wargame/play");
     }
 
-    function getDeleteGame(CouchService $cs, $gameName){
+    function getDeleteGame(CouchService $cs, WargameService $ws, $gameName){
         $user = Auth::user()['name'];
         $cs->setDb('games');
         if ($gameName) {
@@ -533,6 +530,7 @@ class WargameController extends Controller
                 }
             } catch (Exception $e) {
             }
+            $ws->removeClicksByWrgame($gameName);
         }
         echo json_encode(["success"=>true, "emsg"=>false]);
     }
@@ -713,6 +711,20 @@ class WargameController extends Controller
         return true;
     }
 
+
+    function getWargameClicks(CouchService $cs, $wargame){
+        $prevDb = $cs->setDb('clicks');
+        $seq = $cs->get("_design/clickEvents/_view/byWargame?reduce=false&startkey=[\"$wargame\", 0]&endkey=[\"$wargame\", 100000]");
+        echo "getting to it";
+        foreach($seq->rows as $id => $val){
+            echo "ID $id ";
+            var_dump($val);
+        }
+    }
+
+    function getRemoveClicks(WargameService $ws, $wargame){
+        $ws->removeClicksByWrgame($wargame);
+    }
 
     function getChangeWargame(Request $req, CouchService $cs, $newWargame = false)
     {

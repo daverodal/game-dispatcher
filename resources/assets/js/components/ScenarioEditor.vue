@@ -1,6 +1,6 @@
 <template>
     <div class="coolBox">
-        <h1>Scenario Editor (vue)</h1>
+        <h1>Scenario Editor (vue) cool</h1>
         <div v-if="scenario && scenario.unit && scenario.units[0]">
             {{ scenario.units[0].num }}
         </div>
@@ -89,6 +89,7 @@
 
             },
             newUnit(){
+                debugger;
               let unit = {
 
               }
