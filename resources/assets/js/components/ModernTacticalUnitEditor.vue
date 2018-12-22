@@ -39,6 +39,7 @@
                     <option>artillery</option>
                     <option>anti-tank</option>
                     <option>truck</option>
+                    <option>apc</option>
 
                 </select>
                 ForceId

@@ -13,6 +13,31 @@
             <div class="unitNumbers weapons">
                {{unit.weapons}}
             </div>
+            <div class="type-wrapper apc-svg">
+                <svg width="16px" height="8px" viewBox="0 0 30 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+                    <title>Group 3</title>
+                    <desc>Created with Sketch.</desc>
+                    <defs></defs>
+                    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="Group-3" fill-rule="nonzero" stroke="#000000">
+                            <g id="Group" transform="translate(1.192661, 6.513761)">
+                                <circle id="Oval" fill="#000000" cx="4.53715279" cy="4.44540967" r="1.50962985"></circle>
+                                <circle id="Oval-Copy-5" fill="#000000" cx="1.60137297" cy="1.50962985" r="1.50962985"></circle>
+                                <circle id="Oval-Copy" fill="#000000" cx="9.21605187" cy="4.44540967" r="1.50962985"></circle>
+                                <circle id="Oval-Copy-2" fill="#000000" cx="13.8032078" cy="4.44540967" r="1.50962985"></circle>
+                                <circle id="Oval-Copy-3" fill="#000000" cx="18.3903638" cy="4.44540967" r="1.50962985"></circle>
+                                <circle id="Oval-Copy-4" fill="#000000" cx="22.9775198" cy="4.44540967" r="1.50962985"></circle>
+                                <circle id="Oval-Copy-6" fill="#000000" cx="26.0050427" cy="1.50962985" r="1.50962985"></circle>
+                                <path d="M4.51130368,6.30504587 L23.2466047,6.30504587" id="Line" stroke-linecap="square"></path>
+                                <path d="M0.0158908405,2.03423946 L3.67078416,5.78447783" id="Line-2" stroke-linecap="square"></path>
+                                <path d="M24.0525881,5.71010869 L27.3578829,2.30946882" id="Line-3" stroke-linecap="square"></path>
+                            </g>
+                            <path d="M23.3089798,0.5 L0.5,0.5 L0.5,8.39908257 L29.0630529,8.39908257 L23.3089798,0.5 Z M29.9135538,8.89908257 L29.5,8.89908257 L29.5,8.83611096 L30,8.83611096 L29.9135538,8.89908257 Z" id="Combined-Shape" fill="#000000"></path>
+                        </g>
+                    </g>
+                </svg>
+            </div>
             <div class="type-wrapper artillery-svg">
                 <svg width="15" height="21" viewBox="0 0 10 20">
                     <line x1="5" x2="5" y1="0" y2="20" stroke="black" stroke-width="2"></line>
@@ -396,6 +421,18 @@
         }
     }
 
+    .apc{
+        .unitNumbers {
+            font-size:11px;
+        }
+        .apc-svg{
+            font-size:11px;
+            position:absolute;
+            display:block;
+            top:8px;
+            left:9px;
+        }
+    }
     .mech {
         .unitNumbers {
             font-size: 11px;
