@@ -109,6 +109,17 @@ a:hover{
    border-radius:10px;
 
 }
+ #GR{
+   width: auto;
+   left: auto;
+   .close{
+     display:none;
+   }
+
+ }
+ .rules-wrapper{
+   background: rgba(255,255,255,.9);
+ }
 .scenarioWrapper, .breadcrumb{
 
   background: #eee;
@@ -117,6 +128,7 @@ a:hover{
   padding: 5px;
   display:block;
   margin:0;
+  cursor: pointer;
 }
 $satlightskyblue : saturate(lightskyblue, 40%);
 $satindianred: saturate(indianred, 40%);;

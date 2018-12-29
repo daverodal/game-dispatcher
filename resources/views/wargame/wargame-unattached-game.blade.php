@@ -8,9 +8,56 @@
                 <li class='leftGrid'>
                     <a class='breadcrumb' href='{{url("wargame/unattached-game/")}}'>top</a>
                     <?php $up = $theGame['dir'] . "/" . rawurlencode($theGame['genre']);?>
-                    <a class='breadcrumb' href='{{url("wargame/unattached-game/$up")}}'>back</a><br>
+                    <a class='breadcrumb' href='{{url("wargame/unattached-game/$up")}}'>back</a>
+                    @if($theGameMeta['path'] === 'Mollwitz')
 
+                    <a class='breadcrumb' ng-click="toggleRules()">Show/Hide Rules</a><br>
+                    <div ng-if="viewRules" class="coolBox rules-wrapper">
+                        <style type="text/css">
+                            .rules-wrapper #GR {
+                                display: block !important;
+                                background: white;
+                                position: static;
 
+                            }
+                            .rules-wrapper #GR .unit{
+                                box-sizing: content-box;
+                            }
+                            .rules-wrapper #GR .unit .counterWrapper {
+                                box-sizing: content-box;
+                            }
+                            .rules-wrapper #GR .unit p{
+                                margin-top:15px;
+                                margin-bottom: 15px;
+                            }
+                        </style>
+                        @include('wargame::Mollwitz.commonRules', ["name" => $theGameMeta['name'], "forceName" => $theGameMeta['playerInfo']['forceName'], "deployName" =>  $theGameMeta['playerInfo']['deployName'], ])
+                        <h2>Exclusive Rules </h2>
+                        <ol>
+                            @isset($theGameMeta['corePath'])
+                                @if(view()->exists($theGameMeta['corePath'].".exclusiveRules"))
+                                    @include($theGameMeta['corePath'].".exclusiveRules")
+                                @endif
+                            @else
+                                @include('wargame::Mollwitz.common-exclusive-rules')
+                                @include("wargame::".$theGameMeta['curPath'].".exclusiveRules", ["name" => $theGameMeta['name'], "forceName" => $theGameMeta['playerInfo']['forceName'], "deployName" =>  $theGameMeta['playerInfo']['deployName'], ])
+                            @endisset
+
+                        </ol>
+                        <h2>Victory Conditions </h2>
+                        <ol>
+                            @isset($theGameMeta['corePath'])
+                                @if(view()->exists($theGameMeta['corePath'].".victoryConditions"))
+                                    @include($theGameMeta['corePath'].".victoryConditions")
+                                @endif
+                            @else
+                                @include("wargame::".$theGameMeta['curPath'].".victoryConditions", ["name" => $theGameMeta['name'], "forceName" => $theGameMeta['playerInfo']['forceName'], "deployName" =>  $theGameMeta['playerInfo']['deployName'], ])
+                            @endisset
+                        </ol>
+                        <div class="clear"></div>
+                    </div>
+
+                    @endif
                     <h2>@{{name}}</h2>
                     <p>@{{description}}</p>
                     <div ng-if="options.length > 0" class="coolBox">
@@ -69,64 +116,6 @@
                     <div class='coolBox wordpress-wrapper'>
                         {!! $theGameMeta['designerNotes'] or '' !!}
                     </div>
-                    @if($theGameMeta['path'] === 'Mollwitz')
-
-                    <div class="coolBox">
-                        <p class='softVoice'>View the rules here.</p>
-                        <div class="kewl-box"                              class="clearWrapper">
-
-
-                            <a class='scenarioWrapper play'
-                               ng-click="toggleRules()">Show/Hide Rules&raquo;</a>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                        <div ng-if="viewRules" class="rules-wrapper">
-                            <style type="text/css">
-                                .rules-wrapper #GR {
-                                    display: block !important;
-                                    background: white;
-                                    position: static;
-
-                                }
-                                .rules-wrapper #GR .unit{
-                                    box-sizing: content-box;
-                                }
-                                .rules-wrapper #GR .unit .counterWrapper {
-                                    box-sizing: content-box;
-                                }
-                                .rules-wrapper #GR .unit p{
-                                    margin-top:15px;
-                                    margin-bottom: 15px;
-                                }
-                            </style>
-                            @include('wargame::Mollwitz.commonRules', ["name" => $theGameMeta['name'], "forceName" => $theGameMeta['playerInfo']['forceName'], "deployName" =>  $theGameMeta['playerInfo']['deployName'], ])
-                            <h2>Exclusive Rules </h2>
-                            <ol>
-                                @isset($theGameMeta['corePath'])
-                                    @if(view()->exists($theGameMeta['corePath'].".exclusiveRules"))
-                                        @include($theGameMeta['corePath'].".exclusiveRules")
-                                    @endif
-                                @else
-                                @include('wargame::Mollwitz.common-exclusive-rules')
-                                @include("wargame::".$theGameMeta['curPath'].".exclusiveRules", ["name" => $theGameMeta['name'], "forceName" => $theGameMeta['playerInfo']['forceName'], "deployName" =>  $theGameMeta['playerInfo']['deployName'], ])
-                                @endisset
-
-                            </ol>
-                            <h2>Victory Conditions </h2>
-                            <ol>
-                                @isset($theGameMeta['corePath'])
-                                        @if(view()->exists($theGameMeta['corePath'].".victoryConditions"))
-                                            @include($theGameMeta['corePath'].".victoryConditions")
-                                        @endif
-                                    @else
-                                        @include("wargame::".$theGameMeta['curPath'].".victoryConditions", ["name" => $theGameMeta['name'], "forceName" => $theGameMeta['playerInfo']['forceName'], "deployName" =>  $theGameMeta['playerInfo']['deployName'], ])
-                                @endisset
-                            </ol>
-                            <div class="clear"></div>
-                        </div>
-                    </div>
-                    @endif
                 </li>
             </ul>
             @endif
