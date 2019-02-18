@@ -290,6 +290,9 @@ class  WargameService{
                 if($click->event === 'timetravel'){
 
                     $numRevs = $this->jumpToRev($wargame, $click->id);
+                    if($numRevs === false){
+                        continue;
+                    }
                     $prevDb = $this->cs->setDb('clicks');
                     $savedClick = new Click(false, 'timetravel', $click->id, 0 , 0, 0, 0, "$numRevs");
 
@@ -302,7 +305,8 @@ class  WargameService{
                     $ret = $this->doPoke($wargame, $click->event, $click->id, $click->x, $click->y, $user, $click->dieRoll);
                     if ($ret["success"] !== true) {
                         echo "ERROR ERROR ERROR ERROR ";
-                        echo $ret["emsg"];
+                        echo $ret["emsg"] + "this part ";
+                        var_dump($click);
                         return;
                     }
                 }
@@ -442,6 +446,7 @@ class  WargameService{
                     if ($retry++ > 3) {
                         $success = false;
                         $emsg = $e->getMessage();
+                        $emsg .= "This is where I died ";
                         return compact('success', "emsg");
                     }
                 }
@@ -738,9 +743,13 @@ class  WargameService{
         foreach ($revs as $k => $v) {
                 if (preg_match("/^$time-/", $v->rev)) {
                     $revision = "?rev=" . $v->rev;
+                    echo "$revision ";
                     $currentRev = $doc->_rev;
                     break;
                 }
+            }
+            if(!isset($revision)){
+                return false;
             }
             $doc = $this->cs->get($wargame . $revision);
             $doc->_rev = $currentRev;
