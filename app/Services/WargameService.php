@@ -307,7 +307,6 @@ class  WargameService{
                         echo "ERROR ERROR ERROR ERROR ";
                         var_dump( $ret["emsg"] );
                         var_dump($click);
-                        return;
                     }
                 }
             }
