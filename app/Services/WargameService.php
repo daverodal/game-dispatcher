@@ -445,7 +445,6 @@ class  WargameService{
                     if ($retry++ > 3) {
                         $success = false;
                         $emsg = $e->getMessage();
-                        $emsg .= "This is where I died ";
                         return compact('success', "emsg");
                     }
                 }
@@ -744,7 +743,6 @@ class  WargameService{
         foreach ($revs as $k => $v) {
                 if (preg_match("/^$time-/", $v->rev)) {
                     $revision = "?rev=" . $v->rev;
-                    echo "$revision ";
                     $currentRev = $doc->_rev;
                     break;
                 }
