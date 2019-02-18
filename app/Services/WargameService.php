@@ -497,7 +497,9 @@ class  WargameService{
                 if ($doSave) {
                     if($dieRoll !== false){
                         if($battle->dieRolls->getEventsTaken() !== count($dieRoll)){
-                            throw new \Exception('Not all events consumed in playback');
+                            echo "No all events consumes in playback";
+                            var_dump($battle->dieRolls);
+//                            throw new \Exception('Not all events consumed in playback');
                         }
                     }
                     $prevDb = $this->cs->setDb('clicks');
