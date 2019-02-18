@@ -305,7 +305,7 @@ class  WargameService{
                     $ret = $this->doPoke($wargame, $click->event, $click->id, $click->x, $click->y, $user, $click->dieRoll);
                     if ($ret["success"] !== true) {
                         echo "ERROR ERROR ERROR ERROR ";
-                        echo $ret["emsg"] + "this part ";
+                        var_dump( $ret["emsg"] );
                         var_dump($click);
                         return;
                     }
