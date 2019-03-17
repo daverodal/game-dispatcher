@@ -264,6 +264,10 @@ class  WargameService{
         }
         $units = $newUnits;
         $mapUrl = $doc->wargame->mapData->mapUrl;
+
+        if($doc->wargame->mapViewer[0]->trueRows){
+            $mapUrl = preg_replace("/.(png|jpg|jpeg|svg)$/","Left.$1", $mapUrl);
+        }
         /* this was useful when debugging at home with non localhost machine */
 //        $mapUrl = preg_replace("/http:\/\/[^\/]*/","",$mapUrl);
         $arg = $doc->wargame->arg;

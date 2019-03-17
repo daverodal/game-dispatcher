@@ -75,8 +75,7 @@
 
                             <a ng-if="editor" class='scenarioWrapper custom-scenario play copy'
                                href='<?= url("wargame/clone-scenario/$dir/".rawurlencode($plainGenre)."/$game") ?>/@{{scenario.sName}}'><i class="fa fa-files-o"></i></a>
-                            <a ng-if="editor && scenario.id" class="scenarioWrapper custom-scenario play edit" href='{{url("wargame/scenario-edit/")}}/@{{scenario.id}}'><i class="fa fa-pencil-square-o"></i></a>
-                            <a ng-if="editor && scenario.id" class="scenarioWrapper custom-scenario play edit" href='{{url("wargame/scenario-vue-edit/")}}/@{{scenario.id}}'><i class="fa fa-bug"></i></a>
+                            <a ng-if="editor && scenario.id" class="scenarioWrapper custom-scenario play edit" href='{{url("wargame/scenario-vue-edit/")}}/@{{scenario.id}}'><i class="fa fa-pencil-square-o"></i></a>
                             <a ng-if="editor && scenario.id" class="scenarioWrapper custom-scenario play delete" href='{{url("wargame/scenario-delete/")}}/@{{scenario.id}}'><i class="fa fa-times"></i></a>
 
                             <div class="clear"></div>

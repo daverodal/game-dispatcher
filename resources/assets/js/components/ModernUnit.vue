@@ -2,7 +2,7 @@
     <div class="unit-wrapper unit"  :class="[unit.nationality, unit.class]" :id="unit.id" alt="0">
         <div v-if="unit.class != 'supply'" class="unitSize">{{unit.unitSize}}</div>
         <div class="counterWrapper">
-            <img  v-if="unit.class != 'supply' && unit.class != 'truck'" :src="'/assets/unit-images/'+unit.image" class="counter"><span class="unit-desig">{{unit.desig}}</span>
+            <img  v-if="unit.class != 'supply' && unit.class != 'truck'" :src="'/assets/unit-images/'+unit.image" class="counter">
             <i v-if="unit.class === 'supply'" class="counter-symbol fa fa-adjust"></i>
             <i v-if="unit.class === 'truck'" class="counter-symbol fa fa-truck"></i>
             <span class="unit-desig">{{unit.id}}</span>
@@ -72,7 +72,7 @@
         .unit-desig{
             font-size: 7px;
             position: absolute;
-            left: 14px;
+            right: -12px;
             top: 12px;
             -webkit-transform: rotate(-90deg);
             -webkit-transform-origin: center;
@@ -98,9 +98,9 @@
         }
 
          .counter {
-            margin-top: -5px;
-            width: 32px;
-            margin-top: -4px;
+             width: 20px;
+             margin:0 auto;
+             display:block;
         }
 
          .unitSize {
@@ -137,6 +137,59 @@
             position: relative;
             background-color: white;
             color: black;
+            &.big{
+                height:64px;
+                width:64px;
+                font-size:28px;
+                .unitSize{
+                    height: 20px;
+                    font-size: 18px;
+                }
+                .counterWrapper{
+                    height:20px;
+                    .hq{
+                        width:16px;
+                        line-height:8px;
+                        top: -6px;
+                        left:30px;
+                        font-size:32px;
+                    }
+                    .counter{
+                        width:40px;
+                        margin:0 auto;
+                        display:block;
+                    }
+                    .bow{
+                        left: 26px;
+                        height: 26px;
+                        background-size: 20px 26px;
+                        width: 20px;
+                    }
+                    .fa-flag{
+                        width:64px;
+                        border-bottom: 2px solid black;
+                    }
+                    .unit-desig{
+                        font-size: 14px;
+                        right:-10px;
+                    }
+
+                }
+
+                .range{
+                    font-size: 24px;
+                }
+                .unit-numbers{
+                    font-size:22px;
+                    height: 24px;
+                }
+                .unit-steps{
+                    margin-top:-20px;
+                }
+                .unit-command{
+                    font-size:12px;
+                }
+            }
         }
         .unit-num{
             display: inline-block;

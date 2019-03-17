@@ -17,7 +17,7 @@
 
             </div>
             <div class="middle-col col-xs-2">
-                <modern-unit :unit="unit"></modern-unit>
+                <modern-unit class="big" :unit="unit"></modern-unit>
             </div>
             <div class="right-col col-xs-5">
                 deployed <input v-model="unit.deployed" type="checkbox">
@@ -66,22 +66,19 @@
                 show: false,
                 nonStandardKeys: {},
                 types: [
-                    'multiInf.png',
-                    'multiArmor.png',
-                    'multiMech.png',
-                    'multiArt.png',
-                    'multiCav.png',
-                    'multiGlider.png',
-                    'multiGor.png',
-                    'multiHeavy.png',
-                    'multiMotArt.png',
-                    'multiMotInf.png',
-                    'multiMotMt.png',
-                    'multiMountain.png',
-                    'multiPara.png',
-                    'multiRecon.png',
-                    'multiRecon1.png',
-                    'multiShock.png'
+                    'Infantry.svg',
+                    'Armor.svg',
+                    'MechInf.svg',
+                    'Artillery.svg',
+                    'Cavalry.svg',
+                    'Glider.svg',
+                    'Gorilla.svg',
+                    'Heavy.svg',
+                    'MoterizedInfantry.svg',
+                    'Mountain.svg',
+                    'Para.svg',
+                    'ArmorRecon.svg',
+                    'Shock.svg'
                 ]
             }
         }
@@ -104,7 +101,8 @@
             width:32px;
         }
         padding:0;
-        height:20px;
+        height:22px;
+        background:transparent;
         overflow:hidden;
     }
 </style>

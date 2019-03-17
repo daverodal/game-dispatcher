@@ -178,7 +178,7 @@
             }
         }
         $scope.game = '<?=$theGame['game'];?>';
-        $scope.editor = '<?=$editor;?>';
+        $scope.editor = '<?=$editor;?>' - 0;/* turn string back to number */
         $scope.name = '<?=addslashes($theGameMeta['name']);?>';
         $scope.description = '<?=$theGameMeta['description'];?>';
         $scope.histEditLink = '<?=isset($theGameMeta['histEditLink']) ? $theGameMeta['histEditLink'] : false;?>';
