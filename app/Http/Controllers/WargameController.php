@@ -348,11 +348,11 @@ class WargameController extends Controller
             $theGameMeta['histEditLink'] = '';
             $theGameMeta['options'] = [];
             if(count($games) > 0 && !empty($games[0]->game)){
-                return view("wargame/wargame-unattached-games", compact("theScenarios", "theGameMeta", "editor", "backgroundAttr", "backgroundImage","theScenario", "plainGenre", "theGame", "games", "nest","siteUrl"));
+                return view("wargame/wargame-unattached-games", compact("theScenarios", "theGameMeta", "editor", "backgroundAttr", "backgroundImage","theScenario", "plainGenre", "theGame", "games", "siteUrl"));
 
             }
 
-            return view("wargame/wargame-unattached", compact("theScenarios", "theGameMeta", "editor", "backgroundAttr", "backgroundImage","theScenario", "plainGenre", "theGame", "games", "nest","siteUrl"));
+            return view("wargame/wargame-unattached", compact("theScenarios", "theGameMeta", "editor", "backgroundAttr", "backgroundImage","theScenario", "plainGenre", "theGame", "games", "siteUrl"));
         }
     }
 
