@@ -305,7 +305,7 @@ class WargameController extends Controller
             unset($theGame->value);
             $theGame = (array)$theGame;
             $theGameMeta['description'] = '';
-            return view("wargame/wargame-unattached-game", compact("game","dir","theScenarios", "editor", "backgroundImage", "backgroundAttr","bigMapUrl", "mapUrl", "theScenario", "plainGenre", "theGame", "games", "nest","siteUrl","theGameMeta"));
+            return view("wargame/wargame-unattached-game", compact("game","dir","theScenarios", "editor", "backgroundImage", "backgroundAttr","bigMapUrl", "mapUrl", "theScenario", "plainGenre", "theGame", "games", "siteUrl","theGameMeta"));
         } else {
             foreach ($gamesAvail as $gameAvail) {
                 if($gameAvail->game) {

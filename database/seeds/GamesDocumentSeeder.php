@@ -232,8 +232,8 @@ HEREUPDATE;
             }
         }
         try {
-            // TODO add curl -X PUT -d "2500" https://localhost:5984/testdb/_revs_limit to set revs limit to 2500
-            $revs = 2500;
+            // TODO add curl -X PUT -d "3500" https://localhost:5984/testdb/_revs_limit to set revs limit to 2500
+            $revs = 3500;
             echo "Setting revs limit $revs\n";
             $this->couchsag->put("_revs_limit", $revs);
             echo "Writing design docs\n";
