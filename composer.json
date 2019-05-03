@@ -12,21 +12,21 @@
       "type": "path",
       "url": "../wargaming"
     },
-    "Medieval": {
+    "medieval": {
       "type": "path",
       "url": "../Medieval"
     },
-    "Rebellion": {
+    "rebellion": {
       "type": "path",
       "url": "../rebellion"
     },
-    "SPI": {
+    "spi": {
       "type": "path",
       "url": "../SPI"
     },
-    "Tactical": {
+    "tactical": {
       "type": "path",
-      "url": "../Tactical"
+      "url": "../tactical"
     }
   },
   "require": {
@@ -35,10 +35,10 @@
     "guzzlehttp/guzzle": "~6.0",
     "cmgmyr/messenger": "~2.0",
     "daverodal/wargaming": "dev-master",
-    "daverodal/Medieval": "dev-master",
+    "daverodal/medieval": "dev-master",
     "daverodal/rebellion": "dev-master",
-    "daverodal/Tactical": "dev-master",
-    "daverodal/SPI": "dev-master"
+    "daverodal/tactical": "dev-master",
+    "daverodal/spi": "dev-master"
 
   },
   "require-dev": {
