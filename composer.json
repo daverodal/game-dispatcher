@@ -14,7 +14,7 @@
     },
     "medieval": {
       "type": "path",
-      "url": "../Medieval"
+      "url": "../medieval"
     },
     "rebellion": {
       "type": "path",
@@ -22,7 +22,7 @@
     },
     "spi": {
       "type": "path",
-      "url": "../SPI"
+      "url": "../spi"
     },
     "tactical": {
       "type": "path",
