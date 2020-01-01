@@ -13,6 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::middleware('auth:api')->group(function(){
+
+        Route::post('area-maps', 'AreaMapsController@store');
+        Route::get('area-maps', 'AreaMapsController@index');
+        Route::get('area-maps/{id}', 'AreaMapsController@show');
+        Route::put('area-maps/{id}', 'AreaMapsController@update');
+
+});
+
 //Route::get('/user', function (Request $request) {
 //    return $request->user();
 //})->middleware('auth:api');

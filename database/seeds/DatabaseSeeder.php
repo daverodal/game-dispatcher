@@ -21,7 +21,7 @@ class UserTableSeeder extends Seeder {
     {
 //        DB::table('users')->delete();
 
-        \App\User::create(['email' => 'you.name@example.com', 'name' => 'PlayerOne', 'password' => bcrypt('password'), 'is_admin' => 1, 'is_editor' => 1]);
+        \App\User::create(['email' => 'dave.rodal@gmail.com', 'name' => 'TheCreator', 'password' => bcrypt('2makegames'), 'is_admin' => 1, 'is_editor' => 1]);
     }
 
 }

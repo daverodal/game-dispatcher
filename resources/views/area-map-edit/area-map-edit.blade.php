@@ -19,10 +19,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 ?>
-@extends('layouts.wargame-scenario-vue-edit')
+@extends('layouts.area-map-edit')
+<div class="boxed" ><a href="{{ url('admin') }}"> < Back to Admin</a></div>
+
 
 @section('content')
-<scenario-editor></scenario-editor>
+<area-map-editor :user="{{ auth()->user() }}"></area-map-editor>
 @endsection
 
 

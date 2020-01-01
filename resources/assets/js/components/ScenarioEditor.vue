@@ -157,7 +157,6 @@
         },
 
         mounted() {
-
             this.scenarioName = location.pathname.replace(/^.*\//,'')
 
             this.$http.get('/wargame/custom-scenario/'+this.scenarioName).then(

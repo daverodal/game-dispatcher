@@ -193,6 +193,7 @@
     <div class="boxed" ><a href="{{ url('admin/users') }}">Users</a></div>
     <div class="boxed" ><a href="{{ url('admin/logins') }}">Logins</a></div>
     <div class="boxed" ><a href="{{ url('admin/allbugs') }}">Bugs</a></div>
+    <div class="boxed" ><a href="{{ url('admin/area-map-edit') }}">Area Maps</a></div>
 
 </div>
     @yield('content')

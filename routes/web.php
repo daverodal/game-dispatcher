@@ -51,10 +51,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('add-game', 'AdminController@getAddGame');
         Route::get('delete-game/{id}', 'AdminController@getDeleteGame');
         Route::get('delete-game-type', 'AdminController@getDeleteGameType');
+        Route::get('area-map-edit', 'AdminController@areaMapEdit');
     });
 
     Route::group(['prefix'=> 'wargame'], function(){
-
 
         Route::get('terrainInit/{id}/{jd}/{kd}', 'WargameController@terrainInit');
 

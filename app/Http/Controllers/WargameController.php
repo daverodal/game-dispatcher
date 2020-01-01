@@ -45,6 +45,7 @@ class WargameController extends Controller
         $className = $ret['className'];
         $viewPath = WargameService::viewBase($className).".view";
         if(view()->exists("wargame::$viewPath")){
+
             return view("wargame::$viewPath", $ret);
         }
 
@@ -703,7 +704,7 @@ class WargameController extends Controller
             return false;
         }
         $doc->playerStatus = "hot seat";
-        $doc->wargame->players[1] = $doc->wargame->players[2] = $user;
+        $doc->wargame->players = array("", $user, $user);
         $doc->wargame->gameRules->turnChange = true;
         $cs->put($doc->_id, $doc);
         event(new \App\Events\Analytics\RecordGameEvent(['docId'=>$doc->_id, 'type'=>'hotseat-entered', 'className'=> $doc->className, 'scenario'=>$doc->wargame->scenario, 'arg'=>$doc->wargame->arg, 'time'=>time()]));
@@ -771,6 +772,14 @@ class WargameController extends Controller
         $y = (int)Input::get('y', FALSE);
         $event = (int)Input::get('event', FALSE);
         $id = Input::get('id', FALSE);
+        $gameType = Input::get('type', FALSE);
+        if($gameType && $gameType == 'area-game'){
+            $ret = $ws->doAreaPoke($wargame, $event, $id, $x, $y, $user, $dieRoll = false);
+            if (!$ret['success']) {
+                header("HTTP/1.1 404 Not Found");
+            }
+            return $ret;
+        }
         $ret = $ws->doPoke($wargame, $event, $id, $x, $y, $user);
         if (!$ret['success']) {
             header("HTTP/1.1 404 Not Found");
