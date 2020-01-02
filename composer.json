@@ -34,7 +34,7 @@
         "laravel/framework": "^5.8.0",
         "guzzlehttp/guzzle": "~6.0",
         "cmgmyr/messenger": "~2.0",
-        "daverodal/wargaming": "dev-master",
+        "daverodal/wargaming": "dev-area-game-branch",
         "daverodal/medieval": "dev-master",
         "daverodal/rebellion": "dev-master",
         "daverodal/tactical": "dev-master",
