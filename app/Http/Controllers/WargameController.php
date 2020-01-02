@@ -262,6 +262,7 @@ class WargameController extends Controller
             $theGameMeta['curPath'] = WargameService::viewBase($className);
             $theGameMeta['corePath'] = $thisScenario->corePath ?? null;
             unset($theGameMeta->scenarios);
+            $feed = false;
             if ($feed !== false) {
                 $xml = new \SimpleXmlElement($feed);
 
