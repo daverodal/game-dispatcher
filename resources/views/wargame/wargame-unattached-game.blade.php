@@ -104,7 +104,7 @@
                         <a ng-if="editor" target='_blank' ng-href="@{{histEditLink}}">Edit</a>
                         <?php //echo $theGame->value->histEditLink;?>
 
-                        {!! $theGameMeta['longDesc'] or '' !!}
+                        {!! $theGameMeta['longDesc'] ?? '' !!}
                     </div>
                 </li>
                 <li class='rightGrid'>
