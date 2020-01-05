@@ -115,7 +115,11 @@ class  WargameService{
             $id = $row->id;
             $dt = new DateTime($row->value[1]);
             $thePlayers = $row->value[2];
-            $playerTurn = $thePlayers[$playerTurn];
+            if($playerTurn){
+                $playerTurn = $thePlayers[$playerTurn];
+            }else{
+                $playerTurn = "Your";
+            }
             $myTurn = "";
 
             if ($playerTurn == $user) {
@@ -844,7 +848,12 @@ class  WargameService{
 
             $dt = new DateTime($row->value[1]);
             $thePlayers = $row->value[2];
-            $playerTurn = $thePlayers[$playerTurn];
+
+            if($playerTurn){
+                $playerTurn = $thePlayers[$playerTurn];
+            }else{
+                $playerTurn = 'Your';
+            }
             $gameOver = $row->value[4];
 
             $myTurn = "";
@@ -883,7 +892,12 @@ class  WargameService{
             $className = $row->value[0];
             $dt = new DateTime($row->value[1]);
             $thePlayers = $row->value[2];
-            $playerTurn = $thePlayers[$playerTurn];
+            if($playerTurn){
+                $playerTurn = $thePlayers[$playerTurn];
+
+           }else{
+                $playerTurn = "Your";
+            }
             $gameOver = $row->value[3];
             $myTurn = "";
             if ($gameOver === true) {
@@ -917,7 +931,11 @@ class  WargameService{
             $id = $row->id;
             $dt = new DateTime($row->value[1]);
             $thePlayers = $row->value[2];
-            $playerTurn = $thePlayers[$playerTurn];
+            if($playerTurn){
+                $playerTurn = $thePlayers[$playerTurn];
+            }else{
+                $playerTurn = "Your";
+            }
             $myTurn = "";
             if ($playerTurn == $user) {
                 $playerTurn = "Your";

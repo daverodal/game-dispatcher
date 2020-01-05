@@ -35,10 +35,7 @@
         "guzzlehttp/guzzle": "~6.0",
         "cmgmyr/messenger": "~2.0",
         "daverodal/wargaming": "dev-area-game-branch",
-        "daverodal/medieval": "dev-master",
-        "daverodal/rebellion": "dev-master",
-        "daverodal/tactical": "dev-master",
-        "daverodal/spi": "dev-master"
+        "daverodal/medieval": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
