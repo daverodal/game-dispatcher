@@ -110,10 +110,10 @@
                 <li class='rightGrid'>
                     <div class='spinner-div' ng-if="imageUpdating"><i class="fa fa-spinner fa-spin"></i></div>
                     <img id="mapImage" imageonload ng-src="@{{scenario.mapUrl}}">
-                    <h3>Designer Notes {!! $theGameMeta['playerEditLink'] or '' !!}
+                    <h3>Designer Notes {!! $theGameMeta['playerEditLink'] ?? '' !!}
                     </h3>
                     <div class='coolBox wordpress-wrapper'>
-                        {!! $theGameMeta['designerNotes'] or '' !!}
+                        {!! $theGameMeta['designerNotes'] ?? '' !!}
                     </div>
                 </li>
             </ul>
