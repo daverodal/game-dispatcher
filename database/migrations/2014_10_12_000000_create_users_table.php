@@ -22,7 +22,6 @@ class CreateUsersTable extends Migration
             $table->boolean('is_editor')->default(false);
             $table->rememberToken();
             $table->timestamps();
-            $table->string('api_token', 80);
         });
     }
 
