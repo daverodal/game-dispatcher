@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import TestMe from '../components/test-me'
 import Map from '../views/Map.vue'
 import Maps from "../views/Maps";
 
