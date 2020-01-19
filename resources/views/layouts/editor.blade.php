@@ -188,11 +188,6 @@
 <div class="boxed" id="adminMenu">
     <a href="{{ url('/login') }}">Login</a>
     <div class="boxed" ><a href="{{ url('wargame/play') }}">home</a></div>
-    <div class="boxed" ><a href="{{ url('admin/allgames') }}">All Games</a></div>
-    <div class="boxed" ><a href="{{ url('admin/games') }}">All Games Avail</a></div>
-    <div class="boxed" ><a href="{{ url('admin/users') }}">Users</a></div>
-    <div class="boxed" ><a href="{{ url('admin/logins') }}">Logins</a></div>
-    <div class="boxed" ><a href="{{ url('admin/allbugs') }}">Bugs</a></div>
     <div class="boxed" ><a href="{{ url('editor/area-map-edit') }}">Area Maps</a></div>
 
 </div>

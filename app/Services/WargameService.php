@@ -492,6 +492,7 @@ class  WargameService{
 
             $cs->setDb('rest');
             $mapData = $cs->get($battle->scenario->mapDataUrl);
+            $battle->terrainName = $battle->scenario->mapDataUrl;
             $battle->areaMapInit($mapData);
 //            if(isset($battle->scenario->origTerrainName)){
 //                $terrainName = $battle->scenario->origTerrainName;

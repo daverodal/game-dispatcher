@@ -54,6 +54,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('area-map-edit', 'AdminController@areaMapEdit');
     });
 
+
+    Route::group(['prefix' => 'editor'], function(){
+        Route::any('/', 'EditorController@index');
+        Route::get('area-map-edit', 'EditorController@areaMapEdit');
+    });
+
+
+
     Route::group(['prefix'=> 'wargame'], function(){
 
         Route::get('terrainInit/{id}/{jd}/{kd}', 'WargameController@terrainInit');

@@ -26,7 +26,7 @@ hi maps
             axios.get('/api/area-maps/').then(response => {
                 this.maps = response.data.maps
             }).catch(errors => {
-                debugger;
+                console.log(errors);
             });
         },
         methods: {
@@ -39,7 +39,7 @@ hi maps
                 axios.post('/api/area-maps', arg).then( response => {
                     this.$router.push('maps/'+response.data.map.id)
                 }).catch(errors => {
-                    debugger;
+                    console.log(errors);
                     // this.errors = errors.response.data.errors;
                 });
             }

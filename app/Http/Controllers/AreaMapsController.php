@@ -32,6 +32,7 @@ class AreaMapsController extends Controller
         $data->boxes = $postData['boxes'];
         $data->name = $postData['name'];
         $data->url = $postData['url'];
+        $data->neighbors = $postData['neighbors'];
         $resp = $client->post($data);
         $postData['map']['id'] = $resp->id;
 //        dd($data);

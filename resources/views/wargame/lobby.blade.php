@@ -66,8 +66,11 @@
 
             @can('admin')
             <h1><a href="{{url('admin')}}">Admin </a></h1>
+            @else
+                @can('editor')
+                    <h1><a href="{{url('editor')}}">Editor </a></h1>
+                @endcan
             @endcan
-
             <h2>Welcome {{$myName}}</h2>
 
             <h3>You can <a id="create" href="{{url('wargame/unattached-game')}}"><button class="create-button">Start New Game</button></a></h3>

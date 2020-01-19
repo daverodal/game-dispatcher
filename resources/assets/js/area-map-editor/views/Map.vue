@@ -33,13 +33,22 @@
             </p>
 
         </div>
+        <div v-if="selectedBox && selectedBox.neighbors">
+            <span v-for="neighbor in selectedBox.neighbors">
+                {{neighbor}}
+            </span>
+        </div>
+        <button @click="neighborMode = !neighborMode">Neighbor mode</button>
         <button @click="addBox">add box</button>
         <button @click="clear">Clear</button>
         <button @click="saveMap">Save</button>
+        <div v-if="neighborMode" class="neighbor-mode-banner">
+            Neighbor Mode Enabled,
+        </div>
         <div class="map-wrapper">
             <img class="the-image" :style="'width: '+mapWidth+'px'" :src="mapUrl" alt="map">
 
-            <Movable v-for="(box, index) in boxes" v-bind:key="index" :id="index">{{ box.name }}</Movable>
+            <Movable :neighbor-mode="neighborMode" v-for="(box, index) in boxes" v-bind:key="index" :id="index">{{ box.name }}</Movable>
         </div>
     </div>
 </template>
@@ -60,7 +69,8 @@
         data: () => {
             return {
                 value: '',
-                message:''
+                message:'',
+                neighborMode: false
             }
         },
         mounted(){
@@ -69,6 +79,9 @@
               const data = response.data;
               if(data.boxes && data.boxes.length > 0){
                   data.boxes.forEach(box => {
+                      if(!box.neighbors){
+                          box.neighbors = [];
+                      }
                       this.$store.commit('createBox', box);
                   })
 
@@ -76,7 +89,7 @@
               this.$store.commit('updateMapName', data.name);
               this.$store.commit('updateUrl', data.url);
           }).catch(errors => {
-              debugger;
+                console.log(errors);
           });
         },
         methods: {
@@ -106,7 +119,7 @@
                 axios.put('/api/area-maps/'+this.$route.params.id, arg).then( response => {
                     // this.$router.push(response.data.links.self)
                 }).catch(errors => {
-                    debugger;
+                    console.log(errors);
                     // this.errors = errors.response.data.errors;
                 });
             }
@@ -115,6 +128,17 @@
 </script>
 
 <style lang="scss" scoped>
+    .component-wrapper{
+        margin-bottom:915px;
+        .neighbor-mode-banner{
+            display:flex;
+            justify-content: center;
+            padding: 5px 0;
+            color:black;
+            background-color: orange;
+            font-size:20px;
+        }
+    }
     .meta-wrapper{
         width:400px;
         margin: auto;
@@ -126,9 +150,10 @@
     }
     .map-wrapper {
         position: relative;
+        widtH:1024px;
         .the-image {
             width: 1024px;
-            position: absolute;
+            position: static;
             left:0;
             top:0;
         }

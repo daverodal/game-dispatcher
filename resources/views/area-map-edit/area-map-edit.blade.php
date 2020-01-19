@@ -20,7 +20,7 @@
  */
 ?>
 @extends('layouts.area-map-edit')
-<div class="boxed" ><a href="{{ url('admin') }}"> < Back to Admin</a></div>
+<div class="boxed" ><a href="{{ url('editor') }}"> < Back to Editor</a></div>
 
 
 @section('content')

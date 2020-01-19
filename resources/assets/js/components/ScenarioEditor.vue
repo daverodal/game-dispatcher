@@ -89,7 +89,6 @@
 
             },
             newUnit(){
-                debugger;
               let unit = {
 
               }

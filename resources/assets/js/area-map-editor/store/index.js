@@ -10,7 +10,6 @@ let state = {
     selected: null
 };
 // const jstate = JSON.parse(localStorage.getItem('state'))
-// debugger;
 // if(jstate){
 //   state = jstate;
 // }
@@ -21,9 +20,9 @@ export default new Vuex.Store({
   mutations: {
     addBox(state){
       const id = state.boxes.length;
-      state.boxes.push({id: id, x: 0, y: 0, name: ''})
+      state.boxes.push({id: id, x: 0, y: 0, name: '', neighbors: []});
         state.selected = id;
-        localStorage.setItem('state', JSON.stringify(state));
+        localStorage.setItem('state', JSON.strinxgify(state));
       },
     createBox(state, payload){
       state.boxes.push(payload);
@@ -58,9 +57,26 @@ export default new Vuex.Store({
       state.url = payload;
     },
     updateWidth(state, payload){
-      debugger;
       state.width = payload;
-    }
+    },
+    toggleNeighbor(state, payload){
+      const box = state.boxes[state.selected];
+      const found = box.neighbors.find((id) =>{
+        return id === payload;
+      });
+      if(typeof found !== "undefined"){
+        /* found one, remove it */
+        const newNeighbors = box.neighbors.filter( id => id != payload);
+        state.boxes[state.selected].neighbors = [...newNeighbors];
+        const otherBox = state.boxes[payload];
+        const otherNeighbors = otherBox.neighbors.filter(id => id != state.selected);
+        state.boxes[payload].neighbors = [...otherNeighbors];
+      }else{
+        /* not found, add it */
+        state.boxes[state.selected].neighbors = [...state.boxes[state.selected].neighbors, payload ];
+        state.boxes[payload].neighbors = [...state.boxes[payload].neighbors, state.selected];
+      }
+      }
   },
     getters: {
       selectedBox(state){
@@ -74,6 +90,9 @@ export default new Vuex.Store({
       },
       mapWidth(state){
         return state.width;
+      },
+      selectedBoxNeighbors(state){
+        return state.boxes[state.selected].neighbors;
       }
     },
   actions: {

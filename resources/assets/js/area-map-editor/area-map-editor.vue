@@ -7,7 +7,7 @@
   export default {
     name: 'area-map-editor',
     props: ['user'],
-    created(){debugger
+    created(){
       window.axios.interceptors.request.use(
               (config) => {
                 if(config.method === 'get'){

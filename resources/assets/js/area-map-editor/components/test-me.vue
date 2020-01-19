@@ -11,11 +11,9 @@
     export default {
         name: "test-me",
         mounted(){
-            debugger;
         },
         computed:{
            sta(){
-               debugger;
                return this.$store.state;
            }
         }

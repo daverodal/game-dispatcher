@@ -12,7 +12,7 @@
     @render="renderme"
     @dragEnd="handleDragEnd"
     :style="{left: left, top: top}"
-    :class="{'selected': selected}"
+    :class="{'selected': selected, 'neighbor': neighbor}"
   >
     <slot></slot>
   </Moveable>
@@ -26,7 +26,7 @@ export default {
   components: {
     Moveable
   },
-    props:[ 'id' ]
+    props:[ 'id' , 'neighborMode']
     ,
   data: () => ({
     moveable: {
@@ -49,11 +49,28 @@ export default {
             return this.$store.state.boxes[this.id].y + "px";
         },
         selected() {
+
           return this.$store.state.selected === this.id;
+        },
+        neighbor(){
+          const neighbors = this.$store.getters.selectedBoxNeighbors;
+          const found = neighbors.find((ele) =>{
+              return ele === this.id;
+            });
+          if(typeof found !== "undefined") {
+            return true;
+          }
+           return false
         }
     },
   methods: {
       handleDragEnd(e){
+        if(this.neighborMode){
+          if(this.id !== this.$store.state.selected){
+            this.$store.commit('toggleNeighbor', this.id)
+          }
+          return;
+        }
         this.$store.commit('selectBox', this.id)
       },
       handleDragStart(e){
@@ -102,6 +119,9 @@ export default {
     &.selected{
       border:3px yellow solid;
      }
+    &.neighbor{
+      border:3px orange solid;
+    }
   }
   /*
    * should be a better way of doing this.
