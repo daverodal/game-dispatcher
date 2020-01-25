@@ -690,7 +690,8 @@ class WargameController extends Controller
         return redirect('wargame/play');
     }
 
-    public function enterHotseat($wargame, CouchService $cs )
+    public function
+    enterHotseat($wargame, CouchService $cs )
     {
         $cs->setDb('games');
         $user = Auth::user()['name'];

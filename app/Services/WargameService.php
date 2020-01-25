@@ -265,7 +265,8 @@ class  WargameService{
         $units = $newUnits;
         $mapUrl = $doc->wargame->mapData->mapUrl;
 
-        if($doc->wargame->mapViewer[0]->trueRows){
+
+        if($doc->wargame->mapViewer[0]->trueRows ?? false){
             $mapUrl = preg_replace("/.(png|jpg|jpeg|svg)$/","Left.$1", $mapUrl);
         }
         /* this was useful when debugging at home with non localhost machine */

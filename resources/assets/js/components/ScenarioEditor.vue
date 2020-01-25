@@ -140,6 +140,12 @@
                     unit.range = unit.range - 0;
                     unit.forceId = unit.forceId - 0;
                     unit.num = unit.num - 0;
+                    const reduced = parseInt(unit.reduced);
+                    if(isNaN(reduced)){
+                        delete unit.reduced;
+                    }else{
+                        unit.reduced = reduced;
+                    }
                     return unit;
                 });
                 data.units = _.orderBy(data.units, ['forceId','hq', 'class', 'bow'], ['asc','desc','asc', 'asc']);
