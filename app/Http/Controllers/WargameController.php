@@ -769,13 +769,15 @@ class WargameController extends Controller
         $cs->setDb('games');
         $wargame = (string)Input::get('wargame', FALSE);
 
-        $x = (int)Input::get('x', FALSE);
-        $y = (int)Input::get('y', FALSE);
-        $event = (int)Input::get('event', FALSE);
-        $id = Input::get('id', FALSE);
-        $gameType = Input::get('type', FALSE);
+        $x = (int)$req->input('x', FALSE);
+        $y = (int)$req->input('y', FALSE);
+        $event = (int)$req->input('event', FALSE);
+        $id = $req->input('id', FALSE);
+        $gameType = $req->input('type', FALSE);
+        $commands = $req->input('commands', []);
+
         if($gameType && $gameType == 'area-game'){
-            $ret = $ws->doAreaPoke($wargame, $event, $id, $x, $y, $user, $dieRoll = false);
+            $ret = $ws->doAreaPoke($wargame, $event, $id, $commands, $x, $y, $user, $dieRoll = false);
             if (!$ret['success']) {
                 header("HTTP/1.1 404 Not Found");
             }
