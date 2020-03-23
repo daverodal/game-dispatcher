@@ -313,7 +313,6 @@ class  WargameService{
             return false;
         }
         $players = $doc->wargame->players;
-
         $player = array_search($user, $players);
         if ($player === false) {
             $player = 0;
