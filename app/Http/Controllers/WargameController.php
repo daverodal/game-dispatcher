@@ -45,7 +45,6 @@ class WargameController extends Controller
         $className = $ret['className'];
         $viewPath = WargameService::viewBase($className).".view";
         if(view()->exists("wargame::$viewPath")){
-
             return view("wargame::$viewPath", $ret);
         }
 
