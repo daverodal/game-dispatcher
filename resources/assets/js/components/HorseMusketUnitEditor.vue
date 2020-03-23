@@ -45,6 +45,10 @@
                     <label  class="col-xs-2">reinforce</label>
                     <input class="col-xs-8" v-model="unit.reinforce">
                 </div>
+                <div class="row">
+                    <label  class="col-xs-2">Reduced Value</label>
+                    <input class="col-xs-8" v-model="unit.reduced">
+                </div>
                 <div  v-if="!unit.deployed" class="row">
                     <label class="col-xs-2">reinforce turn</label><input class="col-xs-8" v-model="unit.reinforceTurn">
                 </div>
