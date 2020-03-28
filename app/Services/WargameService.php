@@ -10,7 +10,7 @@ use Auth;
 use \DateTime;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ClientException;
-use Input;
+use Request;
 use App\User;
 use League\Flysystem\Exception;
 use Wargame\Battle;
@@ -578,7 +578,7 @@ class  WargameService{
 //                $isGameOver = $battle->victory->gameOver;
 //                $startingAttackerId = $battle->gameRules->attackingForceId;
 //                if ($event === SAVE_GAME_EVENT) {
-//                    $msg = Input::get('msg', 'defar');
+//                    $msg = Request::input('msg', 'defar');
 //                    $clickHistory = $this->getClickHistory($wargame);
 //
 //                    event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'bug-report', 'type' => 'click-history', 'attackingForceId' => $startingAttackerId, 'history' => $clickHistory, 'gameName' => $doc->gameName, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time(), 'msg' => $msg]));
@@ -695,7 +695,7 @@ class  WargameService{
                 $isGameOver = $battle->victory->gameOver;
                 $startingAttackerId = $battle->gameRules->attackingForceId;
                 if ($event === SAVE_GAME_EVENT) {
-                    $msg = Input::get('msg', 'defar');
+                    $msg = Request::input('msg', 'defar');
                     $clickHistory = $this->getClickHistory($wargame);
 
                     event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'bug-report', 'type' => 'click-history', 'attackingForceId' => $startingAttackerId, 'history' => $clickHistory, 'gameName' => $doc->gameName, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time(), 'msg' => $msg]));
@@ -997,12 +997,12 @@ class  WargameService{
         $time = false;
         $timeBranch = false;
         $timeFork = false;
-        if (Input::get('timeTravel')){
-            $time = Input::get('timeTravel');
-            if (Input::get('branch')) {
+        if (Request::input('timeTravel')){
+            $time = Request::input('timeTravel');
+            if (Request::input('branch')) {
                 $timeBranch = true;
             }
-            if (Input::get('fork')) {
+            if (Request::input('fork')) {
                 $timeFork = true;
             }
         }

@@ -11,7 +11,6 @@ use App\Services\AdminService;
 use Illuminate\Http\Request;
 use App\Services\CouchService;
 use Auth;
-use Input;
 use DateTime;
 use Wargame\Battle;
 use App\Services\WargameService;
@@ -467,7 +466,7 @@ class WargameController extends Controller
     {
 
         $message = "";
-        $wargame = Input::get('wargame');
+        $wargame = \Request::input('wargame');
         $user = Auth::user()['name'];
 
         if ($wargame) {
@@ -767,7 +766,7 @@ class WargameController extends Controller
         $user = Auth::user()['name'];
 
         $cs->setDb('games');
-        $wargame = (string)Input::get('wargame', FALSE);
+        $wargame = (string)\Request::input('wargame', FALSE);
 
         $x = (int)$req->input('x', FALSE);
         $y = (int)$req->input('y', FALSE);

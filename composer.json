@@ -11,34 +11,15 @@
         "wargaming": {
             "type": "path",
             "url": "../wargaming"
-        },
-        "medieval": {
-            "type": "path",
-            "url": "../medieval"
-        },
-        "rebellion": {
-            "type": "path",
-            "url": "../rebellion"
-        },
-        "spi": {
-            "type": "path",
-            "url": "../spi"
-        },
-        "tactical": {
-            "type": "path",
-            "url": "../tactical"
         }
     },
     "require": {
         "php": ">=7.2.0",
-        "laravel/framework": "^5.8.0",
+        "laravel/framework": "^6.0",
         "guzzlehttp/guzzle": "~6.0",
         "cmgmyr/messenger": "~2.0",
         "daverodal/wargaming": "dev-area-game-branch",
-        "daverodal/medieval": "dev-master",
-        "daverodal/rebellion": "dev-master",
-        "daverodal/spi": "dev-master",
-        "daverodal/tactical": "dev-master"
+        "laravel/helpers": "^1.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
