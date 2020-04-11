@@ -774,9 +774,10 @@ class WargameController extends Controller
         $id = $req->input('id', FALSE);
         $gameType = $req->input('type', FALSE);
         $commands = $req->input('commands', []);
+        $builds = $req->input('builds', []);
 
         if($gameType && $gameType == 'area-game'){
-            $ret = $ws->doAreaPoke($wargame, $event, $id, $commands, $x, $y, $user, $dieRoll = false);
+            $ret = $ws->doAreaPoke($wargame, $event, $id, $commands, $builds, $x, $y, $user, $dieRoll = false);
             if (!$ret['success']) {
                 header("HTTP/1.1 404 Not Found");
             }

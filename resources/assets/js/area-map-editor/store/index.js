@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 let state = {
   name: 'me',
+  _rev: '',
   url: 'http://davidrodal.com',
   width: 1024,
   boxes: [],
@@ -20,13 +21,15 @@ export default new Vuex.Store({
   mutations: {
     addBox(state){
       const id = state.boxes.length;
-      state.boxes.push({id: id, x: 0, y: 0, name: '', neighbors: []});
+      state.boxes.push({id: id, x: 0, y: 0, isCity: false, terrainType: "", name: '', neighbors: []});
         state.selected = id;
         localStorage.setItem('state', JSON.strinxgify(state));
       },
     createBox(state, payload){
       state.boxes.push(payload);
       state.selected = payload.id;
+      state.isCity = payload.isCity;
+      state.terrainType = payload.terrainType;
       localStorage.setItem('state', JSON.stringify(state));
     },
       moveBox(state, payload){
@@ -48,13 +51,25 @@ export default new Vuex.Store({
         localStorage.setItem('state', JSON.stringify(state));
       },
       updateName(state, payload, commit){
+      debugger;
         state.boxes[state.selected].name = payload;
       },
-      updateMapName(state, payload){
+      updateIsCity(state, payload, commit){
+      debugger;
+        state.boxes[state.selected].isCity = payload;
+      },
+      updateTerrainType(state, payload){
+      debugger;
+        state.boxes[state.selected].terrainType = payload;
+      },
+    updateMapName(state, payload){
         state.name = payload;
       },
     updateUrl(state, payload){
       state.url = payload;
+    },
+    updateRev(state, payload){
+      state._rev = payload;
     },
     updateWidth(state, payload){
       state.width = payload;
@@ -80,6 +95,7 @@ export default new Vuex.Store({
   },
     getters: {
       selectedBox(state){
+        debugger;
         return state.boxes[state.selected];
       },
       mapName(state){

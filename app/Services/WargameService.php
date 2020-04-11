@@ -543,7 +543,7 @@ class  WargameService{
         event(new \App\Events\Analytics\RecordGameEvent(['docId'=>$doc->id, 'type'=>'game-created', 'className'=> $className, 'scenario'=>$battle->scenario, 'arg'=>$battle->arg, 'time'=>time()]));
 
     }
-    public function doAreaPoke($wargame, $event, $id, $commands, $x, $y, $user, $dieRoll = false){
+    public function doAreaPoke($wargame, $event, $id, $commands, $builds, $x, $y, $user, $dieRoll = false){
         $this->cs->setDb('games');
 
         $retry = 0;
@@ -592,8 +592,7 @@ class  WargameService{
 //                    }
 //                    $battle->dieRolls->setEvents( $dieRoll);
 //                }
-                $doSave = $battle->poke($event, $id, $commands, $x, $y, $user, $click);
-
+                $doSave = $battle->poke($event, $id, $commands, $builds, $x, $y, $user, $click);
                 $success = false;
                 if ($doSave) {
 //                    if($dieRoll !== false){

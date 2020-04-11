@@ -27,7 +27,9 @@
             id: {{ selectedId }} <br>
             x: {{ selectedBox.x }}<br>
             y: {{ selectedBox.y }}<br>
-            <input type="text" :value="selectedBox.name" @input="updateName"  placeholder="enter name">
+            Name: <input type="text" :value="selectedBox.name" @input="updateName"  placeholder="enter name">
+            Name: <input type="text" :value="selectedBox.terrainType" @input="updateTerrain"  placeholder="enter terrain type">
+            Has a City?:<input type="checkbox" :checked="selectedBox.isCity" @input="updateIsCity">
             <p>
                 Name is: {{ selectedBox.name }}
             </p>
@@ -88,6 +90,7 @@
               }
               this.$store.commit('updateMapName', data.name);
               this.$store.commit('updateUrl', data.url);
+              this.$store.commit('updateRev', data._rev);
           }).catch(errors => {
                 console.log(errors);
           });
@@ -103,8 +106,15 @@
             updateMapName (e) {
                 this.$store.commit('updateMapName', e.target.value)
             },
+            updateTerrain (e) {
+                this.$store.commit('updateTerrainType', e.target.value)
+            },
             updateUrl (e) {
                 this.$store.commit('updateUrl', e.target.value)
+            },
+            updateIsCity (e) {
+                debugger;
+                this.$store.commit('updateIsCity', e.target.checked)
             },
             updateWidth (e) {
                 this.$store.commit('updateWidth', e.target.value)
@@ -112,6 +122,7 @@
             saveMap(){
                 const x= this.$store.state;
                 const arg = {
+                    _rev: x._rev,
                     name: this.mapName,
                     url: this.mapUrl,
                     boxes: [...x.boxes]
