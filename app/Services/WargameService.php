@@ -10,7 +10,7 @@ use Auth;
 use \DateTime;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ClientException;
-use Input;
+use Request;
 use App\User;
 use League\Flysystem\Exception;
 use Wargame\Battle;
@@ -81,7 +81,11 @@ class  WargameService{
             $id = $row->id;
             $dt = new DateTime($row->value[1]);
             $thePlayers = $row->value[2];
+            if($playerTurn){
                 $playerTurn = $thePlayers[$playerTurn];
+
+            }else{
+            }
             $myTurn = "";
             if ($playerTurn == $user) {
                 $playerTurn = "Your";
@@ -111,7 +115,11 @@ class  WargameService{
             $id = $row->id;
             $dt = new DateTime($row->value[1]);
             $thePlayers = $row->value[2];
-            $playerTurn = $thePlayers[$playerTurn];
+            if($playerTurn){
+                $playerTurn = $thePlayers[$playerTurn];
+            }else{
+                $playerTurn = "Your";
+            }
             $myTurn = "";
 
             if ($playerTurn == $user) {
@@ -195,6 +203,89 @@ class  WargameService{
     }
 
 
+    public function areaGameView($wargame, $doc){
+
+        $user = Auth::user()['name'];
+        $isAdmin = Auth::user()['is_admin'];
+        $name = $doc->name;
+        $gameName = $doc->gameName;
+        if (!$gameName) {
+            return false;
+        }
+        if ($doc->playerStatus && $doc->playerStatus == "created") {
+            return false;
+        }
+        $players = $doc->wargame->players;
+
+        $player = array_search($user, $players);
+        if ($player === false) {
+            $player = 0;
+            $visibility = $doc->visibility ?? "";
+            if($visibility !== "public" && !$isAdmin){
+                return false;
+            }
+        }
+//        $this->load->library('battle');
+        $units = $doc->wargame->force->units;
+
+        $playerData = array($doc->wargame->players[$player]);
+        $playersData = $doc->wargame->players;
+        if (!$units) {
+            $units = array();
+        }
+        $newUnits = array();
+        foreach ($units as $aUnit) {
+            $newUnit = array();
+            foreach ($aUnit as $key => $value) {
+                if ($key == "hexagon") {
+                    continue;
+                }
+                if($key == "adjustments"){
+                    continue;
+                }
+                $newUnit[$key] = $value;
+            }
+            $newUnit['nationality'] = $aUnit->nationality;
+            $newUnit['class'] = $aUnit->class;
+            $newUnit['type'] = $aUnit->nationality;
+            $newUnit['unitSize'] = $aUnit->name;
+            $newUnit['unitDesig'] = $aUnit->unitDesig;
+            if ($aUnit->name == "infantry-1") {
+                $newUnit['unitSize'] = 'xx';
+            }
+            if(isset($newUnit['range'])) {
+                if ($newUnit['range'] == 1) {
+                    $newUnit['range'] = '';
+                }
+            }
+            $newUnits[] = $newUnit;
+        }
+        $units = $newUnits;
+        $mapUrl = $doc->wargame->mapData->mapUrl;
+
+        if($doc->wargame->mapViewer[0]->trueRows ?? false){
+            $mapUrl = preg_replace("/.(png|jpg|jpeg|svg)$/","Left.$1", $mapUrl);
+        }
+        /* this was useful when debugging at home with non localhost machine */
+//        $mapUrl = preg_replace("/http:\/\/[^\/]*/","",$mapUrl);
+        $arg = $doc->wargame->arg;
+        $scenario = $doc->wargame->scenario;
+        $scenarioArray = [];
+        $scenarioArray[] = $scenario;
+        $prevDb = $this->cs->setDb('rest');
+        $mapData = $this->cs->get($scenario->mapDataUrl);
+         $this->cs->setDb($prevDb);
+
+        $className = isset($doc->className)? $doc->className : '';
+        $playDat = $className::getPlayerData($scenario);
+        $forceName = $playDat['forceName'];
+        $deployName = $playDat['deployName'];
+        $docName = $name;
+        $name = $gameName;
+        $justMe = "i am here and me";
+        return compact("mapData", "justMe", "docName","playDat", "className", "deployName", "forceName", "scenario", "scenarioArray", "name", "arg", "player", "mapUrl", "units", "playersData", "playerData", "gameName", "wargame", "user");
+
+    }
     public function gameView($wargame){
 
         $user = Auth::user()['name'];
@@ -208,6 +299,9 @@ class  WargameService{
             if($e->getCode() === 404){
                     return false;
             }
+        }
+        if(preg_match('/^Wargame\\\\Area/',$doc->className)){
+            return $this->areaGameView($wargame, $doc);
         }
 
         $name = $doc->name;
@@ -264,7 +358,6 @@ class  WargameService{
         }
         $units = $newUnits;
         $mapUrl = $doc->wargame->mapData->mapUrl;
-
 
         if($doc->wargame->mapViewer[0]->trueRows ?? false){
             $mapUrl = preg_replace("/.(png|jpg|jpeg|svg)$/","Left.$1", $mapUrl);
@@ -394,6 +487,22 @@ class  WargameService{
             $battle->terrainName = $terrainName;
             $battle->terrainInit($terrainDoc);
         }
+        if (method_exists($battle, 'areaMapInit')) {
+
+            $cs->setDb('rest');
+            $mapData = $cs->get($battle->scenario->mapDataUrl);
+            $battle->terrainName = $battle->scenario->mapDataUrl;
+            $battle->areaMapInit($mapData);
+//            if(isset($battle->scenario->origTerrainName)){
+//                $terrainName = $battle->scenario->origTerrainName;
+//                $terrainDoc = $cs->get($terrainName);
+//            }else {
+//                $terrainDoc = null;
+//                $terrainName = $this->getTerrainName($game, $arg, $terrainDoc);
+//            }
+//            $battle->terrainName = $terrainName;
+//            $battle->terrainInit($terrainDoc);
+        }
         $cs->setDb($prevDb);
         if (method_exists($battle, 'init')) {
             $battle->init();
@@ -434,6 +543,110 @@ class  WargameService{
         event(new \App\Events\Analytics\RecordGameEvent(['docId'=>$doc->id, 'type'=>'game-created', 'className'=> $className, 'scenario'=>$battle->scenario, 'arg'=>$battle->arg, 'time'=>time()]));
 
     }
+    public function doAreaPoke($wargame, $event, $id, $commands, $builds, $x, $y, $user, $dieRoll = false){
+        $this->cs->setDb('games');
+
+        $retry = 0;
+        $doc = false;
+        $conflictRetry = 0;
+        do {
+            $conflict = false;
+            do {
+                try {
+                    $doc = $this->cs->get(urldecode($wargame));
+                } catch (Exception $e) {
+                    $doc = false;
+                    if ($retry++ > 3) {
+                        $success = false;
+                        $emsg = $e->getMessage();
+                        return compact('success', "emsg");
+                    }
+                }
+            } while (!$doc);
+            $ter = false;
+
+//        $this->load->library("battle");
+            $game = !empty($doc->gameName) ? $doc->gameName : '';
+            $emsg = false;
+            $click = $doc->_rev;
+            $matches = array();
+
+            preg_match("/^([0-9]+)-/", $click, $matches);
+            $click = $matches[1];
+            try {
+                $battle = Battle::battleFromDoc($doc);
+//                $isGameOver = $battle->victory->gameOver;
+//                $startingAttackerId = $battle->gameRules->attackingForceId;
+//                if ($event === SAVE_GAME_EVENT) {
+//                    $msg = Request::input('msg', 'defar');
+//                    $clickHistory = $this->getClickHistory($wargame);
+//
+//                    event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'bug-report', 'type' => 'click-history', 'attackingForceId' => $startingAttackerId, 'history' => $clickHistory, 'gameName' => $doc->gameName, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time(), 'msg' => $msg]));
+//                    $success = true;
+//                    $emsg = "";
+//                    return compact('success', "emsg");
+//                }
+//                if ($dieRoll !== false) {
+//                    if(!is_array($dieRoll)){
+//                        $dieRoll = [$dieRoll];
+//                    }
+//                    $battle->dieRolls->setEvents( $dieRoll);
+//                }
+                $doSave = $battle->poke($event, $id, $commands, $builds, $x, $y, $user, $click);
+                $success = false;
+                if ($doSave) {
+//                    if($dieRoll !== false){
+//                        if($battle->dieRolls->getEventsTaken() !== count($dieRoll)){
+//                            echo "No all events consumes in playback";
+//                            var_dump($battle->dieRolls);
+////                            throw new \Exception('Not all events consumed in playback');
+//                        }
+//                    }
+//                    $prevDb = $this->cs->setDb('clicks');
+//
+//                    $savedClick = new Click(false, $event, $id, $x, $y, $user, $battle->gameRules->attackingForceId, $click, $battle->dieRolls->getEvents());
+//                    $savedClick->wargame = $wargame;
+//                    $this->cs->post($savedClick);
+//                    $this->cs->setDb($prevDb);
+                    $doc->wargame = $battle->save();
+
+                    try {
+                        $this->cs->put($doc->_id, $doc);
+                        $success = true;
+                    } catch (RequestException $e) {
+                        $conflict = true;
+                        $conflictRetry++;
+                    }
+
+                }
+                $gameOver = $battle->victory->gameOver;
+                $saveDeploy = $battle->victory->saveDeploy;
+//                if (!$isGameOver && $gameOver && $dieRoll === false) {
+//                    $clickHistory = $this->getClickHistory($wargame);
+//
+//                    event(new \App\Events\Analytics\RecordGameEvent(['docId' => $doc->_id, 'winner' => $battle->victory->winner, 'type' => 'game-victory', 'className' => $doc->className, 'scenario' => $battle->scenario, 'arg' => $battle->arg, 'time' => time()]));
+//                    event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'bug-report', 'type' => 'click-history', 'attackingForceId' => $startingAttackerId, 'history' => $clickHistory,'gameName' => $doc->gameName, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time(), 'msg' => "Game Over Event"]));
+//
+//                }
+//                if ($saveDeploy) {
+////                    /* lose nextPhase click */
+//                    $saveHistory = $this->getClickHistory($wargame);
+//
+//                    array_pop($saveHistory);
+//                    event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'deploy', 'attackingForceId' => $startingAttackerId, 'history' => $saveHistory, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time()]));
+//                }
+                if ($doSave === 0) {
+                    $success = true;
+                }
+            } catch (Exception $e) {
+                $emsg = $e->getMessage() . " \nFile: " . $e->getFile() . " \nLine: " . $e->getLine() . " \nCode: " . $e->getCode();
+                $success = false;
+            }
+
+        }while($conflict && $conflictRetry < 3);
+        return compact('success', "emsg");
+    }
+
     public function doPoke($wargame, $event, $id, $x, $y, $user, $dieRoll = false){
         $this->cs->setDb('games');
 
@@ -481,7 +694,7 @@ class  WargameService{
                 $isGameOver = $battle->victory->gameOver;
                 $startingAttackerId = $battle->gameRules->attackingForceId;
                 if ($event === SAVE_GAME_EVENT) {
-                    $msg = Input::get('msg', 'defar');
+                    $msg = Request::input('msg', 'defar');
                     $clickHistory = $this->getClickHistory($wargame);
 
                     event(new \App\Events\Params\ParamEvent(['opts' => $doc->opts, 'docType' => 'bug-report', 'type' => 'click-history', 'attackingForceId' => $startingAttackerId, 'history' => $clickHistory, 'gameName' => $doc->gameName, 'className' => $doc->className, 'arg' => $battle->arg, 'time' => time(), 'msg' => $msg]));
@@ -594,7 +807,9 @@ class  WargameService{
 
             $dt = new DateTime($row->value[1]);
             $thePlayers = $row->value[2];
-            $playerTurn = $thePlayers[$playerTurn];
+            if($playerTurn){
+                $playerTurn = $thePlayers[$playerTurn];
+            }
             $gameOver = $row->value[4];
             $currentTurn = $row->value[5];
             $maxTurn = $row->value[6];
@@ -632,7 +847,12 @@ class  WargameService{
 
             $dt = new DateTime($row->value[1]);
             $thePlayers = $row->value[2];
-            $playerTurn = $thePlayers[$playerTurn];
+
+            if($playerTurn){
+                $playerTurn = $thePlayers[$playerTurn];
+            }else{
+                $playerTurn = 'Your';
+            }
             $gameOver = $row->value[4];
 
             $myTurn = "";
@@ -671,7 +891,12 @@ class  WargameService{
             $className = $row->value[0];
             $dt = new DateTime($row->value[1]);
             $thePlayers = $row->value[2];
-            $playerTurn = $thePlayers[$playerTurn];
+            if($playerTurn){
+                $playerTurn = $thePlayers[$playerTurn];
+
+           }else{
+                $playerTurn = "Your";
+            }
             $gameOver = $row->value[3];
             $myTurn = "";
             if ($gameOver === true) {
@@ -705,7 +930,11 @@ class  WargameService{
             $id = $row->id;
             $dt = new DateTime($row->value[1]);
             $thePlayers = $row->value[2];
-            $playerTurn = $thePlayers[$playerTurn];
+            if($playerTurn){
+                $playerTurn = $thePlayers[$playerTurn];
+            }else{
+                $playerTurn = "Your";
+            }
             $myTurn = "";
             if ($playerTurn == $user) {
                 $playerTurn = "Your";
@@ -767,12 +996,12 @@ class  WargameService{
         $time = false;
         $timeBranch = false;
         $timeFork = false;
-        if (Input::get('timeTravel')){
-            $time = Input::get('timeTravel');
-            if (Input::get('branch')) {
+        if (Request::input('timeTravel')){
+            $time = Request::input('timeTravel');
+            if (Request::input('branch')) {
                 $timeBranch = true;
             }
-            if (Input::get('fork')) {
+            if (Request::input('fork')) {
                 $timeFork = true;
             }
         }
@@ -870,7 +1099,7 @@ class  WargameService{
         }
         $doc->playerStatus = "multi";
         $doc->visibility = $visibility;
-        $doc->wargame->players = array("", $playerOne, $playerTwo);
+        $doc->wargame->players = ["", $playerOne, $playerTwo];
         if($playerThree){
             $doc->wargame->players[] = $playerThree;
             if($playerFour){

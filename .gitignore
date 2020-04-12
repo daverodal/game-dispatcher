@@ -10,7 +10,6 @@ Homestead.json
 /public
 !/public/.htaccess
 !/public/index.php
-composer.lock
 /resources/views/vendor
 /config/messenger.php
 /resources/assets/sass/vendor

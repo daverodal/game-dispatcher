@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\AdminService;
 use App\Services\CouchService;
 use App\Http\Requests;
-use Illuminate\Http\Request;
+use Request;
 
 class AdminController extends Controller
 {
@@ -96,7 +96,7 @@ class AdminController extends Controller
 
        $providersPaths  = \App\Services\WargameService::getProviders();
 
-        $dir = \Input::get('dir',false);
+        $dir = Request::input('dir',false);
         if($dir){
             foreach($providersPaths as $path){
                 $infoPath = "$dir/info.json";
@@ -153,7 +153,7 @@ class AdminController extends Controller
     }
 
     function getDeleteGameType(AdminService $ad){
-        $killGame = \Input::get('killGame',false);
+        $killGame = Request::input('killGame',false);
 
         if($killGame){
             $ad->deleteGame($_GET['killGame']);

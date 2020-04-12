@@ -11,7 +11,6 @@ use App\Services\AdminService;
 use Illuminate\Http\Request;
 use App\Services\CouchService;
 use Auth;
-use Input;
 use DateTime;
 use Wargame\Battle;
 use App\Services\WargameService;
@@ -261,6 +260,7 @@ class WargameController extends Controller
             $theGameMeta['curPath'] = WargameService::viewBase($className);
             $theGameMeta['corePath'] = $thisScenario->corePath ?? null;
             unset($theGameMeta->scenarios);
+            $feed = false;
             if ($feed !== false) {
                 $xml = new \SimpleXmlElement($feed);
 
@@ -466,7 +466,7 @@ class WargameController extends Controller
     {
 
         $message = "";
-        $wargame = Input::get('wargame');
+        $wargame = \Request::input('wargame');
         $user = Auth::user()['name'];
 
         if ($wargame) {
@@ -704,7 +704,7 @@ class WargameController extends Controller
             return false;
         }
         $doc->playerStatus = "hot seat";
-        $doc->wargame->players[1] = $doc->wargame->players[2] = $user;
+        $doc->wargame->players = array("", $user, $user);
         $doc->wargame->gameRules->turnChange = true;
         $cs->put($doc->_id, $doc);
         event(new \App\Events\Analytics\RecordGameEvent(['docId'=>$doc->_id, 'type'=>'hotseat-entered', 'className'=> $doc->className, 'scenario'=>$doc->wargame->scenario, 'arg'=>$doc->wargame->arg, 'time'=>time()]));
@@ -766,12 +766,23 @@ class WargameController extends Controller
         $user = Auth::user()['name'];
 
         $cs->setDb('games');
-        $wargame = (string)Input::get('wargame', FALSE);
+        $wargame = (string)\Request::input('wargame', FALSE);
 
-        $x = (int)Input::get('x', FALSE);
-        $y = (int)Input::get('y', FALSE);
-        $event = (int)Input::get('event', FALSE);
-        $id = Input::get('id', FALSE);
+        $x = (int)$req->input('x', FALSE);
+        $y = (int)$req->input('y', FALSE);
+        $event = (int)$req->input('event', FALSE);
+        $id = $req->input('id', FALSE);
+        $gameType = $req->input('type', FALSE);
+        $commands = $req->input('commands', []);
+        $builds = $req->input('builds', []);
+
+        if($gameType && $gameType == 'area-game'){
+            $ret = $ws->doAreaPoke($wargame, $event, $id, $commands, $builds, $x, $y, $user, $dieRoll = false);
+            if (!$ret['success']) {
+                header("HTTP/1.1 404 Not Found");
+            }
+            return $ret;
+        }
         $ret = $ws->doPoke($wargame, $event, $id, $x, $y, $user);
         if (!$ret['success']) {
             header("HTTP/1.1 404 Not Found");
