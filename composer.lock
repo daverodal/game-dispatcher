@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b4db823d75641b384f0cb046764efdd",
+    "content-hash": "4d521cf253d7e87bc7d7a3654018a053",
     "packages": [
         {
             "name": "cmgmyr/messenger",
@@ -67,12 +67,128 @@
             "time": "2020-03-09T16:36:17+00:00"
         },
         {
+            "name": "daverodal/medieval",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../medieval",
+                "reference": "683ba682690cb897be9411d4765452f4c28dcf6e"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Wargame\\Medieval\\MedievalServiceProvider"
+                    ],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Wargame\\Medieval\\": "Medieval"
+                }
+            },
+            "authors": [
+                {
+                    "name": "daverodal",
+                    "email": "dave.rodal@gmail.com"
+                }
+            ]
+        },
+        {
+            "name": "daverodal/rebellion",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../rebellion",
+                "reference": "94936fec7cc37fe02a7b2e752320ad9caf0a8fc4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Wargame\\Rebellion\\RebellionServiceProvider"
+                    ],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Wargame\\Rebellion\\": "src"
+                }
+            },
+            "authors": [
+                {
+                    "name": "daverodal",
+                    "email": "dave.rodal@gmail.com"
+                }
+            ]
+        },
+        {
+            "name": "daverodal/spi",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../spi",
+                "reference": "f7823f808c19919f40fed4294f6988c2b00965af"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Wargame\\SPI\\SPIServiceProvider"
+                    ],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Wargame\\SPI\\": "SPI"
+                }
+            },
+            "authors": [
+                {
+                    "name": "daverodal",
+                    "email": "dave.rodal@gmail.com"
+                }
+            ]
+        },
+        {
+            "name": "daverodal/tactical",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../tactical",
+                "reference": "8dfc5df373c3b3be859791e0f1abd366e3b2c40c"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Wargame\\Tactical\\TacticalServiceProvider"
+                    ],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Wargame\\Tactical\\": "Tactical"
+                }
+            },
+            "authors": [
+                {
+                    "name": "daverodal",
+                    "email": "dave.rodal@gmail.com"
+                }
+            ]
+        },
+        {
             "name": "daverodal/wargaming",
-            "version": "dev-area-game-branch",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "../wargaming",
-                "reference": "7eec55ae7c790bd3c739cfeed617c3d9158456b7"
+                "reference": "f9b2d6f911c36247056dfe14feed7ae2ba7b2c1c"
             },
             "require": {
                 "php": ">=7.2.0"
@@ -534,16 +650,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.18.3",
+            "version": "v6.18.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "4e48acfaba87f08320a2764d36c3b6a4a4112ccf"
+                "reference": "4ef5f9612c2694c915f53f0cec3e4081e9bfc778"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/4e48acfaba87f08320a2764d36c3b6a4a4112ccf",
-                "reference": "4e48acfaba87f08320a2764d36c3b6a4a4112ccf",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/4ef5f9612c2694c915f53f0cec3e4081e9bfc778",
+                "reference": "4ef5f9612c2694c915f53f0cec3e4081e9bfc778",
                 "shasum": ""
             },
             "require": {
@@ -676,7 +792,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-03-24T16:37:50+00:00"
+            "time": "2020-04-08T15:51:23+00:00"
         },
         {
             "name": "laravel/helpers",
@@ -3004,16 +3120,16 @@
         },
         {
             "name": "vlucas/phpdotenv",
-            "version": "v3.6.2",
+            "version": "v3.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "786a947e57086cf236cefdee80784634224b99fa"
+                "reference": "1b3103013797f04521c6cae5560f604649484066"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/786a947e57086cf236cefdee80784634224b99fa",
-                "reference": "786a947e57086cf236cefdee80784634224b99fa",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/1b3103013797f04521c6cae5560f604649484066",
+                "reference": "1b3103013797f04521c6cae5560f604649484066",
                 "shasum": ""
             },
             "require": {
@@ -3063,7 +3179,7 @@
                 "env",
                 "environment"
             ],
-            "time": "2020-03-27T23:36:02+00:00"
+            "time": "2020-04-12T15:18:03+00:00"
         }
     ],
     "packages-dev": [
@@ -4758,7 +4874,11 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "daverodal/wargaming": 20
+        "daverodal/wargaming": 20,
+        "daverodal/medieval": 20,
+        "daverodal/spi": 20,
+        "daverodal/rebellion": 20,
+        "daverodal/tactical": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
