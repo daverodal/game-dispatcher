@@ -20,11 +20,11 @@
  */
 ?>
 @extends('layouts.area-map-edit')
-<div class="boxed" ><a href="{{ url('editor') }}"> < Back to Editor</a></div>
 
 
 @section('content')
-<area-map-editor :user="{{ auth()->user() }}"></area-map-editor>
+    <div class="boxed" ><a href="{{ url('editor') }}"> < Back to Editor</a></div>
+    <area-map-editor :user="{{ auth()->user() }}"></area-map-editor>
 @endsection
 
 

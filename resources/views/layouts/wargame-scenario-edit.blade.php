@@ -31,7 +31,7 @@
     <link href="{{ elixir('css/app.css')}}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="{{mix('vendor/css/wargame/all-nations-colors.css')}}">
 
-    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <style type="text/css">
         body {

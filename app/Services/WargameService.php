@@ -648,6 +648,8 @@ class  WargameService{
     }
 
     public function doPoke($wargame, $event, $id, $x, $y, $user, $dieRoll = false){
+
+
         $this->cs->setDb('games');
 
         $retry = 0;
@@ -709,7 +711,6 @@ class  WargameService{
                     $battle->dieRolls->setEvents( $dieRoll);
                 }
                 $doSave = $battle->poke($event, $id, $x, $y, $user, $click);
-
                 $success = false;
                 if ($doSave) {
                     if($dieRoll !== false){

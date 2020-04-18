@@ -20,6 +20,8 @@
 <html ng-app="playMulti">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <script src="<?= url("javascripts/main.js"); ?>"></script>
     <style>
         footer {

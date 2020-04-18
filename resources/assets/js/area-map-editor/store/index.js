@@ -51,15 +51,12 @@ export default new Vuex.Store({
         localStorage.setItem('state', JSON.stringify(state));
       },
       updateName(state, payload, commit){
-      debugger;
         state.boxes[state.selected].name = payload;
       },
       updateIsCity(state, payload, commit){
-      debugger;
         state.boxes[state.selected].isCity = payload;
       },
       updateTerrainType(state, payload){
-      debugger;
         state.boxes[state.selected].terrainType = payload;
       },
     updateMapName(state, payload){
@@ -95,7 +92,6 @@ export default new Vuex.Store({
   },
     getters: {
       selectedBox(state){
-        debugger;
         return state.boxes[state.selected];
       },
       mapName(state){

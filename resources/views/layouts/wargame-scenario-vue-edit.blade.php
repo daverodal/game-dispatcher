@@ -28,10 +28,10 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link href="{{ mix('css/app.css')}}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="{{mix('vendor/css/wargame/all-nations-colors.css')}}">
-  </style>
 </head>
 <body >
 <div id="container">

@@ -149,11 +149,20 @@
                 });
                 data.units = _.orderBy(data.units, ['forceId','hq', 'class', 'bow'], ['asc','desc','asc', 'asc']);
                 const jsonData = JSON.stringify(data);
-                return this.$http.put('/wargame/custom-scenario/' + this.scenarioName + '/' + this.scenario.sName, jsonData, {headers: headers})
+
+                let token = document.querySelector('meta[name="csrf-token"]');
+
+
+                if (token) {
+                }
+
+                axios.defaults.headers.put['Content-Type'] = 'application/json';
+                return axios.put('/wargame/custom-scenario/' + this.scenarioName + '/' + this.scenario.sName, jsonData)
                     .then(response => response.json)
                     .then(
                         (myData) => {
-                            window.location.href = document.referrer;
+
+                            //window.location.href = document.referrer;
                         },
                         (myData) => {
                         }

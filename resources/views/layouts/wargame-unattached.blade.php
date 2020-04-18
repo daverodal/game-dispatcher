@@ -32,6 +32,7 @@
     <link href="{{ mix('css/app.css')}}" rel="stylesheet" type="text/css">
 
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <style type="text/css">
         body {
@@ -223,6 +224,7 @@
             $scope.$root.theUrl = arg;
             $scope.updateOptions();
             $scope.$root.theUrl += $scope.setOptions;
+            $scope.$root.token =  document.querySelector('meta[name="csrf-token"]');
 
             ModalService.showModal({
                 template: `<div class="back-screen" ></div>
@@ -231,6 +233,7 @@
                                 Name your game, then hit return.
 
                                 <form method="post" action='@{{theUrl}}'>
+                                    <input type="hidden" name="_token" value="@{{token.content}}">
                                     <input ng-model='aGameName' id="wargame" name="wargame" pay-attention-to-me>
                                     <input ng-show="aGameName.length > 0" class="go-button" type="submit" value="start">
                                     </form>

@@ -1,5 +1,8 @@
 <template>
     <div class="component-wrapper">
+        hi all
+        <my-button></my-button>
+    yeah
         <a  class="btn btn-danger" href="#" @click="$router.back()">
             < Back
         </a>
@@ -28,7 +31,13 @@
             x: {{ selectedBox.x }}<br>
             y: {{ selectedBox.y }}<br>
             Name: <input type="text" :value="selectedBox.name" @input="updateName"  placeholder="enter name">
-            Name: <input type="text" :value="selectedBox.terrainType" @input="updateTerrain"  placeholder="enter terrain type">
+            TerrainType:
+            <select @input="debugMe" v-model="selectedTerrain">
+            <option value=""  disabled>Please Select TerrainType</option>
+            <option >Water</option>
+            <option >Forest</option>
+        </select>
+            Name: <input type="text" v-model="selectedTerrain" @input="updateTerrain"  placeholder="enter terrain type">
             Has a City?:<input type="checkbox" :checked="selectedBox.isCity" @input="updateIsCity">
             <p>
                 Name is: {{ selectedBox.name }}
@@ -72,7 +81,8 @@
             return {
                 value: '',
                 message:'',
-                neighborMode: false
+                neighborMode: false,
+                selectedTerrain: ''
             }
         },
         mounted(){
@@ -97,6 +107,9 @@
         },
         methods: {
             ...mapMutations(['clear','updateMapName']),
+            debugMe(e){
+
+            },
           addBox(){
               this.$store.commit('addBox')
           },
@@ -113,7 +126,6 @@
                 this.$store.commit('updateUrl', e.target.value)
             },
             updateIsCity (e) {
-                debugger;
                 this.$store.commit('updateIsCity', e.target.checked)
             },
             updateWidth (e) {
