@@ -32,16 +32,7 @@
             y: {{ selectedBox.y }}<br>
             Name: <input type="text" :value="selectedBox.name" @input="updateName"  placeholder="enter name">
             TerrainType:
-            <select @input="debugMe" v-model="selectedTerrain">
-            <option value=""  disabled>Please Select TerrainType</option>
-            <option >water</option>
-            <option >forest</option>
-            <option >desert</option>
-            <option >mountain</option>
-            <option >pasture</option>
-            <option >field</option>
-        </select>
-            Name: <input type="text" v-model="selectedTerrain" @input="updateTerrain"  placeholder="enter terrain type">
+            Name: <input type="text" :value="selectedBox.terrainType" @input="updateTerrain"  placeholder="enter terrain type">
             Has a City?:<input type="checkbox" :checked="selectedBox.isCity" @input="updateIsCity">
             <p>
                 Name is: {{ selectedBox.name }}
