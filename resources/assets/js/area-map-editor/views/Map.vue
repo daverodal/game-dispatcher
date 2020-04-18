@@ -36,6 +36,10 @@
             <option value=""  disabled>Please Select TerrainType</option>
             <option >Water</option>
             <option >Forest</option>
+            <option >Desert</option>
+            <option >Mountain</option>
+            <option >Pasture</option>
+            <option >Field</option>
         </select>
             Name: <input type="text" v-model="selectedTerrain" @input="updateTerrain"  placeholder="enter terrain type">
             Has a City?:<input type="checkbox" :checked="selectedBox.isCity" @input="updateIsCity">
