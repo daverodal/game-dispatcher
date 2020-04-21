@@ -8,7 +8,8 @@ let state = {
   url: 'http://davidrodal.com',
   width: 1024,
   boxes: [],
-    selected: null
+    selected: null,
+  neighborMode: false
 };
 // const jstate = JSON.parse(localStorage.getItem('state'))
 // if(jstate){
@@ -28,8 +29,6 @@ export default new Vuex.Store({
     createBox(state, payload){
       state.boxes.push(payload);
       state.selected = payload.id;
-      state.isCity = payload.isCity;
-      state.terrainType = payload.terrainType;
       localStorage.setItem('state', JSON.stringify(state));
     },
       moveBox(state, payload){
@@ -71,6 +70,9 @@ export default new Vuex.Store({
     updateWidth(state, payload){
       state.width = payload;
     },
+    toggleNeighborMode(state){
+      state.neighborMode = !state.neighborMode;
+    },
     toggleNeighbor(state, payload){
       const box = state.boxes[state.selected];
       const found = box.neighbors.find((id) =>{
@@ -100,11 +102,14 @@ export default new Vuex.Store({
       mapUrl(state){
         return state.url;
       },
-      mapWidth(state){
+      getMapWidth(state){
         return state.width;
       },
       selectedBoxNeighbors(state){
         return state.boxes[state.selected].neighbors;
+      },
+      neighborMode(state){
+        return state.neighborMode;
       }
     },
   actions: {

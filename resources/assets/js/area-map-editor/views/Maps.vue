@@ -32,7 +32,7 @@ hi maps
         methods: {
             newMap(){
                 const arg = {
-                    name: '',
+                    name: 'new-map',
                     url: '',
                     boxes: []
                 }

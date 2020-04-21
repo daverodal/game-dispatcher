@@ -32,7 +32,14 @@
             y: {{ selectedBox.y }}<br>
             Name: <input type="text" :value="selectedBox.name" @input="updateName"  placeholder="enter name">
             TerrainType:
-            Name: <input type="text" :value="selectedBox.terrainType" @input="updateTerrain"  placeholder="enter terrain type">
+            <select v-model="terrainType">
+                <option>forest</option>
+                <option>water</option>
+                <option>mountain</option>
+                <option>pasture</option>
+                <option>field</option>
+                <option>desert</option>
+            </select>
             Has a City?:<input type="checkbox" :checked="selectedBox.isCity" @input="updateIsCity">
             <p>
                 Name is: {{ selectedBox.name }}
@@ -44,7 +51,7 @@
                 {{neighbor}}
             </span>
         </div>
-        <button @click="neighborMode = !neighborMode">Neighbor mode</button>
+        <button @click="toggleNeighborMode">Neighbor mode</button>
         <button @click="addBox">add box</button>
         <button @click="clear">Clear</button>
         <button @click="saveMap">Save</button>
@@ -52,9 +59,9 @@
             Neighbor Mode Enabled,
         </div>
         <div class="map-wrapper">
-            <img class="the-image" :style="'width: '+mapWidth+'px'" :src="mapUrl" alt="map">
+            <img class="the-image" :style="{width: mapWidth+'px'}" :src="mapUrl" alt="map">
 
-            <Movable :neighbor-mode="neighborMode" v-for="(box, index) in boxes" v-bind:key="index" :id="index">{{ box.name }}</Movable>
+            <Movable v-for="(box, index) in boxes" v-bind:key="index" :id="index">{{ box.name }}</Movable>
         </div>
     </div>
 </template>
@@ -66,9 +73,27 @@
         name: "Map",
         computed:{
             ...mapState(['boxes','selected']),
-            ...mapGetters(['selectedBox','mapName', 'mapUrl', 'mapWidth']),
+            ...mapGetters(['selectedBox','mapName', 'mapUrl', 'neighborMode', 'getMapWidth']),
             selectedId() {
                 return this.$store.state.selected
+            },
+            terrainType:{
+                get(){
+                    return  this.selectedBox.terrainType;
+                },
+                set(value){
+                    this.$store.commit('updateTerrainType', value)
+                }
+            },
+            mapWidth:{
+                get(){
+                    debugger;
+                    return this.getMapWidth;
+                },
+                set(value){
+                    debugger;
+                  this.$store.commit('updateWidth', value);
+                }
             }
         },
         components: { Movable },
@@ -76,7 +101,6 @@
             return {
                 value: '',
                 message:'',
-                neighborMode: false,
                 selectedTerrain: ''
             }
         },
@@ -93,6 +117,8 @@
                   })
 
               }
+              // this.mapWidth = data.width;
+              this.$store.commit('updateWidth', data.width);
               this.$store.commit('updateMapName', data.name);
               this.$store.commit('updateUrl', data.url);
               this.$store.commit('updateRev', data._rev);
@@ -101,7 +127,7 @@
           });
         },
         methods: {
-            ...mapMutations(['clear','updateMapName']),
+            ...mapMutations(['clear','updateMapName', 'toggleNeighborMode', 'updateWidth']),
             debugMe(e){
 
             },
@@ -132,7 +158,8 @@
                     _rev: x._rev,
                     name: this.mapName,
                     url: this.mapUrl,
-                    boxes: [...x.boxes]
+                    boxes: [...x.boxes],
+                    width: this.mapWidth
                 }
                 axios.put('/api/area-maps/'+this.$route.params.id, arg).then( response => {
                     // this.$router.push(response.data.links.self)

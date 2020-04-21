@@ -32,7 +32,6 @@ class AreaMapsController extends Controller
         $data->boxes = $postData['boxes'];
         $data->name = $postData['name'];
         $data->url = $postData['url'];
-        $data->neighbors = $postData['neighbors'];
         $resp = $client->post($data);
         $postData['map']['id'] = $resp->id;
 //        dd($data);
@@ -51,11 +50,13 @@ class AreaMapsController extends Controller
                 'name' => 'required',
                 'url' => 'required|url',
                 'boxes' => 'array',
-                'boxes.*.x' => 'required'
+                'boxes.*.x' => 'required',
+                'width' => ''
             ]);
             $doc->boxes = $postData['boxes'];
             $doc->url = $postData['url'];
             $doc->name = $postData['name'];
+            $doc->width = $postData['width'];
             $client->put($id,$doc);
             $postData['map']['id'] = $id;
             return response()->json($postData);

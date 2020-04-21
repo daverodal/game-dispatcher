@@ -20,13 +20,14 @@
 
 <script>
 import Moveable from 'vue-moveable'
+import {mapGetters} from "vuex";
 
 export default {
   name: 'Movable',
   components: {
     Moveable
   },
-    props:[ 'id' , 'neighborMode']
+    props:[ 'id' ]
     ,
   data: () => ({
     moveable: {
@@ -41,7 +42,11 @@ export default {
       throttleRotate: 3
     }
   }),
+  mounted(){
+    console.log(this.neighborMode);
+  },
     computed:{
+        ...mapGetters(['neighborMode']),
       left() {
           return this.$store.state.boxes[this.id].x + "px";
       },
@@ -83,6 +88,9 @@ export default {
 
 
     handleDrag ({ target, left, top }) {
+        if(this.neighborMode){
+          return;
+        }
         this.$store.commit('moveBox',{id: this.id, x: left, y: top});
       // target.style.left = `${left}px`
       // target.style.top = `${top}px`
