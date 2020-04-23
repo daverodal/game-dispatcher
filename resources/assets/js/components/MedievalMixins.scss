@@ -11,8 +11,72 @@
       color:$unColor;
     }
   }
+  @include badge($nationality, $shortName, $color);
 }
 
+@mixin badge($nationality, $shortName, $borderColor: black) {
+  .vintage{
+
+    &.#{$nationality}.inf .counterWrapper .counter {
+      background-image: url('../../../../../wargaming/Wargame/Mollwitz/badges/#{$shortName}InfBadge.png');
+      background-size: $vintage-badge-size;
+    }
+    &.#{$nationality}.cavalry .counterWrapper .counter {
+      background-image: url('../../../../../wargaming/Wargame/Mollwitz/badges/#{$shortName}CavBadge.png');
+      background-size: $vintage-badge-size;
+    }
+
+    &.#{$nationality}.artillery .counterWrapper .counter {
+      background-image: url('../../../../../wargaming/Wargame/Mollwitz/badges/#{$shortName}ArtBadge.png');
+      background-size: $vintage-badge-size;
+    }
+    &.#{$nationality}.horseartillery .counterWrapper .counter {
+      background-image: url('../../../../../wargaming/Wargame/Mollwitz/badges/#{$shortName}HorArtBadge.png');
+      background-size: $vintage-badge-size;
+    }
+    &.#{$nationality}.hq .counterWrapper .counter {
+      font: normal normal normal 14px/1 FontAwesome;
+      &:before{
+        content:"\f024";
+      }
+    }
+  }
+  .#{$nationality} .counterWrapper .counter {
+    height:$badge-size;
+    background-repeat:no-repeat;
+    border-bottom:1px solid $borderColor;
+  }
+  .#{$nationality}.inf .counterWrapper .counter {
+    background-image: url('../../../../../wargaming/Wargame/Mollwitz/badges/#{$shortName}InfBadge.png');
+    background-size: $badge-size;
+  }
+  .#{$nationality}.cavalry .counterWrapper .counter {
+    background-image: url('../../../../../wargaming/Wargame/Mollwitz/badges/#{$shortName}CavBadge.png');
+    background-size: $badge-size;
+  }
+
+  .#{$nationality}.artillery .counterWrapper .counter {
+    background-image: url('../../../../../wargaming/Wargame/Mollwitz/badges/#{$shortName}ArtBadge.png');
+    background-size: $badge-size;
+  }
+  .#{$nationality}.horseartillery .counterWrapper .counter {
+    background-image: url('../../../../../wargaming/Wargame/Mollwitz/badges/#{$shortName}HorArtBadge.png');
+    background-size: $badge-size;
+  }
+  .#{$nationality}.hq .counterWrapper .counter {
+    font: normal normal normal 14px/1 FontAwesome;
+    &:before{
+      content:"\f024";
+    }
+    background-size: $badge-size;
+  }
+
+  .#{$nationality}.wagon .counterWrapper .counter {
+    background-image: url('../../../../../wargaming/Wargame/Mollwitz/badges/CrusaderWagon.png');
+    background-size: $badge-size;
+  }
+
+}
 @mixin wagon($nationality){
 .#{$nationality}.wagon .counterWrapper .counter {
   background-image: url('badges/CrusaderWagon.png');
