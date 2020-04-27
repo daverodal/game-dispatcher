@@ -58,7 +58,7 @@
         <div v-if="neighborMode" class="neighbor-mode-banner">
             Neighbor Mode Enabled,
         </div>
-        <div class="map-wrapper">
+        <div :style="{width: mapWidth+'px'}" class="map-wrapper">
             <img class="the-image" :style="{width: mapWidth+'px'}" :src="mapUrl" alt="map">
 
             <Movable v-for="(box, index) in boxes" v-bind:key="index" :id="index">{{ box.name }}</Movable>
@@ -195,7 +195,7 @@
     }
     .map-wrapper {
         position: relative;
-        widtH:1024px;
+        width:auto;
         .the-image {
             width: 1024px;
             position: static;

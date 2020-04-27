@@ -116,10 +116,10 @@ export default {
   .moveable {
     font-family: "Roboto", sans-serif;
     position: absolute;
-    width: 32px;
-    height: 32px;
+    width: auto;
+    height: auto;
     text-align: center;
-    font-size: 10px;
+    font-size: 16px;
     margin: 0 auto;
     font-weight: 100;
     letter-spacing: 1px;
