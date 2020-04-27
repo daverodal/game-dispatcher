@@ -87,11 +87,9 @@
             },
             mapWidth:{
                 get(){
-                    debugger;
                     return this.getMapWidth;
                 },
                 set(value){
-                    debugger;
                   this.$store.commit('updateWidth', value);
                 }
             }
