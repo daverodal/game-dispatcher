@@ -37,7 +37,9 @@
 
         {!! csrf_field() !!}
 
-        @if($users->count() > 0)
+        <input type="hidden" id="_token" value="{{ csrf_token() }}">
+
+    @if($users->count() > 0)
             <div class="checkbox">TO:
                 @foreach($users as $user)
                     <label title="{!!$user->name!!}"><input type="checkbox" name="recipients[]" value="{!!$user->id!!}">{!!$user->name!!}</label>

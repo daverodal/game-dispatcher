@@ -42,6 +42,8 @@
 
         <h2>Add a new message</h2>
         <form action="{{ url('/messages/'.$thread->id) }}" method="POST" class="form-horizontal">
+        {!! csrf_field() !!}
+
             <!-- Message Form Input -->
             <div class="form-group">
                 <label for="task" class="col-sm-3 control-label">Message</label>
