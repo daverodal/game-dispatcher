@@ -1,7 +1,9 @@
 @extends('layouts.wargame-unattached')
 
 @section('content')
-    <div id="container" <?= $theGame ? "class='wideGame coolBox'" : 'class="coolBox"'; ?>>
+    <div id="container" class="coolBox">
+        <a href="{{url("wargame/leave-game")}}">back to lobby</a>
+
         <ul id="theGrid">
             @foreach($games as $game)
                 <li class="gridRow row">
