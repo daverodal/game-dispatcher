@@ -1,6 +1,6 @@
 <template>
     <div class="component-wrapper">
-        hi all
+        hi all everupme pf
         <my-button></my-button>
     yeah
         <a  class="btn btn-danger" href="#" @click="$router.back()">
@@ -51,31 +51,47 @@
                 {{neighbor}}
             </span>
         </div>
-        <button @click="toggleNeighborMode">Neighbor mode</button>
-        <button @click="addBox">add box</button>
-        <button @click="clear">Clear</button>
-        <button @click="saveMap">Save</button>
-        <div v-if="neighborMode" class="neighbor-mode-banner">
-            Neighbor Mode Enabled,
-        </div>
+
+      <button @click="toggleNeighborMode">Neighbor mode</button>
+      <button @click="toggleBorderMode">Show Border Boxes</button>
+      <button @click="addBox">add box</button>
+      <button @click="clear">Clear</button>
+      <button @click="saveMap">Save</button>
+      <div v-if="$store.state.selectedBorderBox !== null">
+         Last moved borderbox {{$store.state.borderBoxes[$store.state.selectedBorderBox].key }}
+        {{$store.state.borderBoxes[$store.state.selectedBorderBox].x }}
+        {{$store.state.borderBoxes[$store.state.selectedBorderBox].y }}
+      </div>
+      <div v-if="neighborMode" class="neighbor-mode-banner">
+          Neighbor Mode Enabled,
+      </div>
         <div :style="{width: mapWidth+'px'}" class="map-wrapper">
             <img class="the-image" :style="{width: mapWidth+'px'}" :src="mapUrl" alt="map">
+            <span v-for="(box, index) in borderBoxes"> {{box.x}} {{ box.y}} {{ index }}</span>
 
+
+            <MovableBorderBox v-if="showBorderBoxes" v-for="(box, index) in borderBoxes" v-bind:key="box.key" :id="index"><img class="target-img" src="../../../images/Target2.svg"></MovableBorderBox>
             <Movable v-for="(box, index) in boxes" v-bind:key="index" :id="index">{{ box.name }}</Movable>
         </div>
+      <div> {{ myBorderBox }}</div>
+
     </div>
 </template>
 
 <script>
     import Movable from './Movable'
+    import MovableBorderBox from './MovableBorderBox'
     import { mapState, mapMutations, mapGetters} from 'vuex'
     export default {
         name: "Map",
         computed:{
-            ...mapState(['boxes','selected']),
+            ...mapState(['boxes','selected', 'borderBoxes']),
             ...mapGetters(['selectedBox','mapName', 'mapUrl', 'neighborMode', 'getMapWidth']),
             selectedId() {
                 return this.$store.state.selected
+            },
+            myBorderBox(){
+              return this.$store.state.borderBoxes
             },
             terrainType:{
                 get(){
@@ -94,12 +110,13 @@
                 }
             }
         },
-        components: { Movable },
+        components: { Movable , MovableBorderBox},
         data: () => {
             return {
                 value: '',
                 message:'',
-                selectedTerrain: ''
+                selectedTerrain: '',
+              showBorderBoxes: true
             }
         },
         mounted(){
@@ -115,6 +132,14 @@
                   })
 
               }
+
+            if(data.borderBoxes && data.borderBoxes.length > 0){
+              data.borderBoxes.forEach(box => {
+                this.$store.commit('createBorderBox', box);
+              })
+
+            }
+
               // this.mapWidth = data.width;
               this.$store.commit('updateWidth', data.width);
               this.$store.commit('updateMapName', data.name);
@@ -129,6 +154,9 @@
             debugMe(e){
 
             },
+          toggleBorderMode(){
+            this.showBorderBoxes = !this.showBorderBoxes;
+          },
           addBox(){
               this.$store.commit('addBox')
           },
@@ -157,6 +185,7 @@
                     name: this.mapName,
                     url: this.mapUrl,
                     boxes: [...x.boxes],
+                    borderBoxes: [...x.borderBoxes],
                     width: this.mapWidth
                 }
                 axios.put('/api/area-maps/'+this.$route.params.id, arg).then( response => {
@@ -181,6 +210,12 @@
             background-color: orange;
             font-size:20px;
         }
+    }
+    .target-img{
+      margin-left:-8px;
+      margin-top: -8px;
+      width:17px;
+      height:17px;
     }
     .meta-wrapper{
         width:400px;

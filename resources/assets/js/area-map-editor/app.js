@@ -20,6 +20,7 @@ import router from './router'
 Vue.component('area-map-editor', require('./area-map-editor'));
 Vue.component('Map', require('./views/Map'));
 Vue.component('Movable', require('./views/Movable'));
+Vue.component('MovableBorderBox', require('./views/MovableBorderBox'));
 import VueComponentz  from "vue-componentz";
 Vue.use(VueComponentz)
 import  store  from './store';

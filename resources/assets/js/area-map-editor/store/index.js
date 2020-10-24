@@ -9,7 +9,10 @@ let state = {
   width: 1024,
   boxes: [],
     selected: null,
-  neighborMode: false
+  neighborMode: false,
+  borderBoxMap: {},
+  borderBoxes: [],
+  selectedBorderBox: null
 };
 // const jstate = JSON.parse(localStorage.getItem('state'))
 // if(jstate){
@@ -31,6 +34,13 @@ export default new Vuex.Store({
       state.selected = payload.id;
       localStorage.setItem('state', JSON.stringify(state));
     },
+
+    createBorderBox(state, payload){
+      state.borderBoxes.push(payload);
+      localStorage.setItem('state', JSON.stringify(state));
+    },
+
+
       moveBox(state, payload){
         state.boxes[payload.id].x = payload.x;
         state.boxes[payload.id].y = payload.y;
@@ -38,7 +48,22 @@ export default new Vuex.Store({
         localStorage.setItem('state', JSON.stringify(state));
 
       },
-      selectBox(state, payload){
+
+    moveBorderBox(state, payload){
+
+      let box = state.borderBoxes[payload.id];
+      box.x = payload.x;
+      box.y = payload.y;
+      Vue.set(state.borderBoxes, payload.id , box);
+      localStorage.setItem('state', JSON.stringify(state));
+
+    },
+
+    selectedBorderBox(state, id){
+      state.selectedBorderBox = id;
+    },
+
+    selectBox(state, payload){
         state.selected = payload;
         localStorage.setItem('state', JSON.stringify(state));
       },
@@ -85,10 +110,43 @@ export default new Vuex.Store({
         const otherBox = state.boxes[payload];
         const otherNeighbors = otherBox.neighbors.filter(id => id != state.selected);
         state.boxes[payload].neighbors = [...otherNeighbors];
+        let key = "";
+        if(payload < state.selected){
+          key = payload + "@" + state.selected;
+        }else{
+          key = state.selected + "@" + payload;
+        }
+        let index = 0;
+        for(let box of state.borderBoxes){
+          if(key == box.key){
+            state.borderBoxes.splice(index,1);
+            break;
+          }
+          index++;
+        }
+
       }else{
         /* not found, add it */
         state.boxes[state.selected].neighbors = [...state.boxes[state.selected].neighbors, payload ];
         state.boxes[payload].neighbors = [...state.boxes[payload].neighbors, state.selected];
+        let key = "";
+        let id = state.borderBoxes.length;
+        key = getKey(1,2);
+        if(payload < state.selected){
+          key = payload + "@" + state.selected;
+        }else{
+          key = state.selected + "@" + payload;
+        }
+        // state.borderBoxMap[key] = id;
+        let newX = (state.boxes[state.selected].x + state.boxes[payload].x) / 2;
+        let newY = (state.boxes[state.selected].y + state.boxes[payload].y) / 2;
+        let borderBox = {
+          id: id,
+          key: key,
+          x: newX,
+          y: newY
+        }
+        state.borderBoxes[id] = borderBox;
       }
       }
   },
@@ -117,3 +175,7 @@ export default new Vuex.Store({
   modules: {
   }
 })
+
+function getKey(payload, selected) {
+  return 'key';
+}

@@ -12,9 +12,9 @@
     @render="renderme"
     @dragEnd="handleDragEnd"
     :style="{left: left, top: top}"
-    :class="{'selected': selected, 'neighbor': neighbor}"
+    :class="{}"
   >
-    <slot> s {{ left }} e</slot>
+    <slot></slot>
   </Moveable>
 </template>
 
@@ -23,7 +23,7 @@ import Moveable from 'vue-moveable'
 import {mapGetters} from "vuex";
 
 export default {
-  name: 'Movable',
+  name: 'MovableBorderBox',
   components: {
     Moveable
   },
@@ -48,10 +48,11 @@ export default {
     computed:{
         ...mapGetters(['neighborMode']),
       left() {
-          return this.$store.state.boxes[this.id].x + "px";
+          console.log(this.id);
+          return this.$store.state.borderBoxes[this.id].x + "px";
       },
         top() {
-            return this.$store.state.boxes[this.id].y + "px";
+            return this.$store.state.borderBoxes[this.id].y + "px";
         },
         selected() {
 
@@ -70,16 +71,11 @@ export default {
     },
   methods: {
       handleDragEnd(e){
-        if(this.neighborMode){
-          if(this.id !== this.$store.state.selected){
-            this.$store.commit('toggleNeighbor', this.id)
-          }
-          return;
-        }
-        this.$store.commit('selectBox', this.id)
+        console.log('start')
+
       },
       handleDragStart(e){
-
+console.log("end");
       },
       clickme(){
       },
@@ -88,10 +84,11 @@ export default {
 
 
     handleDrag ({ target, left, top }) {
-        if(this.neighborMode){
-          return;
-        }
-        this.$store.commit('moveBox',{id: this.id, x: left, y: top});
+        console.log("Left  "+ left + " top "+ top);
+        console.log(this.id);
+        console.log(target);
+        this.$store.commit('selectedBorderBox', this.id);
+        this.$store.commit('moveBorderBox',{id: this.id, x: left, y: top});
       // target.style.left = `${left}px`
       // target.style.top = `${top}px`
     },
@@ -112,7 +109,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .moveable {
     font-family: "Roboto", sans-serif;
     position: absolute;
@@ -123,12 +120,15 @@ export default {
     margin: 0 auto;
     font-weight: 100;
     letter-spacing: 1px;
-    background: #eeeeee;
-    &.selected{
-      border:3px yellow solid;
-     }
-    &.neighbor{
-      border:3px orange solid;
+    background: transparent;
+
+    border: none;
+    img{
+      margin-top: -8px;
+      margin-left: -8px''
+    }
+    .target-img{
+      margin-left:-300px;
     }
   }
   /*

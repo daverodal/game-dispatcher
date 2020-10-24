@@ -25,13 +25,18 @@ class AreaMapsController extends Controller
            'name' => '',
             'url' => 'url',
             'boxes' => 'array',
-            'boxes.*.x' => 'required'
+            'boxes.*.x' => 'required',
+            'borderBoxes' => 'array',
+            'borderBoxes.*.x' => 'required',
+            'width' => ''
         ]);
         $data = new \stdClass();
         $data->docType = "areaMapData";
         $data->boxes = $postData['boxes'];
+        $data->borderBoxes = $postData['borderBoxes'];
         $data->name = $postData['name'];
         $data->url = $postData['url'];
+        $data->width = $postData['width'];
         $resp = $client->post($data);
         $postData['map']['id'] = $resp->id;
 //        dd($data);
@@ -51,9 +56,12 @@ class AreaMapsController extends Controller
                 'url' => 'required|url',
                 'boxes' => 'array',
                 'boxes.*.x' => 'required',
+                'borderBoxes' => 'array',
+                'borderBoxes.*.x' => 'required',
                 'width' => ''
             ]);
             $doc->boxes = $postData['boxes'];
+            $doc->borderBoxes = $postData['borderBoxes'];
             $doc->url = $postData['url'];
             $doc->name = $postData['name'];
             $doc->width = $postData['width'];
