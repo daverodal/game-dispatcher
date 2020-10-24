@@ -10,7 +10,6 @@ let state = {
   boxes: [],
     selected: null,
   neighborMode: false,
-  borderBoxMap: {},
   borderBoxes: [],
   selectedBorderBox: null
 };
@@ -70,6 +69,7 @@ export default new Vuex.Store({
       clear(state){
         state.selected = null;
         state.boxes = [];
+        state.borderBoxes = [];
         state.name = '';
         state.url = '';
         localStorage.setItem('state', JSON.stringify(state));
@@ -137,7 +137,6 @@ export default new Vuex.Store({
         }else{
           key = state.selected + "@" + payload;
         }
-        // state.borderBoxMap[key] = id;
         let newX = (state.boxes[state.selected].x + state.boxes[payload].x) / 2;
         let newY = (state.boxes[state.selected].y + state.boxes[payload].y) / 2;
         let borderBox = {
