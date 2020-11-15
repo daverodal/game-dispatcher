@@ -11,7 +11,9 @@ let state = {
     selected: null,
   neighborMode: false,
   borderBoxes: [],
-  selectedBorderBox: null
+  selectedBorderBox: null,
+  gameName: '',
+  scenarioName: ''
 };
 // const jstate = JSON.parse(localStorage.getItem('state'))
 // if(jstate){
@@ -77,6 +79,12 @@ export default new Vuex.Store({
       updateName(state, payload, commit){
         state.boxes[state.selected].name = payload;
       },
+    updateGameName(state, payload){
+      state.gameName = payload;
+    },
+    updateScenarioName(state, payload, commit){
+      state.scenarioName = payload;
+    },
       updateIsCity(state, payload, commit){
         state.boxes[state.selected].isCity = payload;
       },

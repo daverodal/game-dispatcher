@@ -24,6 +24,16 @@
                 <input type="text" v-model="mapWidth" class="text-gray-900 pt-8 w-full" id="width"
                        placeholder="map width" @input="updateWidth" >
             </div>
+          <div  class="flex-container">
+            <label for="width">Game Name {{ gameName }} f</label>
+            <input type="text" v-model="gameName" class="text-gray-900 pt-8 w-full"
+                   placeholder="Game Name" @input="updateGameName" >
+          </div>
+          <div  class="flex-container">
+            <label for="width">Map Width</label>
+            <input type="text" v-model="scenarioName" class="text-gray-900 pt-8 w-full"
+                   placeholder="Scenario Name" @input="updateScenarioName" >
+          </div>
         </div>
 
         <div v-if="selected !== null">
@@ -57,6 +67,7 @@
       <button @click="addBox">add box</button>
       <button @click="clear">Clear</button>
       <button @click="saveMap">Save</button>
+      <button class="btn btn-primary" @click="publishMap">Publish</button>
       <div v-if="$store.state.selectedBorderBox !== null">
          Last moved borderbox {{$store.state.borderBoxes[$store.state.selectedBorderBox].key }}
         {{$store.state.borderBoxes[$store.state.selectedBorderBox].x }}
@@ -85,7 +96,7 @@
     export default {
         name: "Map",
         computed:{
-            ...mapState(['boxes','selected', 'borderBoxes']),
+            ...mapState(['boxes','selected', 'borderBoxes', 'gameName', 'scenarioName']),
             ...mapGetters(['selectedBox','mapName', 'mapUrl', 'neighborMode', 'getMapWidth']),
             selectedId() {
                 return this.$store.state.selected
@@ -139,12 +150,13 @@
               })
 
             }
-
               // this.mapWidth = data.width;
               this.$store.commit('updateWidth', data.width);
               this.$store.commit('updateMapName', data.name);
               this.$store.commit('updateUrl', data.url);
               this.$store.commit('updateRev', data._rev);
+              this.$store.commit('updateGameName', data.gameName);
+              this.$store.commit('updateScenarioName', data.scenarioName);
           }).catch(errors => {
                 console.log(errors);
           });
@@ -154,6 +166,12 @@
             debugMe(e){
 
             },
+          publishMap(){
+            axios.get('/wargame/terrainInit/'+ this.$store.state.gameName+ '/' + this.$store.state.scenarioName + '/' +
+                this.$route.params.id).then( response => {
+              // this.$router.push(response.data.links.self)
+            });
+        },
           toggleBorderMode(){
             this.showBorderBoxes = !this.showBorderBoxes;
           },
@@ -178,6 +196,12 @@
             updateWidth (e) {
                 this.$store.commit('updateWidth', e.target.value)
             },
+          updateGameName (e) {
+            this.$store.commit('updateGameName', e.target.value)
+          },
+          updateScenarioName (e) {
+            this.$store.commit('updateScenarioName', e.target.value)
+          },
             saveMap(){
                 const x= this.$store.state;
                 const arg = {
@@ -186,7 +210,9 @@
                     url: this.mapUrl,
                     boxes: [...x.boxes],
                     borderBoxes: [...x.borderBoxes],
-                    width: this.mapWidth
+                    width: this.mapWidth,
+                    gameName: this.$store.state.gameName,
+                    scenarioName: this.$store.state.scenarioName
                 }
                 axios.put('/api/area-maps/'+this.$route.params.id, arg).then( response => {
                     // this.$router.push(response.data.links.self)

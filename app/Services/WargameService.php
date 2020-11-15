@@ -273,17 +273,17 @@ class  WargameService{
         $scenarioArray = [];
         $scenarioArray[] = $scenario;
         $prevDb = $this->cs->setDb('rest');
-        $mapData = $this->cs->get($scenario->mapDataUrl);
+//        $mapData = $this->cs->get($scenario->mapDataUrl);
          $this->cs->setDb($prevDb);
-
+         $mapData = $doc->wargame->terrain;
+         $mapData->url = $mapData->mapUrl;
         $className = isset($doc->className)? $doc->className : '';
         $playDat = $className::getPlayerData($scenario);
         $forceName = $playDat['forceName'];
         $deployName = $playDat['deployName'];
         $docName = $name;
         $name = $gameName;
-        $justMe = "i am here and me";
-        return compact("mapData", "justMe", "docName","playDat", "className", "deployName", "forceName", "scenario", "scenarioArray", "name", "arg", "player", "mapUrl", "units", "playersData", "playerData", "gameName", "wargame", "user");
+        return compact("mapData","docName","playDat", "className", "deployName", "forceName", "scenario", "scenarioArray", "name", "arg", "player", "mapUrl", "units", "playersData", "playerData", "gameName", "wargame", "user");
 
     }
     public function gameView($wargame){

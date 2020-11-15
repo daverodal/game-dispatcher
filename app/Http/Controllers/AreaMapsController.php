@@ -58,13 +58,17 @@ class AreaMapsController extends Controller
                 'boxes.*.x' => 'required',
                 'borderBoxes' => 'array',
                 'borderBoxes.*.x' => 'required',
-                'width' => ''
+                'width' => '',
+                'gameName' => '',
+                'scenarioName' => ''
             ]);
             $doc->boxes = $postData['boxes'];
             $doc->borderBoxes = $postData['borderBoxes'];
             $doc->url = $postData['url'];
             $doc->name = $postData['name'];
             $doc->width = $postData['width'];
+            $doc->gameName = $postData['gameName'];
+            $doc->scenarioName = $postData['scenarioName'];
             $client->put($id,$doc);
             $postData['map']['id'] = $id;
             return response()->json($postData);

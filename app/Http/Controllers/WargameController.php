@@ -802,18 +802,26 @@ class WargameController extends Controller
             return response()->json($ret);
         }
 
-
-        if (method_exists($battle, 'terrainGen')) {
+        if(method_exists($battle, 'publishAreaMap')){
             $cs->setDb("rest");
             $terrainDoc = $cs->get($terrainDocId);
-            $mapId = $terrainDoc->hexStr->map;
-            $mapDoc = $cs->get($mapId);
-            $battle->terrainGen($mapDoc, $terrainDoc);
-        }else{
-            echo "No TerrainGen ";
-            return;
+            if($terrainDoc->docType !== "areaMapData"){
+                echo "No MapData ";
+                return;
+            }
+            $battle->publishAreaMap($terrainDoc);
+        } else {
+            if (method_exists($battle, 'terrainGen')) {
+                $cs->setDb("rest");
+                $terrainDoc = $cs->get($terrainDocId);
+                $mapId = $terrainDoc->hexStr->map;
+                $mapDoc = $cs->get($mapId);
+                $battle->terrainGen($mapDoc, $terrainDoc);
+            } else {
+                echo "No TerrainGen ";
+                return;
+            }
         }
-
         $mapUrl = $battle->terrain->mapUrl;
         $mapWidth = $battle->terrain->mapWidth;
         if($mapWidth && $mapWidth !== "auto"){
