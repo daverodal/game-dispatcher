@@ -12,6 +12,9 @@ import VueResource from 'vue-resource';
 Vue.use(VueResource);
 import router from './router'
 
+import Vue from 'vue';
+import VueFlashMessage from 'vue-flash-message';
+Vue.use(VueFlashMessage);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

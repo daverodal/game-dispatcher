@@ -32,5 +32,7 @@ mix.js('resources/assets/js/area-map-editor/app.js', 'public/js/area-map-editor'
 mix.js('resources/assets/js/analytics.js', 'public/javascripts/analytics.js')
 mix.js('resources/assets/js/main.js', 'public/javascripts/main.js')
    .sass('resources/assets/sass/app.scss', 'public/css').version();
+mix.sass('resources/assets/sass/app4.scss', 'public/css').version();
+
 mix.version(['public/vendor/css/', 'public/vendor/javascripts']);
 

@@ -1,13 +1,14 @@
 <template>
     <div class="component-wrapper">
-        hi all everupme pf
-        <my-button></my-button>
-    yeah
-        <a  class="btn btn-danger" href="#" @click="$router.back()">
+
+      <flash-message class="myCustomClass"></flash-message>
+
+      <a  class="btn btn-danger" href="#" @click="$router.back()">
             < Back
         </a>
         You have {{boxes.length}} boxes. Map Name is "{{ mapName }}"
-        <div class="meta-wrapper">
+      <div class="flex-container">
+      <div class="col-sm-6 meta-wrapper">
             <div class="flex-container">
                 <label for="name">Map Name</label>
                 <input type="text" v-model="mapName" class="text-gray-900 pt-8 w-full" id="name"
@@ -36,7 +37,7 @@
           </div>
         </div>
 
-        <div v-if="selected !== null">
+        <div class="col-sm-6 meta-wrapper" v-if="selected !== null">
             id: {{ selectedId }} <br>
             x: {{ selectedBox.x }}<br>
             y: {{ selectedBox.y }}<br>
@@ -54,18 +55,18 @@
             <p>
                 Name is: {{ selectedBox.name }}
             </p>
-
-        </div>
-        <div v-if="selectedBox && selectedBox.neighbors">
+          <div v-if="selectedBox && selectedBox.neighbors">
             <span v-for="neighbor in selectedBox.neighbors">
                 {{neighbor}}
             </span>
+          </div>
         </div>
 
+      </div>
       <button @click="toggleNeighborMode">Neighbor mode</button>
       <button @click="toggleBorderMode">Show Border Boxes</button>
       <button @click="addBox">add box</button>
-      <button @click="clear">Clear</button>
+      <button @click="saveMap">Save</button>
       <button @click="saveMap">Save</button>
       <button class="btn btn-primary" @click="publishMap">Publish</button>
       <div v-if="$store.state.selectedBorderBox !== null">
@@ -84,12 +85,20 @@
             <MovableBorderBox v-if="showBorderBoxes" v-for="(box, index) in borderBoxes" v-bind:key="box.key" :id="index"><img class="target-img" src="../../../images/Target2.svg"></MovableBorderBox>
             <Movable v-for="(box, index) in boxes" v-bind:key="index" :id="index">{{ box.name }}</Movable>
         </div>
-      <div> {{ myBorderBox }}</div>
+      <button @click="toggleNeighborMode">Neighbor mode</button>
+      <button @click="toggleBorderMode">Show Border Boxes</button>
+      <button @click="addBox">add box</button>
+      <button @click="saveMap">Save</button>
+      <button class="btn btn-primary" @click="publishMap">Publish</button>
+      <div v-if="neighborMode" class="neighbor-mode-banner">
+        Neighbor Mode Enabled,
+      </div>
 
     </div>
 </template>
 
 <script>
+require('vue-flash-message/dist/vue-flash-message.min.css');
     import Movable from './Movable'
     import MovableBorderBox from './MovableBorderBox'
     import { mapState, mapMutations, mapGetters} from 'vuex'
@@ -133,7 +142,10 @@
         mounted(){
             this.$store.commit('clear');
           axios.get('/api/area-maps/'+ this.$route.params.id).then(response => {
-              const data = response.data;
+            this.flash('Data loaded', 'success', {
+              timeout: 2000,
+            });
+            const data = response.data;
               if(data.boxes && data.boxes.length > 0){
                   data.boxes.forEach(box => {
                       if(!box.neighbors){
@@ -216,8 +228,13 @@
                 }
                 axios.put('/api/area-maps/'+this.$route.params.id, arg).then( response => {
                     // this.$router.push(response.data.links.self)
+                  this.flash('Map Saved', 'success', {
+                    timeout: 2000,
+                  });
                 }).catch(errors => {
                     console.log(errors);
+                  this.flash('error saving map', 'error', {
+                  });
                     // this.errors = errors.response.data.errors;
                 });
             }
@@ -226,6 +243,12 @@
 </script>
 
 <style lang="scss" scoped>
+    .myCustomClass{
+      position: absolute;
+      width: 100%;
+      z-index:3;
+      top:0px;
+    }
     .component-wrapper{
         margin-bottom:915px;
         .neighbor-mode-banner{
@@ -244,8 +267,6 @@
       height:17px;
     }
     .meta-wrapper{
-        width:400px;
-        margin: auto;
         .flex-container{
             display:flex;
             justify-content: space-between;
@@ -261,6 +282,10 @@
             left:0;
             top:0;
         }
+    }
+    .flex-container{
+      display:flex;
+      align-items: stretch;
     }
 
 </style>

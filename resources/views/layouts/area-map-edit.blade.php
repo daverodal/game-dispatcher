@@ -30,7 +30,7 @@
     <title>my app</title>
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link href="{{ mix('css/app.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ mix('css/app4.css')}}" rel="stylesheet" type="text/css">
 
     <meta charset="UTF-8">
 

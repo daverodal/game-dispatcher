@@ -1,19 +1,34 @@
 <template>
-    <div class="maps-wrapper">
+    <div class="maps-comp-wrapper">
         <div><button @click="newMap">New Map</button></div>
-hi maps
-        <div class="flex-container"  v-for="map in maps"  v-bind:key="map.id">
+      <div class="">
+        <div class="row"  v-for="map in maps"  v-bind:key="map.id">
+
+          <div class="col-4">
             <router-link :to="'/maps/'+map.id" >
-                    {{ map.name}}
+              {{ map.name }}----{{ map.gameName }}.{{map.scenarioName}}
             </router-link>
+          </div>
+          <div class="col-6">
             <router-link :to="'/maps/'+map.id" >
 
-            {{map.url}}
+              {{map.url}}
 
             </router-link>
-            <button @click="clone(map)">Clone</button>
+          </div>
+        <div class="col-1">
+          <button @click="clone(map)">Clone</button>
 
         </div>
+          <div class="col-1">
+            <button @click="remove(map)">Delete</button>
+
+          </div>
+
+
+        </div>
+      </div>
+
     </div>
 </template>
 
@@ -24,13 +39,20 @@ hi maps
             return { maps: []}
         },
         mounted(){
-            axios.get('/api/area-maps/').then(response => {
-                this.maps = response.data.maps
-            }).catch(errors => {
-                console.log(errors);
-            });
+          this.fetchData();
         },
         methods: {
+          fetchData(){
+            axios.get('/api/area-maps/').then(response => {
+
+              console.log("Flashed it ");
+              this.flash('Data loaded', 'success');
+
+              this.maps = response.data.maps
+            }).catch(errors => {
+              console.log(errors);
+            });
+          },
             newMap(){
                 const arg = {
                     name: 'new-map',
@@ -95,17 +117,30 @@ hi maps
                     console.log(errors);
                 });
 
-            }
+            },
+          remove(map){
+            // // this.$store.commit('clear');
+            axios.delete('/api/area-maps/'+ map.id).then(response => {
+                  this.fetchData();
+            }).catch(errors => {
+              console.log(errors);
+            });
+
+          }
         }
     }
 </script>
 
 <style lang="scss" scoped>
 
-    .maps-wrapper{
+    .maps-comp-wrapper{
         border: 10px solid lightgray;
         border-radius: 10px;
         padding: 10px;
+      text-align: left;
+      max-width:1650px;
+      position: relative;
+      z-index: 3;
     }
     .flex-container{
         display:flex;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\AreaMap;
 use App\Services\CouchService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AreaMapsController extends Controller
 {
@@ -47,8 +48,8 @@ class AreaMapsController extends Controller
     public function show(CouchService $client ,$mapId){
         $postData = $client->get($mapId);
         return response()->json($postData, 200);
-        }
-        public function update(CouchService $client, Request $request, $id){
+    }
+    public function update(CouchService $client, Request $request, $id){
 
             $doc = $client->get($id);
             $postData = request()->validate([
@@ -74,4 +75,22 @@ class AreaMapsController extends Controller
             return response()->json($postData);
 
         }
+
+
+    function destroy(CouchService $cs, $id){
+        $postData = new \stdClass();
+         if ($id) {
+            try {
+                $doc = $cs->get($id);
+
+                    if ($doc && $doc->_id && $doc->_rev) {
+                        $cs->delete($doc->_id, $doc->_rev);
+                        $postData->ok = true;
+                    }
+            } catch (Exception $e) {
+            }
+        }
+        return response()->json($postData);
+
+    }
 }
