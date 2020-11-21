@@ -21,7 +21,7 @@
         "bootstrap-sass": "^3.4.1",
         "cross-env": "^5.0.1",
         "extend": ">=3.0.2",
-        "jquery": "^3.2",
+        "jquery": "^3.5",
         "laravel-mix": "^1.0",
         "lodash": "^4.17.11",
         "popper.js": "^1.12",
