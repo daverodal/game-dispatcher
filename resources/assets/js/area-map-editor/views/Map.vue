@@ -67,7 +67,6 @@
       <button @click="toggleBorderMode">Show Border Boxes</button>
       <button @click="addBox">add box</button>
       <button @click="saveMap">Save</button>
-      <button @click="saveMap">Save</button>
       <button class="btn btn-primary" @click="publishMap">Publish</button>
       <div v-if="$store.state.selectedBorderBox !== null">
          Last moved borderbox {{$store.state.borderBoxes[$store.state.selectedBorderBox].key }}
