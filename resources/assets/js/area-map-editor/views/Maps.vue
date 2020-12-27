@@ -57,7 +57,9 @@
                 const arg = {
                     name: 'new-map',
                     url: '',
-                    boxes: []
+                    boxes: [],
+                    borderBoxes: [],
+                    width: 1000
                 }
                 axios.post('/api/area-maps', arg).then( response => {
                     this.$router.push('maps/'+response.data.map.id)
