@@ -1,5 +1,4 @@
 @extends('layouts.wargame-unattached')
-
 @section('content')
     <div id="container" class="{{$theGame ? 'wideGame coolBox' : 'coolBox'}}">
 
@@ -130,3 +129,4 @@
 </style>
 <link rel="stylesheet" type="text/css" href="{{mix('vendor/css/wargame/horse-musket.css')}}">
 
+@include ("wargame::".$viewPath)

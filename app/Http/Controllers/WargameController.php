@@ -305,7 +305,11 @@ class WargameController extends Controller
             unset($theGame->value);
             $theGame = (array)$theGame;
             $theGameMeta['description'] = '';
-            return view("wargame/wargame-unattached-game", compact("game","dir","theScenarios", "editor", "backgroundImage", "backgroundAttr","bigMapUrl", "mapUrl", "theScenario", "plainGenre", "theGame", "games", "siteUrl","theGameMeta"));
+            $className = $fileName;
+            $className = preg_replace("/^./","", $className);
+            $viewPath = WargameService::viewBase($className).".playMulti";
+            $scenario = $thisScenario;
+            return view("wargame/wargame-unattached-game", compact("scenario", "viewPath", "game","dir","theScenarios", "editor", "backgroundImage", "backgroundAttr","bigMapUrl", "mapUrl", "theScenario", "plainGenre", "theGame", "games", "siteUrl","theGameMeta"));
         } else {
             foreach ($gamesAvail as $gameAvail) {
                 if($gameAvail->game) {
@@ -347,12 +351,16 @@ class WargameController extends Controller
             $theGameMeta['name'] = '';
             $theGameMeta['histEditLink'] = '';
             $theGameMeta['options'] = [];
+            $className = isset($doc->className)? $doc->className : '';
+
+            $viewPath = WargameService::viewBase($className).".playMulti";
+
             if(count($games) > 0 && !empty($games[0]->game)){
                 return view("wargame/wargame-unattached-games", compact("theScenarios", "theGameMeta", "editor", "backgroundAttr", "backgroundImage","theScenario", "plainGenre", "theGame", "games", "siteUrl"));
 
             }
 
-            return view("wargame/wargame-unattached", compact("theScenarios", "theGameMeta", "editor", "backgroundAttr", "backgroundImage","theScenario", "plainGenre", "theGame", "games", "siteUrl"));
+            return view("wargame/wargame-unattached", compact("viewPath","theScenarios", "theGameMeta", "editor", "backgroundAttr", "backgroundImage","theScenario", "plainGenre", "theGame", "games", "siteUrl"));
         }
     }
 

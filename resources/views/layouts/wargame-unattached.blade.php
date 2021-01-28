@@ -27,6 +27,7 @@
 <html ng-app="scenarioApp">
 
 <head>
+
     <meta charset="UTF-8">
     <script src="{{ mix('javascripts/main.js')}}"></script>
     <link href="{{ mix('css/app.css')}}" rel="stylesheet" type="text/css">
@@ -34,9 +35,16 @@
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    @empty($viewPath)
+        <style type="text/css">
+            body {
+
+                background: url('{{asset("vendor/wargame/genre/images/$backgroundImage")}}');
+            }
+        </style>
+    @endempty
     <style type="text/css">
         body {
-            background: url('{{asset("vendor/wargame/genre/images/$backgroundImage")}}');
             background-repeat: no-repeat;
             background-size: 100%;
             background-attachment:fixed;
@@ -125,9 +133,7 @@
 </head>
 <body ng-controller="ScenarioController">
 @yield('content');
-<footer class="unattached attribution">
-    <?=$backgroundAttr;?>
-</footer>
+
 </body>
 <script>
 </script>
