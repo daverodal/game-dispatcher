@@ -82,7 +82,7 @@
             "dist": {
                 "type": "path",
                 "url": "../medieval",
-                "reference": "ba2721fc50e7f7eb70141cef52bc07d4da614f58"
+                "reference": "15895c09bca27663451fa796b6f0ce90277cafbc"
             },
             "type": "library",
             "extra": {
@@ -178,7 +178,7 @@
             "dist": {
                 "type": "path",
                 "url": "../tactical",
-                "reference": "a1d0adbb356337705cd764603ba6bd38f90c916b"
+                "reference": "9841e2be781e2e00387c5d894efe1a332836497b"
             },
             "type": "library",
             "extra": {
@@ -210,7 +210,7 @@
             "dist": {
                 "type": "path",
                 "url": "../wargaming",
-                "reference": "8944363e2661c6916ebc13aab7f40d59847aa2e5"
+                "reference": "672dad0bade7bc64951cb5c8b3fe2a5961d0a839"
             },
             "require": {
                 "php": ">=7.2.0"
@@ -753,16 +753,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.20.15",
+            "version": "v6.20.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "b42c2d845cdd827ac5a53cacf16af4a0b5dd8be1"
+                "reference": "806082fb559fe595cb17cd6aa8571f03ed287814"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/b42c2d845cdd827ac5a53cacf16af4a0b5dd8be1",
-                "reference": "b42c2d845cdd827ac5a53cacf16af4a0b5dd8be1",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/806082fb559fe595cb17cd6aa8571f03ed287814",
+                "reference": "806082fb559fe595cb17cd6aa8571f03ed287814",
                 "shasum": ""
             },
             "require": {
@@ -902,7 +902,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-01-26T14:39:47+00:00"
+            "time": "2021-02-02T13:50:12+00:00"
         },
         {
             "name": "laravel/helpers",
@@ -1382,16 +1382,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.43.0",
+            "version": "2.44.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "d32c57d8389113742f4a88725a170236470012e2"
+                "reference": "e6ef33cb1f67a4bed831ed6d0f7e156739a5d8cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/d32c57d8389113742f4a88725a170236470012e2",
-                "reference": "d32c57d8389113742f4a88725a170236470012e2",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/e6ef33cb1f67a4bed831ed6d0f7e156739a5d8cd",
+                "reference": "e6ef33cb1f67a4bed831ed6d0f7e156739a5d8cd",
                 "shasum": ""
             },
             "require": {
@@ -1407,7 +1407,7 @@
                 "phpmd/phpmd": "^2.9",
                 "phpstan/extension-installer": "^1.0",
                 "phpstan/phpstan": "^0.12.54",
-                "phpunit/phpunit": "^7.5 || ^8.0",
+                "phpunit/phpunit": "^7.5.20 || ^8.5.14",
                 "squizlabs/php_codesniffer": "^3.4"
             },
             "bin": [
@@ -1471,7 +1471,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-12-17T20:55:32+00:00"
+            "time": "2021-01-26T20:46:41+00:00"
         },
         {
             "name": "opis/closure",
@@ -2902,16 +2902,16 @@
         },
         {
             "name": "symfony/mime",
-            "version": "v5.2.2",
+            "version": "v5.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mime.git",
-                "reference": "37bade585ea100d235c031b258eff93b5b6bb9a9"
+                "reference": "7dee6a43493f39b51ff6c5bb2bd576fe40a76c86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mime/zipball/37bade585ea100d235c031b258eff93b5b6bb9a9",
-                "reference": "37bade585ea100d235c031b258eff93b5b6bb9a9",
+                "url": "https://api.github.com/repos/symfony/mime/zipball/7dee6a43493f39b51ff6c5bb2bd576fe40a76c86",
+                "reference": "7dee6a43493f39b51ff6c5bb2bd576fe40a76c86",
                 "shasum": ""
             },
             "require": {
@@ -2964,7 +2964,7 @@
                 "mime-type"
             ],
             "support": {
-                "source": "https://github.com/symfony/mime/tree/v5.2.2"
+                "source": "https://github.com/symfony/mime/tree/v5.2.3"
             },
             "funding": [
                 {
@@ -2980,7 +2980,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-25T14:08:25+00:00"
+            "time": "2021-02-02T06:10:15+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
