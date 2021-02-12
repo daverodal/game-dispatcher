@@ -133,7 +133,11 @@
 </head>
 <body ng-controller="ScenarioController">
 @yield('content');
-
+@empty($viewPath)
+    <footer class="attribution">
+        {!! $backgroundAttr !!}
+    </footer>
+@endempty
 </body>
 <script>
 </script>

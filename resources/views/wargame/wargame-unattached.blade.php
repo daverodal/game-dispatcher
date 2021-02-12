@@ -1,5 +1,10 @@
 @extends('layouts.wargame-unattached')
+<style type="text/css">
+    body {
 
+        background: url('{{asset("vendor/wargame/genre/images/$backgroundImage")}}');
+    }
+</style>
 @section('content')
     <div id="container" class="coolBox">
         <a href="{{url("wargame/leave-game")}}">back to lobby</a>
@@ -19,3 +24,6 @@
         <a href="{{url("/logout")}}">Logout</a>
     </div>
 @endsection
+<footer class="attribution">
+    {!! $backgroundAttr !!}
+</footer>

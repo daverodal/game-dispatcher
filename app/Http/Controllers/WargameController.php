@@ -117,7 +117,7 @@ class WargameController extends Controller
         $gamesAvail = $ad->getAvailGames($dir, $genre, $game);
 
         $backgroundImage = "Egyptian_Pharaoh_in_a_War-Chariot,_Warrior,_and_Horses._(1884)_-_TIMEA.jpg";
-        $backgroundAttr = 'By Unknown author [<a href="http://creativecommons.org/licenses/by-sa/2.5">CC BY-SA 2.5</a>], <a href="http://commons.wikimedia.org/wiki/File%3AEgyptian_Pharaoh_in_a_War-Chariot%2C_Warrior%2C_and_Horses._(1884)_-_TIMEA.jpg">via Wikimedia Commons</a>';
+        $backgroundAttr = 'By Unknown author [<a target="blank" href="http://creativecommons.org/licenses/by-sa/2.5">CC BY-SA 2.5</a>], <a target="blank" href="http://commons.wikimedia.org/wiki/File%3AEgyptian_Pharaoh_in_a_War-Chariot%2C_Warrior%2C_and_Horses._(1884)_-_TIMEA.jpg">via Wikimedia Commons</a>';
         if($genre){
             if(preg_match("/18%27th/", urlencode($genre))){
                 $backgroundImage = "18th_century_gun.jpg";
