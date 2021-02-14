@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5ec0e2b2b02215cd5cf0ca9056e10cb4",
+    "content-hash": "0088e6d09d98d1a22fb4d1cab7082825",
     "packages": [
         {
             "name": "cmgmyr/messenger",
@@ -174,11 +174,11 @@
         },
         {
             "name": "daverodal/tactical",
-            "version": "dev-MajorMoveRulesChange",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "../tactical",
-                "reference": "9841e2be781e2e00387c5d894efe1a332836497b"
+                "reference": "992e2e4117f6512804a48fab4ad561ba8a0e2128"
             },
             "type": "library",
             "extra": {
@@ -206,11 +206,11 @@
         },
         {
             "name": "daverodal/wargaming",
-            "version": "dev-MajorMoveRulesChange",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "../wargaming",
-                "reference": "254ff60b92ab5f575f74937c04e389eac6a5fbbf"
+                "reference": "eba3c902e9e65c3a202dad8a5c3ee0838dc6f761"
             },
             "require": {
                 "php": ">=7.2.0"

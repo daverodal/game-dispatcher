@@ -34,11 +34,11 @@
         "laravel/framework": "^6.0",
         "guzzlehttp/guzzle": "~6.0",
         "cmgmyr/messenger": "~2.0",
-        "daverodal/wargaming": "dev-MajorMoveRulesChange",
+        "daverodal/wargaming": "dev-master",
         "daverodal/medieval": "dev-master",
         "daverodal/spi": "dev-master",
         "daverodal/rebellion": "dev-master",
-        "daverodal/tactical": "dev-MajorMoveRulesChange",
+        "daverodal/tactical": "dev-master",
         "laravel/helpers": "^1.2",
         "laravelcollective/html": "^6.2"
     },
