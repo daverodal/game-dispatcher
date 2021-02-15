@@ -6,7 +6,7 @@
  * Time: 6:20 PM
  */
 
-namespace app\Services;
+namespace App\Services;
 
 
 class AnalyticsService
