@@ -139,7 +139,7 @@ require('vue-flash-message/dist/vue-flash-message.min.css');
             }
         },
         mounted(){
-            this.$store.commit('clear');
+          this.$store.commit('clear');
           axios.get('/api/area-maps/'+ this.$route.params.id).then(response => {
             this.flash('Data loaded', 'success', {
               timeout: 2000,
@@ -147,6 +147,10 @@ require('vue-flash-message/dist/vue-flash-message.min.css');
             const data = response.data;
               if(data.boxes && data.boxes.length > 0){
                   data.boxes.forEach(box => {
+                    if(typeof box.isCity === "undefined"){
+
+                      box.isCity = false;
+                    }
                       if(!box.neighbors){
                           box.neighbors = [];
                       }
