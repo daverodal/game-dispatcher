@@ -26,7 +26,7 @@
                             @else
                                 {{$login->name}}
                             @endif
-                            {{$login->time}} {{$login->action or "(unknown -- assumed login)"}}
+                            {{$login->time}} {{$login->action ?? "(unknown -- assumed login)"}}
                         </li>
                     @endforeach
                 </ul>
