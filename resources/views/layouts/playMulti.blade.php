@@ -86,7 +86,6 @@ if (!empty($players[3])) {
                 </li>
                 <li ng-if="pals == true" ng-repeat="friend in friends | orderBy: 'key'"><a ng-class="player.otherColor" href="{{$path}}/{{$wargame}}/{{$me}}/@{{friend.name}}/@{{publicGame}}">@{{friend.name}}</a></li>
                 <li ng-if="pals == false" ng-repeat="user in users | orderBy: 'key'"><a ng-class="player.otherColor" href="{{$path}}/{{$wargame}}/{{$me}}/@{{user.name}}/@{{publicGame}}">@{{user.name}}</a></li>
-                <li ng-if="hasRobots"><a ng-class="player.otherColor" href="{{$path}}/{{$wargame}}/{{$me}}/Robottt/@{{publicGame}}">Robottt</a></li>
             </ul>
             <ul ng-if="player.myName == playerTwo.myName">
                 <li>
@@ -150,17 +149,11 @@ if (!empty($players[3])) {
 <script>
     angular.module('playMulti', [])
             .controller('SimpleRadio', ['$scope', function ($scope) {
-                debugger;
                 $scope.publicGame = '{{$visibility}}';
                 $scope.users = [];
                 $scope.wargame = '{wargame}';
                 $scope.iAm = '{me}';
                 $scope.player = {};
-                $scope.hasRobots = false;
-                var scenario = JSON.parse('<?php echo json_encode($scenario);?>');
-                if(scenario.hasRobots){
-                    $scope.hasRobots = true;
-                }
                 var users = JSON.parse('<?php echo json_encode($users);?>');
                 var usersArray = [];
                 for(var i in users){
