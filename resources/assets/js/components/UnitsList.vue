@@ -28,8 +28,8 @@
     import ModernTacticalUnitEditor from './ModernTacticalUnitEditor.vue';
     import HorseMusketUnit from './HorseMusketUnit.vue';
     import HorseMusketUnitEditor from './HorseMusketUnitEditor.vue';
-    import MedievalUnit from './MedievalUnit.vue';
-    import MedievalUnitEditor from './MedievalUnitEditor.vue';
+    // import MedievalUnit from './MedievalUnit.vue';
+    // import MedievalUnitEditor from './MedievalUnitEditor.vue';
     ;
 
 
@@ -47,8 +47,8 @@
             modernTacticalUnitEditor: ModernTacticalUnitEditor,
             horseMusketUnit: HorseMusketUnit,
             horseMusketUnitEditor: HorseMusketUnitEditor,
-            medievalUnit: MedievalUnit,
-            medievalUnitEditor: MedievalUnitEditor
+            // medievalUnit: MedievalUnit,
+            // medievalUnitEditor: MedievalUnitEditor
         },
         props:['unit', 'units', 'unit-type', 'scenario'],
         methods:{
