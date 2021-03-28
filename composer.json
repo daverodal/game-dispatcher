@@ -8,37 +8,13 @@
     "license": "MIT",
     "type": "project",
     "repositories": {
-        "wargaming": {
-            "type": "path",
-            "url": "../wargaming"
-        },
-        "rebellion": {
-            "type": "path",
-            "url": "../rebellion"
-        },
-        "spi": {
-            "type": "path",
-            "url": "../spi"
-        },
-        "tactical": {
-            "type": "path",
-            "url": "../tactical"
-        },
-        "medieval": {
-            "type": "path",
-            "url": "../medieval"
-        }
     },
     "require": {
         "php": ">=7.2.0",
         "laravel/framework": "^6.0",
         "guzzlehttp/guzzle": "~6.0",
         "cmgmyr/messenger": "~2.0",
-        "daverodal/wargaming": "dev-master",
-        "daverodal/medieval": "dev-master",
-        "daverodal/spi": "dev-master",
-        "daverodal/rebellion": "dev-master",
-        "daverodal/tactical": "dev-master",
+        "daverodal/wargaming": "0.1.12",
         "laravel/helpers": "^1.2",
         "laravelcollective/html": "^6.2"
     },
