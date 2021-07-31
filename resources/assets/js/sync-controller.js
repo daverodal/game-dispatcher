@@ -28,6 +28,21 @@ export default class SyncController{
 
     constructor($scope, $http,sync) {
 
+        sync.register('chats', function(chats) {
+            debugger
+            var hotChats = [];
+            for (var i in chats) {
+                if(chats[i].date){
+                    let yesterday = new Date();
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    if(yesterday.getTime() <= (chats[i].date * 1000)){
+                        hotChats.unshift(chats[i]);
+                    }
+                }
+            }
+            $scope.chats = hotChats;
+            $scope.$apply();
+        });
         sync.register('lobbies', function (lobbies) {
             console.log("Hi lobbies");
             var myHotLobbies = [];

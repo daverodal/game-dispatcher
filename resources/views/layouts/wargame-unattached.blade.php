@@ -188,7 +188,7 @@
                 $scope.scenario.units = $scope.defaultUnits;
             }
         }
-        $scope.game = '<?=$theGame['game'];?>';
+        $scope.game = '<?=$theGame['game'] ?? "";?>';
         $scope.editor = '<?=$editor;?>' - 0;/* turn string back to number */
         $scope.name = '<?=addslashes($theGameMeta['name']);?>';
         $scope.description = '<?=$theGameMeta['description'];?>';

@@ -10,6 +10,7 @@ use Auth;
 use \DateTime;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ClientException;
+use Illuminate\Support\Facades\Date;
 use Request;
 use App\User;
 use League\Flysystem\Exception;
@@ -94,7 +95,7 @@ class  WargameService{
                 $playerTurn .= "'s";
             }
             array_shift($thePlayers);
-            $players = implode($thePlayers, " ");
+            $players = implode(" ", $thePlayers);
             $row->value[1] = "created " . formatDateDiff($dt) . " ago";
             $odd ^= 1;
             $lobbies[] = array("odd" => $odd ? "odd" : "", "name" => $row->value[0], 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameInfo, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
@@ -127,7 +128,7 @@ class  WargameService{
                 $myTurn = "myTurn";
             }
             array_shift($thePlayers);
-            $players = implode($thePlayers, " ");
+            $players = implode(" ",$thePlayers );
             $row->value[1] = "created " . formatDateDiff($dt) . " ago";
             $otherGames[] = array("name" => $name, 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
         }
@@ -647,6 +648,17 @@ class  WargameService{
         return compact('success', "emsg");
     }
 
+    public function doChatPoke($user, $msg){
+        $db = $this->cs->setDb('games');
+        $chat = new \stdClass();
+        $chat->docType = "chat";
+        $chat->user = $user;
+        $chat->chat = $msg;
+        $chat->date = time();
+        $this->cs->post($chat);
+        $this->cs->setDb($db);
+    }
+
     public function doPoke($wargame, $event, $id, $x, $y, $user, $dieRoll = false){
 
 
@@ -788,6 +800,17 @@ class  WargameService{
 
         $this->cs->setDb('games');
 
+        $seq = $this->cs->get("_design/newFilter/_view/chats");
+        $chats = [];
+        date_default_timezone_set("America/New_York");
+        $odd = 0;
+        foreach ($seq->rows as $row) {
+            $chats[] = $row->value;
+      }
+
+
+
+
         $seq = $this->cs->get("_design/newFilter/_view/getLobbies?startkey=[\"$user\",\"hot seat\"]&endkey=[\"$user\",\"hot seat\",\"zzzzzzzzzzzzzzzzzzzzzzzz\"]");
         $lobbies = [];
         date_default_timezone_set("America/New_York");
@@ -823,7 +846,7 @@ class  WargameService{
                 $playerTurn = "$currentTurn of $maxTurn";
             }
             array_shift($thePlayers);
-            $players = implode($thePlayers, " ");
+            $players = implode(" ", $thePlayers);
             $row->value[1] = "created " . formatDateDiff($dt) . " ago";
             $odd ^= 1;
             $lobbies[] = array("className" => $className, "public" => $public, "odd" => $odd ? "odd" : "", "gameName" => $gameName, "name" => $name, 'timestamp'=>$dt->getTimestamp(), 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
@@ -869,7 +892,7 @@ class  WargameService{
                 }
             }
             array_shift($thePlayers);
-            $players = implode($thePlayers, " ");
+            $players = implode(" ", $thePlayers);
             $row->value[1] = "created " . formatDateDiff($dt) . " ago";
             $odd ^= 1;
             $multiLobbies[] = array("className" => $className, "public" => $public, "odd" => $odd ? "odd" : "", "gameName" => $gameName, "name" => $name,'timestamp'=>$dt->getTimestamp(), 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
@@ -910,7 +933,7 @@ class  WargameService{
                 }
             }
             array_shift($thePlayers);
-            $players = implode($thePlayers, " ");
+            $players = implode(" ", $thePlayers);
             $row->value[1] = "created " . formatDateDiff($dt) . " ago";
             $odd ^= 1;
             $otherGames[] = array("className" => $className, "odd" => $odd ? "odd" : "", "name" => $name, "gameName" => $gameName,'timestamp'=>$dt->getTimestamp(), 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
@@ -942,14 +965,14 @@ class  WargameService{
                 $myTurn = "myTurn";
             }
             array_shift($thePlayers);
-            $players = implode($thePlayers, " ");
+            $players = implode(" ", $thePlayers);
             $row->value[1] = "created " . formatDateDiff($dt) . " ago";
             $odd ^= 1;
             $publicGames[] = array("odd" => $odd ? "odd" : "", "name" => $name, "gameName" => $gameName, 'timestamp'=>$dt->getTimestamp(), 'date' => $row->value[1], "id" => $id, "creator" => $creator, "gameType" => $gameType, "turn" => $playerTurn, "players" => $players, "myTurn" => $myTurn);
         }
         $results = $lastSeq->results;
         $last_seq = $lastSeq->last_seq;
-        return compact("lobbies", "multiLobbies", "otherGames", "last_seq", "publicGames");
+        return compact("lobbies", "multiLobbies", "otherGames", "last_seq", "publicGames", "chats");
     }
 
 

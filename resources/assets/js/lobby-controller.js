@@ -1,7 +1,8 @@
 import SyncController from "./sync-controller.js";
+import axios from "axios";
 export default class LobbyController extends SyncController{
     constructor($scope, $http, sync) {
-        $scope.myOtherGames = $scope.myPublicGames = $scope.myMultiGames = $scope.myHotGames = [];
+        $scope.myOtherGames = $scope.myPublicGames = $scope.myMultiGames = $scope.myHotGames = $scope.chats =  [];
 
 
         $scope.lobbySort = 'timestamp';
@@ -12,6 +13,7 @@ export default class LobbyController extends SyncController{
         $scope.otherSortDir = true;
         $scope.publicSort = 'timestamp';
         $scope.publicSortDir = true;
+        $scope.speak = '';
         super($scope, $http,sync);
 
         this.$http = $http;
@@ -27,6 +29,17 @@ export default class LobbyController extends SyncController{
         DR.scope = $scope;
 
         sync.fetch(0);
+    }
+
+    doChatPostRequest(chat) {
+        debugger;
+        var mychat = $("#mychat").attr("value");
+        let data = {chat: chat};
+        let obj;
+        axios.post("/wargame/chatPoke", data).then((response) => {
+        }).catch(error => {
+        });
+        this.$scope.speak = '';
     }
 
     deleteGame(game) {

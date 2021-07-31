@@ -24,6 +24,11 @@ $max-width: 100em;
 .sort-col{
   cursor:pointer;
 }
+.chat-window{
+  height:200px;
+  overflow: scroll;
+  color:white;
+}
 .form-group {
   //@include outer-container;
   .col-sm-3 {
@@ -110,7 +115,7 @@ $grid-columns: 12;
   clear: both;
 }
 
-#multiPlayerGames {
+.chat-wrapper, #multiPlayerGames {
   background-color: rgba(170, 170, 170, .4);
   padding-bottom: 20px;
   border: 5px solid rgba(130, 130, 130, .4);
@@ -119,6 +124,17 @@ $grid-columns: 12;
   }
 }
 
+.chat-wrapper {
+  float: right;
+  padding: 15px;
+  width:40%;
+  border-radius: 10px;
+}
+
+.start-game-wrapper {
+  clear:both;
+  float:left;
+}
 body {
   background-repeat: no-repeat;
   color: #666;
@@ -173,6 +189,7 @@ a {
 
 .logoutUpper , .logout-lower{
   float: right;
+  margin-bottom:10px;
 }
 .tabbable .nav-tabs li a.logout, .logout {
   color: white;

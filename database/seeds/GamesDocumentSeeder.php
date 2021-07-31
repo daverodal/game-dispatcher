@@ -59,6 +59,19 @@ class GamesDocumentSeeder extends Seeder
 
             }
         }";
+
+
+
+        $views->chats = new StdClass;
+        $views->chats->map = "function(doc){
+          if(doc.docType == 'chat') {
+                emit (doc._id, doc);
+            }
+        }";
+
+
+
+
         $views->getLobbies = new StdClass;
         $views->getLobbies->map = "function(doc){
             if(doc.docType == 'wargame'){
@@ -94,6 +107,9 @@ NameFind;
             }
             if(!req.query.name){
                 return false;
+            }
+            if(doc.docType == "chat"){
+                return true;
             }
             var player = req.query.name;
             if(doc.docType != "wargame"){

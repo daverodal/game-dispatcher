@@ -22,6 +22,46 @@ use Illuminate\Support\Facades\Artisan;
 
 class WargameController extends Controller
 {
+    public $ws;
+
+    public function __construct(WargameService  $ws)
+    {
+        $this->ws = $ws;
+    }
+
+    /**
+     * Handle user login events.
+     */
+    public function handleUserLogin($event) {
+        $user = Auth::user()['name'];
+        $this->ws->doChatPoke($user, "Has logged in");
+    }
+
+    /**
+     * Handle user logout events.
+     */
+    public function handleUserLogout($event) {
+        $user = Auth::user()['name'];
+        $this->ws->doChatPoke($user, "Has logged out");
+    }
+
+    /**
+     * Register the listeners for the subscriber.
+     *
+     * @param  \Illuminate\Events\Dispatcher  $events
+     */
+    public function subscribe($events)
+    {
+        $events->listen(
+            'Illuminate\Auth\Events\Login',
+            'App\Http\Controllers\WargameController@handleUserLogin'
+        );
+
+        $events->listen(
+            'Illuminate\Auth\Events\Logout',
+            'App\Http\Controllers\WargameController@handleUserLogout'
+        );
+    }
 
     public function getIndex(){
     }
@@ -522,6 +562,8 @@ class WargameController extends Controller
 
     function getLeaveGame(Request $req)
     {
+        $user = Auth::user()['name'];
+        $this->ws->doChatPoke($user, "Has entered the lobby");
         return redirect("/wargame/play");
     }
 
@@ -747,6 +789,8 @@ class WargameController extends Controller
 //
 //            $req->session()->put("wargame", $newWargame);
 //        }
+        $user = Auth::user()['name'];
+        $this->ws->doChatPoke($user, "Has left the lobby and is in a game");
         return redirect("/wargame/play/$newWargame");
     }
 
@@ -765,7 +809,14 @@ class WargameController extends Controller
         return $ret;
     }
 
-
+    public function chatPoke( Request $req,WargameService $ws, CouchService $cs)
+    {
+        $user = Auth::user()['name'];
+        $cs->setDb('games');
+        $chat = $req->input('chat', FALSE);
+        $ws->doChatPoke($user, $chat);
+        return "User $user, chat $chat";
+    }
 
 
 

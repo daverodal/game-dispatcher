@@ -93,6 +93,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('change-wargame/{newWargame?}', 'WargameController@getChangeWargame');
         Route::get('fetch/{wargame}/{lastSeq?}', 'WargameController@getFetch');
         Route::post('poke', 'WargameController@postPoke');
+        Route::any('chatPoke', 'WargameController@chatPoke');
         Route::get('make-public/{docId}', 'WargameController@getMakePublic');
         Route::get('make-private/{docId}', 'WargameController@getMakePrivate');
         Route::get('custom-scenario/{id}', 'WargameController@getCustomScenario');

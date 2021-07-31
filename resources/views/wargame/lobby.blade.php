@@ -64,19 +64,33 @@
         <div class="container game-view" id="content" ng-controller="LobbyController as lc">
             <a class="logout logoutUpper" href="{{url('/logout')}}">Logout</a>
 
-            @can('admin')
-            <h1><a href="{{url('admin')}}">Admin </a></h1>
-            @else
-                @can('editor')
-                    <h1><a href="{{url('editor')}}">Editor </a></h1>
+            <div class="start-game-wrapper">
+                @can('admin')
+                <h1><a href="{{url('admin')}}">Admin </a></h1>
+                @else
+                    @can('editor')
+                        <h1><a href="{{url('editor')}}">Editor </a></h1>
+                    @endcan
                 @endcan
-            @endcan
-            <h2>Welcome {{$myName}}</h2>
+                <h2>Welcome {{$myName}}</h2>
 
-            <h3>You can <a id="create" href="{{url('wargame/unattached-game')}}"><button class="create-button">Start New Game</button></a></h3>
-            Or play an existing game:<br>
+                <h3>You can <a id="create" href="{{url('wargame/unattached-game')}}"><button class="create-button">Start New Game</button></a></h3>
+                Or play an existing game:
+            </div>
 
-            <h2>Multi Player Games</h2>
+            <div class="chat-wrapper">
+                <h2 class="chat-header">Chats</h2>
+                <form ng-submit="lc.doChatPostRequest(speak)">
+                    Chat <input ng-model="speak">
+                </form>
+                <ul class="chat-window">
+                    <li class="chat-line" ng-repeat="chat in chats">
+                        @{{ chat.user }}: @{{ chat.chat }}
+                    </li>
+                </ul>
+
+            </div>
+            <h2 style="clear:both">Multi Player Games</h2>
             <ul id="multiPlayerGames">
                 <li>
                     <h3>Multi games you created:</h3>
