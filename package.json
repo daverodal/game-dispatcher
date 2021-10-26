@@ -34,7 +34,7 @@
         "bootstrap-scss": "^4.5.3",
         "extend": ">=3.0.2",
         "font-awesome": "^4.7.0",
-        "jquery-ui": "^1.12.1",
+        "jquery-ui": "^1.13.0",
         "jquery-ui-bundle": "^1.12.1",
         "url-parse": "^1.4.3",
         "vue": "^2.5.22",
