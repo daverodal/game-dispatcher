@@ -29,7 +29,6 @@ export default class SyncController{
     constructor($scope, $http,sync) {
 
         sync.register('chats', function(chats) {
-            debugger
             var hotChats = [];
             for (var i in chats) {
                 if(chats[i].date){

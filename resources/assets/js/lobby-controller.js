@@ -32,7 +32,6 @@ export default class LobbyController extends SyncController{
     }
 
     doChatPostRequest(chat) {
-        debugger;
         var mychat = $("#mychat").attr("value");
         let data = {chat: chat};
         let obj;

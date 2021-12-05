@@ -184,8 +184,16 @@ require('vue-flash-message/dist/vue-flash-message.min.css');
           publishMap(){
             axios.get('/wargame/terrainInit/'+ this.$store.state.gameName+ '/' + this.$store.state.scenarioName + '/' +
                 this.$route.params.id).then( response => {
+              this.flash('Map Published', 'success', {
+                timeout: 2000,
+              });
               // this.$router.push(response.data.links.self)
-            });
+            }).catch(errors => {
+              console.log(errors);
+              this.flash('error saving map', 'error', {
+              });
+              // this.errors = errors.response.data.errors;
+            });;
         },
           toggleBorderMode(){
             this.showBorderBoxes = !this.showBorderBoxes;
