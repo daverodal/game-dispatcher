@@ -392,13 +392,12 @@ class  WargameService{
                     if($numRevs === false){
                         continue;
                     }
-                    $prevDb = $this->cs->setDb('clicks');
-                    $savedClick = new Click(false, 'timetravel', $click->id, 0 , 0, 0, 0, "$numRevs");
-
-                    $savedClick->wargame = $wargame;
-                    $this->cs->post($savedClick);
-                    $this->cs->post($savedClick);
-                    $this->cs->setDb($prevDb);
+//                    $prevDb = $this->cs->setDb('clicks');
+//                    $savedClick = new Click(false, 'timetravel', $click->id, 0 , 0, 0, 0, "$numRevs");
+//
+//                    $savedClick->wargame = $wargame;
+//                    $this->cs->post($savedClick);
+//                    $this->cs->setDb($prevDb);
 
                 }else {
                     $ret = $this->doPoke($wargame, $click->event, $click->id, $click->x, $click->y, $user, $click->dieRoll);
@@ -672,6 +671,7 @@ class  WargameService{
             do {
                 try {
                     $doc = $this->cs->get(urldecode($wargame));
+                    $docStr = json_encode($doc);
                 } catch (Exception $e) {
                     $doc = false;
                     if ($retry++ > 3) {
@@ -739,7 +739,11 @@ class  WargameService{
                     $this->cs->post($savedClick);
                     $this->cs->setDb($prevDb);
                     $doc->wargame = $battle->save();
-
+                    $cl = new \stdClass();
+                    $cl->content_type = "text/plain";
+                    $cl->data = base64_encode($docStr);
+                    $doc->_attachments = $doc->_attachments ?? new \stdClass();
+                    $doc->_attachments->$click = $cl;
                     try {
                         $this->cs->put($doc->_id, $doc);
                         $success = true;
@@ -994,25 +998,41 @@ class  WargameService{
     }
 
     public function  jumpToRev($wargame, $time){
-            $doc = $this->cs->get($wargame . "?revs_info=true");
-            $revs = $doc->_revs_info;
-            $numRevs = count($revs);
+            $doc = $this->cs->get($wargame );
+            $currentRev = $doc->_rev;
+//            $revs = $doc->_revs_info;
+//            $numRevs = count($revs);
+//
+//        foreach ($revs as $k => $v) {
+//                if (preg_match("/^$time-/", $v->rev)) {
+//                    $revision = "?rev=" . $v->rev;
+//                    $currentRev = $doc->_rev;
+//                    break;
+//                }
+//            }
+        if(!$time){
+            return false;
+        }
+//            if(!isset($revision)){
+//                return false;
+//            }
+        $click = $doc->_rev;
+        $matches = array();
 
-        foreach ($revs as $k => $v) {
-                if (preg_match("/^$time-/", $v->rev)) {
-                    $revision = "?rev=" . $v->rev;
-                    $currentRev = $doc->_rev;
-                    break;
-                }
-            }
-            if(!isset($revision)){
-                return false;
-            }
-            $doc = $this->cs->get($wargame . $revision);
+        preg_match("/^([0-9]+)-/", $click, $matches);
+        $click = $matches[1];
+        $jsonDoc = json_encode($doc);
+        $oldAttachments = clone $doc->_attachments;
+            $doc = $this->cs->get("$wargame/$time" );
             $doc->_rev = $currentRev;
+            $doc->attachments = $oldAttachments;
+            $cl = new \stdClass();
+            $cl->content_type = "text/plain";
+            $cl->data = base64_encode($jsonDoc);
+            $doc->attachments->$click = $cl;
             $doc->wargame->gameRules->flashMessages[] = "Time Travel to click $time";
              $this->cs->put($doc->_id, $doc);
-             return $numRevs;
+             return $click;
     }
     public function grabChanges( $req,$wargame, $last_seq = 0,  $user = 'observer')
     {
@@ -1062,16 +1082,25 @@ class  WargameService{
             if($time <= 2){
                 return false;
             }
-            $doc = $this->cs->get($wargame . "?revs_info=true");
-            $revs = $doc->_revs_info;
-            $numRevs = count($revs);
-            foreach ($revs as $k => $v) {
-                if (preg_match("/^$time-/", $v->rev)) {
-                    $revision = "?rev=" . $v->rev;
-                    $currentRev = $doc->_rev;
-                    break;
-                }
-            }
+            $doc = $this->cs->get($wargame);
+            $click = $doc->_rev;
+            $matches = array();
+
+            preg_match("/^([0-9]+)-/", $click, $matches);
+            $click = $matches[1];
+            $jsonDoc = json_encode($doc);
+            $oldAttachments = clone $doc->_attachments;
+            $currentRev = $doc->_rev;
+
+//            $revs = $doc->_revs_info;
+//            foreach ($revs as $k => $v) {
+//                if (preg_match("/^$time-/", $v->rev)) {
+//                    $revision = "?rev=" . $v->rev;
+//                    $currentRev = $doc->_rev;
+//                    break;
+//                }
+//            }
+            $revision = "/$time";
 
         }
 //        file_put_contents("/tmp/perflog","\nGetting ".microtime(),FILE_APPEND);
@@ -1079,9 +1108,14 @@ class  WargameService{
         if ($timeBranch) {
             $doc->_rev = $currentRev;
             $doc->wargame->gameRules->flashMessages[] = "Time Travel to click $time";
+            $doc->_attachments = $oldAttachments;
+            $cl = new \stdClass();
+            $cl->content_type = "text/plain";
+            $cl->data = base64_encode($jsonDoc);
+            $doc->_attachments->$click = $cl;
             $this->cs->put($doc->_id, $doc);
             $prevDb = $this->cs->setDb('clicks');
-            $savedClick = new Click(false, 'timetravel', $time, 0 , 0, 0, 0, $numRevs);
+            $savedClick = new Click(false, 'timetravel', $time, 0 , 0, 0, 0, $click);
             $savedClick->wargame = $wargame;
             $this->cs->post($savedClick);
             $this->cs->setDb($prevDb);
@@ -1215,20 +1249,23 @@ class  WargameService{
 
     public function resizeImage($filename, $new_width = 500, $dir = 'smallImages')
     {
-        ini_set( 'memory_limit', 1024 . 'M' );
+        ini_set( 'memory_limit', 8092 . 'M' );
 
+        $image = file_get_contents($filename);
+        $tmp = tempNam("/tmp", "img");
+        file_put_contents($tmp, $image);
 // Get new dimensions
-        list($width, $height, $type) = getimagesize($filename);
+        list($width, $height, $type) = getimagesize($tmp);
         $new_height = ($height / $width) * $new_width;
 
 // Resample
         $image_p = imagecreatetruecolor($new_width, $new_height);
         switch($type){
             case IMAGETYPE_PNG:
-                $image = imagecreatefrompng($filename);
+                $image = imagecreatefrompng($tmp);
                 break;
             case IMAGETYPE_JPEG:
-                    $image = imagecreatefromjpeg($filename);
+                    $image = imagecreatefromjpeg($tmp);
                 break;
         }
         imagecopyresampled($image_p, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
@@ -1239,6 +1276,7 @@ class  WargameService{
         imagedestroy($image_p);
         imagedestroy($image);
 
+        unlink($tmp);
         $url = config('publish.hostname'). "/$f";
         return $url;
 
