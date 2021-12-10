@@ -386,6 +386,9 @@ class  WargameService{
 
         try {
             foreach ($clicks as $click) {
+                if($click->event === 'preunitinit'){
+                    continue;
+                }
                 if($click->event === 'timetravel'){
 
                     $numRevs = $this->jumpToRev($wargame, $click->id);
@@ -470,12 +473,18 @@ class  WargameService{
         return $terrainName;
     }
 
-    public function gameUnitInit($doc, $game, $arg,  $opts){
+    public function gameUnitInit($doc, $game, $arg,  $opts, $dieRoll = false){
         $doc->opts = $opts;
         $battle = Battle::battleFromName( $game, $arg, $opts);
 
         $cs = $this->cs;
         $prevDb = $cs->setDb('terrain');
+        if ($dieRoll !== false) {
+            if(!is_array($dieRoll)){
+                $dieRoll = [$dieRoll];
+            }
+            $battle->dieRolls->setEvents( $dieRoll);
+        }
         if (method_exists($battle, 'terrainInit')) {
             if(isset($battle->scenario->origTerrainName)){
                 $terrainName = $battle->scenario->origTerrainName;
@@ -538,6 +547,22 @@ class  WargameService{
         $className = $doc->className = get_class($battle);
         $doc->chats = array();
         $doc->gameName = $game;
+
+        if($dieRoll !== false){
+            if($battle->dieRolls->getEventsTaken() !== count($dieRoll)){
+                echo "Not all events consumes in playback";
+                var_dump($battle->dieRolls);
+//                            throw new \Exception('Not all events consumed in playback');
+            }
+        }
+        $prevDb = $this->cs->setDb('clicks');
+
+        $savedClick = new Click(false, 'preunitinit', 1, 0 , 0, 0, 0, $click, $battle->dieRolls->getEvents());
+        $savedClick->wargame = $doc->_id;
+        $this->cs->post($savedClick);
+        $this->cs->setDb($prevDb);
+
+
 
         $doc = $cs->put($doc->_id, $doc);
         event(new \App\Events\Analytics\RecordGameEvent(['docId'=>$doc->id, 'type'=>'game-created', 'className'=> $className, 'scenario'=>$battle->scenario, 'arg'=>$battle->arg, 'time'=>time()]));
@@ -727,7 +752,7 @@ class  WargameService{
                 if ($doSave) {
                     if($dieRoll !== false){
                         if($battle->dieRolls->getEventsTaken() !== count($dieRoll)){
-                            echo "No all events consumes in playback";
+                            echo "Not all events consumes in playback";
                             var_dump($battle->dieRolls);
 //                            throw new \Exception('Not all events consumed in playback');
                         }
@@ -1025,11 +1050,11 @@ class  WargameService{
         $oldAttachments = clone $doc->_attachments;
             $doc = $this->cs->get("$wargame/$time" );
             $doc->_rev = $currentRev;
-            $doc->attachments = $oldAttachments;
+            $doc->_attachments = $oldAttachments;
             $cl = new \stdClass();
             $cl->content_type = "text/plain";
             $cl->data = base64_encode($jsonDoc);
-            $doc->attachments->$click = $cl;
+            $doc->_attachments->$click = $cl;
             $doc->wargame->gameRules->flashMessages[] = "Time Travel to click $time";
              $this->cs->put($doc->_id, $doc);
              return $click;

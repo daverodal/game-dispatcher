@@ -491,7 +491,11 @@ class WargameController extends Controller
 
             $cs->setDb('games');
             $doc = $cs->get(urldecode($wargame));
-            $ws->gameUnitInit($doc, $game, $arg, $opts);
+            $firstClick = false;
+            if($paramObj->history[0]->event === 'preunitinit'){
+                $firstClick = $paramObj->history[0]->dieRoll;
+            }
+            $ws->gameUnitInit($doc, $game, $arg, $opts, $firstClick);
             $this->enterHotSeat($wargame, $cs);
             $cs->setDb('games');
             if ($cs->get($wargame)) {
