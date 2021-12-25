@@ -29,6 +29,7 @@
         "webpack-dev-server": ">=3.1.11"
     },
     "dependencies": {
+        "@markarian/wargame-helpers": "0.0.5",
         "@markarian/wargame-vue-components": "0.0.5",
         "bootstrap": "^3.4.1",
         "bootstrap-scss": "^4.5.3",
