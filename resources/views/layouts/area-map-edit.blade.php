@@ -50,6 +50,10 @@
 <div id="container">
 @yield('content')
 </div>
+<script type="text/javascript">
+    debugger;
+    var fetchUrl = 'api/areaa-map';
+</script>
 
 <script type="text/javascript" src="{{mix('js/area-map-editor/app.js')}}"></script>
 </body>

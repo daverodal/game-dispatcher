@@ -286,9 +286,9 @@ class WargameController extends Controller
 
             $gameFeed = strtolower($game);
             $feed = false;
-            try{
-                @$feed = file_get_contents("http://davidrodal.com/pubs/category/$gameFeed/feed");
-            }catch(Exception $e){}
+//            try{
+//                @$feed = file_get_contents("http://davidrodal.com/pubs/category/$gameFeed/feed");
+//            }catch(Exception $e){}
             $theGameMeta = (array)$theGame->value;
             $theGameMeta['options'] = isset($theGameMeta['options'])? $theGameMeta['options'] : [];
             $fileName = $theGame->value->fileName;
