@@ -6,7 +6,7 @@
 
           <div class="col-4">
             <router-link :to="'/maps/'+map.id" >
-              {{ map.name }}----{{ map.gameName }}.{{map.scenarioName}}
+              {{ map.gameName }}.{{ map.scenarioName }}----{{map.name}}
             </router-link>
           </div>
           <div class="col-6">
@@ -49,6 +49,7 @@
               this.flash('Data loaded', 'success');
 
               this.maps = response.data.maps
+              this.maps = _.sortBy(this.maps, ['gameName', 'scenarioName']);
             }).catch(errors => {
               console.log(errors);
             });
