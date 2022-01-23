@@ -40,7 +40,8 @@
         "daverodal/rebellion": "dev-master",
         "daverodal/tactical": "dev-master",
         "laravel/helpers": "^1.2",
-        "laravelcollective/html": "^6.2"
+        "laravelcollective/html": "^6.2",
+        "monolog/monolog": "^2.3"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
