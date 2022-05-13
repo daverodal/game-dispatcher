@@ -828,6 +828,7 @@ class WargameController extends Controller
 
     public function postPoke( Request $req,WargameService $ws, CouchService $cs)
     {
+        Log::debug("Top of postPoke");
         $user = Auth::user()['name'];
 
         $cs->setDb('games');
@@ -848,10 +849,13 @@ class WargameController extends Controller
             }
             return $ret;
         }
+        Log::debug("Before do poke");
         $ret = $ws->doPoke($wargame, $event, $id, $x, $y, $user);
+        Log::debug("after do poke");
         if (!$ret['success']) {
             header("HTTP/1.1 404 Not Found");
         }
+        Log::debug("Returning from poke");
         return $ret;
     }
 
