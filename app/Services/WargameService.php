@@ -379,7 +379,7 @@ class  WargameService{
       }
 
     public function playClicks($wargame, $clicks){
-        $user = Auth::user()['name'];
+//        $user = Auth::user()['name'];
         $user = "Markarian";
         ini_set( 'memory_limit', 1024 . 'M' );
 

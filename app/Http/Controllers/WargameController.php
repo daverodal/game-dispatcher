@@ -18,6 +18,7 @@ use App\User;
 use App\Services\AnalyticsService;
 use App\Jobs\RunMakeGame;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 
 
 class WargameController extends Controller
@@ -71,6 +72,7 @@ class WargameController extends Controller
 //        $wargame = $req->session()->get('wargame');
 
 
+        Log::debug("debugme ");
         if (!$wargame) {
             $ret = $ws->lobbyView($wargame);
 
@@ -420,7 +422,7 @@ class WargameController extends Controller
 
     public function getApplyDeploys(Request $req, CouchService $cs, WargameService $ws, $wargame, $deploy)
     {
-
+        Log::debug("love");
         $opts = "";
         $cs->setDb('games');
         $paramObj = $cs->get($wargame);
@@ -855,7 +857,11 @@ class WargameController extends Controller
 
     public function terrainInit(CouchService $cs, WargameService $ws,  $game = "MartianCivilWar", $arg = false, $terrainDocId = false)
     {
-        $user = Auth::user()['name'];
+        if(Auth::user()){
+            $user = Auth::user()['name'];
+        }else{
+            $user = "Markarian";
+        }
 
 
         $battle = Battle::battleFromName($game, $arg);
