@@ -38,7 +38,7 @@
         "font-awesome": "^4.7.0",
         "jquery-ui": "^1.12.1",
         "jquery-ui-bundle": "^1.12.1",
-        "url-parse": "^1.4.3",
+        "url-parse": "^1.5.9",
         "vue": "^2.5.22",
         "vue-flash-message": "^0.7.2",
         "vue-moveable": "^1.1.0",
