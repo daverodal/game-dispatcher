@@ -803,6 +803,7 @@ class WargameController extends Controller
 
     public function getFetch(Request $req, CouchService $cs, WargameService $ws, $wargame, $last_seq = '')
     {
+        Log::debug("fetching");
         $user = Auth::user()['name'];
 
         if (!$user) {
@@ -812,6 +813,7 @@ class WargameController extends Controller
 
 //        $wargame = urldecode($req->session()->get("wargame"));
         $ret = $ws->grabChanges($req, $wargame, $last_seq, $user);
+        Log::debug("fetched");
         return $ret;
     }
 
