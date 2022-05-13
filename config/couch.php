@@ -18,7 +18,7 @@ return [
     | array format for simplicity. Here you can tweak the fetch style.
     |
     */
-    'hostname' => 'localhost',
+    'hostname' => '127.0.0.1',
     'port'=>5984,
     'username'=>env('COUCH_USERNAME', ''),
     'password'=>env('COUCH_PASSWORD', ''),
